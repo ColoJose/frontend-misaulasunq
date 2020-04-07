@@ -1,0 +1,20 @@
+#Se define los recipientes de las notificaciones
+notifications:
+  email:
+    recipients:
+      - flame.el22@gmail.com
+      - msanchez.jose.94@gmail.com
+    on_success: never
+    on_failure: always
+
+#Definicion de lenguaje y version de VM
+language: node_js
+node_js:
+  - node
+
+cache: npm
+install:
+  - npm install
+
+#Se corren los test
+script: true # Provisoriamente hasta tener test de front (Con Jasmine o parecido)
