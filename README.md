@@ -10,7 +10,7 @@ Debido a la problematica recurrente sobre el desconocimiento de la ubicacion de 
    Nombre            |						Usuario						| Legajo UNQ |							Email
 ---------------------|--------------------------------------------------|------------|----------------------------------------------------------
 Victor Mariano Degano|[@VictorDegano](https://github.com/VictorDegano)  |    26106   | [flame.el22@gmail.com](mailto:flame.el22@gmail.com)
-José Sanchez         |[@ColoJose](https://github.com/ColoJose)          |       | [msanchez.jose.94@gmail.com](mailto:msanchez.jose.94@gmail.com)
+José Sanchez         |[@ColoJose](https://github.com/ColoJose)          |    28674  | [msanchez.jose.94@gmail.com](mailto:msanchez.jose.94@gmail.com)
 
 ## Estado del Proyecto
 
