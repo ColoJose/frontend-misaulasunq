@@ -8,3 +8,18 @@
 .img-logo {
     width: 50px;
 }
+
+body {
+    background-color: e2e3de;
+}
+
+.main {
+    height: 85%;
+    /* background-color: e2e3de; */
+}
+
+.container {
+    height:inherit;
+    max-width: 100%;
+    background-color: #e2e3de;
+}

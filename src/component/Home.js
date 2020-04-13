@@ -17,38 +17,35 @@ import "../component/Home.css";
 import logoApp from "../resources/lab.png"
 
 const Home = props => (
-    <Container style={{height:"inherit", maxWidth: "98%"}}>
+    <Container className="container">
         {/* Navigation bar */}
         <Row style={{height:"15%"}}>
-        <Navbar fixed="top" 
-                className="color-navbar"
-                variant="light">
-            <Navbar.Brand className="col-1 justify-content-start">
-                <Image src={logoApp} 
-                       rounded
-                       />
-                <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
-            </Navbar.Brand>
+            <Navbar fixed="top" 
+                    className="color-navbar"
+                    variant="light">
+                <Navbar.Brand className="col-2 justify-content-start">
+                    <Image src={logoApp} 
+                        rounded
+                        />
+                    <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
+                </Navbar.Brand>
+ 
+                <Form inline className="col-4 justify-content-center">
+                    <FormControl type="text" 
+                                placeholder="Buscar aula por materia" 
+                                className="mr-sm-2" />
+                    <Button variant="light">Search</Button>
+                </Form>
 
-            <Nav  className="other col-3 justify-content-center">
-                <Navbar.Text >  |  </Navbar.Text>
-                <Navbar.Text >Login</Navbar.Text>
-
-            </Nav>
-            
-            <Form inline className="col-8 justify-content-end">
-                <FormControl type="text" 
-                             placeholder="Buscar aula por materia" 
-                             className="mr-sm-2" />
-                <Button variant="light">Search</Button>
-            </Form>
-            
-            
-        </Navbar>
-        
+                <Nav  className="col-6 justify-content-end">
+                    <Navbar.Text >  |  </Navbar.Text>
+                    <Navbar.Text >Login</Navbar.Text>
+                </Nav>
+            </Navbar>
         </Row>
+
         {/* Body */}
-        <Row style={{height:"85%"}}>
+        <Row className="main">
             <Col xs={3} 
                  className="justify-content-start" >
                 <Card style={{ width: '18rem'}}>
