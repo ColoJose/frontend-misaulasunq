@@ -14,6 +14,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 // Css import
 import "../component/Home.css";
+import logoApp from "../resources/lab.png"
 
 const Home = props => (
     <Container style={{height:"inherit", maxWidth: "98%"}}>
@@ -22,24 +23,27 @@ const Home = props => (
         <Navbar fixed="top" 
                 className="color-navbar"
                 variant="light">
-            <Navbar.Brand className="col-2 justify-content-start">
-                <Image src="holder.js/171x180" 
-                       rounded  
-                       alt="Mis Aulas UNQ"/>
+            <Navbar.Brand className="col-1 justify-content-start">
+                <Image src={logoApp} 
+                       rounded
+                       />
+                <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
             </Navbar.Brand>
+
+            <Nav  className="other col-3 justify-content-center">
+                <Navbar.Text >  |  </Navbar.Text>
+                <Navbar.Text >Login</Navbar.Text>
+
+            </Nav>
             
-            <Form inline className="col-7 justify-content-end">
+            <Form inline className="col-8 justify-content-end">
                 <FormControl type="text" 
-                             placeholder="Search" 
+                             placeholder="Buscar aula por materia" 
                              className="mr-sm-2" />
-                <Button variant="outline-info">Search</Button>
+                <Button variant="light">Search</Button>
             </Form>
             
-            <Nav className="col-3 justify-content-center">
-                <Navbar.Text >Mi Cuenta</Navbar.Text>
-                <Navbar.Text > | </Navbar.Text>
-                <Navbar.Text >Salir </Navbar.Text>
-            </Nav>
+            
         </Navbar>
         
         </Row>
