@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React/*, { useState, useEffect } */from 'react';
+// import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
+// import axios from 'axios';
+import Home from '../component/Home';
 
 class App extends React.Component {
 
@@ -24,9 +25,7 @@ class App extends React.Component {
     //const { data } = this.state
 
     return (
-      <div>
-      
-      </div>
+      <Home/>
     )
   }
 }
