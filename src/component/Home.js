@@ -13,8 +13,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 // Css import
-import "../component/Home.css";
+import "./Home.css";
 import logoApp from "../resources/lab.png"
+import Filters from "./Filters.js"
 
 const Home = props => (
     <Container className="container">
@@ -48,19 +49,14 @@ const Home = props => (
         <Row className="main">
             <Col xs={3} 
                  className="justify-content-start" >
-                <Card style={{ width: '18rem'}}>
-                    <Card.Header>Filtrar Horarios:</Card.Header>
-                    <ListGroup variant="flush">
-                        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-                    </ListGroup>
-                </Card>
+                
+                <Filters />
+
             </Col>
             <Col xs={5} style={{backgroundColor:"orange"}}>Search Results</Col>
             <Col xs={4} style={{backgroundColor:"brown"}}>Map viewer</Col>
         </Row>
     </Container>
 )
-
+// llaaa
 export default Home;
