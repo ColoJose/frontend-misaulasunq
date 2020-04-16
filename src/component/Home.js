@@ -10,12 +10,11 @@ import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-// Css import
 import "./Home.css";
-import logoApp from "../resources/lab.png"
-import Filters from "./Filters.js"
+import logoApp from '../resources/lab.png';
+import Filters from './Filters.js';
+import SubjectsInfo from './SubjectsInfo.js';
+import UnqMap from '../resources/plantaBajaUnq.png';
 
 const Home = props => (
     <Container className="container">
@@ -53,8 +52,12 @@ const Home = props => (
                 <Filters />
 
             </Col>
-            <Col xs={5} style={{backgroundColor:"orange"}}>Search Results</Col>
-            <Col xs={4} style={{backgroundColor:"brown"}}>Map viewer</Col>
+            <Col xs={5}>
+                <SubjectsInfo />
+            </Col>
+            <Col xs={4}>
+                <img src={UnqMap}/>
+            </Col>
         </Row>
     </Container>
 )

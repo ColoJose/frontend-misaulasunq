@@ -41,6 +41,14 @@ const Filters = props => (
                     <Form.Control type="text" placeholder="Ingrese número de aula"/>
                 </FormGroup>
                 <input type="image" src={next}/>
+            </Form>
+
+            <Form>
+                <h5>Filtrar por Nro de comisión</h5>
+                <FormGroup>
+                    <Form.Control type="text" placeholder="Ingrese número de comisión"/>
+                </FormGroup>
+                <input type="image" src={next}/>
             </Form>    
             
         
