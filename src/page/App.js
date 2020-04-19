@@ -12,14 +12,7 @@ class App extends React.Component {
       data: null,
     }
   }
-
-  componentDidMount() {
-    fetch('http://localhost:3000')
-      .then((data) => {
-        console.log(data);
-      });
-  }
-
+  
   render() {
 
     //const { data } = this.state

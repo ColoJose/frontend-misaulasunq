@@ -1,5 +1,5 @@
 // React imports
-import React from 'react';
+import React, { useEffect } from 'react';
 // BootStrap imports
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -16,50 +16,54 @@ import Filters from './Filters.js';
 import SubjectsInfo from './SubjectsInfo.js';
 import UnqMap from '../resources/plantaBajaUnq.png';
 
-const Home = props => (
-    <Container className="container">
-        {/* Navigation bar */}
-        <Row style={{height:"15%"}}>
-            <Navbar fixed="top" 
-                    className="color-navbar"
-                    variant="light">
-                <Navbar.Brand className="col-2 justify-content-start">
-                    <Image src={logoApp} 
-                        rounded
-                        />
-                    <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
-                </Navbar.Brand>
- 
-                <Form inline className="col-4 justify-content-center">
-                    <FormControl type="text" 
-                                placeholder="Buscar aula por materia" 
-                                className="mr-sm-2" />
-                    <Button variant="light">Search</Button>
-                </Form>
+function Home() {
 
-                <Nav  className="col-6 justify-content-end">
-                    <Navbar.Text >  |  </Navbar.Text>
-                    <Navbar.Text >Login</Navbar.Text>
-                </Nav>
-            </Navbar>
-        </Row>
+    return (
 
-        {/* Body */}
-        <Row className="main">
-            <Col xs={3} 
-                 className="justify-content-start" >
-                
-                <Filters />
+        <Container className="container"> {/* refactorear: navbar*/ }
+            {/* Navigation bar */}
+            <Row style={{height:"15%"}}>
+                <Navbar fixed="top" 
+                        className="color-navbar"
+                        variant="light">
+                    <Navbar.Brand className="col-2 justify-content-start">
+                        <Image src={logoApp} 
+                            rounded
+                            />
+                        <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
+                    </Navbar.Brand>
+    
+                    <Form inline className="col-4 justify-content-center">
+                        <FormControl type="text" 
+                                    placeholder="Buscar aula por materia" 
+                                    className="mr-sm-2" />
+                        <Button variant="light">Search</Button>
+                    </Form>
 
-            </Col>
-            <Col xs={5}>
-                <SubjectsInfo />
-            </Col>
-            <Col xs={4}>
-                <img src={UnqMap}/>
-            </Col>
-        </Row>
-    </Container>
-)
-// llaaa
+                    <Nav  className="col-6 justify-content-end">
+                        <Navbar.Text >  |  </Navbar.Text>
+                        <Navbar.Text >Login</Navbar.Text>
+                    </Nav>
+                </Navbar>
+            </Row>
+
+            {/* Body */}
+            <Row className="main">
+                <Col xs={3} 
+                    className="justify-content-start" >
+                    
+                    <Filters />
+
+                </Col>
+                <Col xs={5}>
+                    <SubjectsInfo />
+                </Col>
+                <Col xs={4}>
+                    <img src={UnqMap} alt="mapa-unq"/>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
+
 export default Home;
