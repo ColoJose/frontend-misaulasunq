@@ -13,7 +13,7 @@ import NavbarApp from './Navbar.js';
 function Home() {
 
     return (
-
+        // comment
         <Container className="container"> {/* refactorear: navbar*/ }
             <NavbarApp />
             {/* Body */}
