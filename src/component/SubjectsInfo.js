@@ -9,10 +9,12 @@ function SubjectsInfo() {
 
     const [data,setData] = React.useState({res : []});
 
+    //  generar servicios para mejorar (refactorear)
     useEffect( async() => {
         const result = await Axios(
             "http://www.mocky.io/v2/5e9a6ea2330000b7c77b3011"
-        ).then( (res) => { console.log(res.data)})
+        )
+        
     })
 
     return (
