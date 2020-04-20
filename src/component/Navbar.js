@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import logoApp from '../resources/lab.png';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
+//css
+import './Navbar.css';
 
 function NavbarApp() {
 
