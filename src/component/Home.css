@@ -1,1 +1,24 @@
 
+/* .Home { height: inherit;} */
+
+
+.body,html {
+    height: 100%;
+
+}
+
+
+.bg-image {
+  background-image: url("../resources/UNQnsala231018.jpg");
+  display: block;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Full height */
+  height: 1000px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
