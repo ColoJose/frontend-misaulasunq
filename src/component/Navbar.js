@@ -7,34 +7,38 @@ import Button from 'react-bootstrap/Button';
 import logoApp from '../resources/lab.png';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
+//css
+import './Navbar.css';
+
+import history from '../utils/history';
 
 function NavbarApp() {
 
     return (
-        <Row style={{height:"15%"}}>
-        <Navbar fixed="top" 
-                className="color-navbar"
-                variant="light">
-            <Navbar.Brand className="col-2 justify-content-start">
-                <Image src={logoApp} 
-                    rounded
-                    />
-                <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
-            </Navbar.Brand>
+        <Row>
+            <Navbar fixed="top" 
+                    className="color-navbar"
+                    variant="light">
+                <Navbar.Brand className="col-2 justify-content-start">
+                    <Image src={logoApp} 
+                        rounded
+                        />
+                    <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
+                </Navbar.Brand>
 
-            <Form inline className="col-4 justify-content-center">
-                <FormControl type="text" 
-                            placeholder="Buscar aula por materia" 
-                            className="mr-sm-2" />
-                <Button variant="light">Search</Button>
-            </Form>
+                <Form inline className="col-4 justify-content-center">
+                    <FormControl type="text" 
+                                placeholder="Buscar aula por materia" 
+                                className="mr-sm-2" />
+                    <Button variant="light" onClick={ () => history.push("/search")}>Search</Button>
+                </Form>
 
-            <Nav  className="col-6 justify-content-end">
-                <Navbar.Text >  |  </Navbar.Text>
-                <Navbar.Text >Login</Navbar.Text>
-            </Nav>
-        </Navbar>
-    </Row>
+                <Nav  className="col-6 justify-content-end">
+                    <Navbar.Text >  |  </Navbar.Text>
+                    <Navbar.Text >Login</Navbar.Text>
+                </Nav>
+            </Navbar>
+        </Row>
     );
 }
 

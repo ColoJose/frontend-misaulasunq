@@ -1,24 +1,24 @@
-import React/*, { useState, useEffect } */from 'react';
-// import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-// import axios from 'axios';
 import Home from '../component/Home';
-
+import NavbarApp from '../component/Navbar';
+import { Route, Router, Switch } from 'react-router-dom';
+import Search from '../component/Search';
+import history from '../utils/history';
 class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-    }
-  }
   
   render() {
 
-    //const { data } = this.state
-
     return (
-      <Home/>
+      <div>
+        <NavbarApp />
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/" component={Home}  />
+            <Route exact path="/search" component={Search}  />
+          </Switch> 
+        </Router>
+      </div>
     )
   }
 }

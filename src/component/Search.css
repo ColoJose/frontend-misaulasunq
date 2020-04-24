@@ -1,0 +1,17 @@
+
+
+.Home {
+    height: inherit;
+}
+
+.main {
+    height: 85%;
+    /* background-color: e2e3de; */
+}
+
+.container {
+    margin-top: 40p;
+    height:inherit;
+    max-width: 100%;
+    background-color: #e2e3de;
+}

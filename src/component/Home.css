@@ -1,25 +1,22 @@
-.Home {
-    height: inherit;
-}
-.color-navbar{
-    background-color: #bd003a;
+
+/* .Home { height: inherit;} */
+
+
+.body,html {
+    height: 100%;
+
 }
 
-.img-logo {
-    width: 50px;
-}
+.bg-image {
+  background-image: url("https://eltermometroweb.com/wp-content/uploads/2016/08/rectoradounq-678x332.jpg");
+  display: block;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 
-body {
-    background-color: e2e3de;
-}
+  height: 1000px;
 
-.main {
-    height: 85%;
-    /* background-color: e2e3de; */
-}
-/*  */
-.container {
-    height:inherit;
-    max-width: 100%;
-    background-color: #e2e3de;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
