@@ -10,6 +10,8 @@ import Image from 'react-bootstrap/Image';
 //css
 import './Navbar.css';
 
+import history from '../utils/history';
+
 function NavbarApp() {
 
     return (
@@ -28,7 +30,7 @@ function NavbarApp() {
                     <FormControl type="text" 
                                 placeholder="Buscar aula por materia" 
                                 className="mr-sm-2" />
-                    <Button variant="light">Search</Button>
+                    <Button variant="light" onClick={ () => history.push("/search")}>Search</Button>
                 </Form>
 
                 <Nav  className="col-6 justify-content-end">
