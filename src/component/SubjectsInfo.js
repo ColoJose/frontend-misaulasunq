@@ -22,13 +22,14 @@ function SubjectsInfo({subjects}) {
         <div>
             {subjects !== undefined ? 
                         ( subjects.map( subject => {
+                            return(
                             <ListGroup>
                                 <ListGroup.Item>Materia: {subject.name}</ListGroup.Item>
                                 <ListGroup.Item>Aula</ListGroup.Item>
                                 <ListGroup.Item>Comisión</ListGroup.Item>
                                 <ListGroup.Item>Horario </ListGroup.Item>
                                 <ListGroup.Item><img  src={MapIcon}/></ListGroup.Item>
-                        </ListGroup> }))
+                        </ListGroup>) }))
                         
                     :
 

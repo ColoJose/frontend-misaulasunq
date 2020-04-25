@@ -17,7 +17,7 @@ const Filters = (props) => {
         e.preventDefault();
         async function test(){
             const response = await axios({
-                url: `http://localhost:8090/subjectAPI/byName/Sistemas operativos`,
+                url: `http://localhost:8090/subjectAPI/byName/${subject}`,
                 method: 'GET'
             }).then( resp =>{
                 props.retrieveSubjects(resp.data);
