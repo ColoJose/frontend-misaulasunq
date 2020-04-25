@@ -23,8 +23,8 @@ class App extends React.Component {
         <Row className="margin-top">
         <Router history={history}>
           <Switch>
-            <Route exact path="/" component={Home}  />
-            <Route exact path="/search" component={Search}  />
+            {/* <Route exact path="/" component={Home}  /> */}
+            <Route exact path="/" component={Search}  />
           </Switch> 
         </Router>
         </Row>
