@@ -1,5 +1,4 @@
-import React from 'react';
-import useState from 'react';
+import React ,{useState} from 'react';
 // BootStrap imports
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -12,17 +11,16 @@ import UnqMap from '../resources/plantaBajaUnq.png';
 
 function Search() {
 
-    // const [ imAtSearchPage, setImAtSearchPage ] = useState(false); whyyy????
+    const [subjects,setSubjects] = useState();
 
     return (
-        <Container className="container"> {/* refactorear: navbar*/ }
-
+        <Container className="container">
             <Row className="main">
                 <Col xs={3} className="justify-content-start" >
-                    <Filters />
+                    <Filters retrieveSubjects={(test) => setSubjects(test)} />
                 </Col>
                 <Col xs={5}>
-                    <SubjectsInfo />
+                    <SubjectsInfo subjects={subjects} />
                 </Col>
                 <Col xs={4}>
                     <img src={UnqMap} alt="mapa-unq"/>
