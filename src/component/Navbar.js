@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // bootstrap
 import {Nav, Navbar}from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -9,10 +9,22 @@ import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
 //css
 import './Navbar.css';
-
 import history from '../utils/history';
 
 function NavbarApp() {
+
+    const [subject,setSubject] = useState('');
+    
+
+    const handleSubmit = (e) => {
+        //e.preventDefault();
+        history.push("/search");
+        console.log(subject);
+    }
+
+    useEffect( ()=>{
+
+    })
 
     return (
         <Row>
@@ -26,11 +38,14 @@ function NavbarApp() {
                     <Navbar.Brand >Mis Aulas UNQ</Navbar.Brand>           
                 </Navbar.Brand>
 
-                <Form inline className="col-4 justify-content-center">
+                <Form inline className="col-4 justify-content-center" onSubmit={handleSubmit}>
                     <FormControl type="text" 
-                                placeholder="Buscar aula por materia" 
-                                className="mr-sm-2" />
-                    <Button variant="light" onClick={ () => history.push("/search")}>Search</Button>
+                                //  placeholder="Buscar aula por materia" 
+                                 className="mr-sm-2"
+                                 value={subject}
+                                 onChange={ (e) =>  setSubject(e.target.value)}
+                                 disabled />
+                    <Button type="submit" variant="light" disabled>Search</Button>
                 </Form>
 
                 <Nav  className="col-6 justify-content-end">
