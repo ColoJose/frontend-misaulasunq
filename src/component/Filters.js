@@ -2,103 +2,127 @@ import "./Filters.css"
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import FormGroup from 'react-bootstrap/FormGroup';
+import Image from 'react-bootstrap/Image';
 import next from '../resources/next.png';
 import { Row, Col,Button } from "react-bootstrap";
 import axios from 'axios';
+import SubjectAPI from "../Api/SubjectAPI";
 
-const hours = [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
+const hours = ["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"]
 const optionsHours = hours.map( (hs) => <option key={hs.toString()}>{hs}</option>)
 
 const Filters = (props) => {
 
     const [subject, setSubject] = useState("");
+    const [classroomNumber, setClassroomNumber] = useState("");
+    const [startHour, setStartHour] = useState("07:00");
+    const [endHour, setEndHour] = useState("22:00");
 
     const filterBySubject = (e) =>{
         e.preventDefault();
-        async function test(){
-            const response = await axios({
-                url: `http://localhost:8090/subjectAPI/byName/${subject}`,
-                method: 'GET'
-            }).then( resp =>{
-                props.retrieveSubjects(resp.data);
-            }).catch(e => {
-                console.log(e)
-            })
-        }
-        test();
-        return false;
+        const subjectApi = new SubjectAPI();
+        subjectApi.getSubjectsByName(subject)
+                .then( resp =>{
+                    props.retrieveSubjects(resp.data);
+                }).catch(e => {
+                    console.log(e)
+                })
     }
      
-    const filterBySchedule = () => {
-        console.log("filter by schedule works");
+    const filterBySchedule = (e) => {
+        e.preventDefault();
+        const subjectApi = new SubjectAPI();
+        subjectApi.getSubjectsBySchedule(startHour, endHour)
+                .then( resp =>{
+                    props.retrieveSubjects(resp.data);
+                }).catch(e => {
+                    console.log(e)
+                })
     }
 
-    const filterByNumberOf = () => {
-        console.log("filter by n");
+    const filterByNumberOf = (e) => {
+        e.preventDefault();
+        const subjectApi = new SubjectAPI();
+        subjectApi.getSubjectsByClassroomNumber(classroomNumber)
+                .then( resp =>{
+                    props.retrieveSubjects(resp.data);
+                }).catch(e => {
+                    console.log(e)
+                })
     }
 
     return (
-        <div>
-                <Form >
-                    <h5>Filtrar por nombre materia</h5>
-                    <FormGroup onSubmit={filterBySubject}>
-                        <Row>
-                            <Col xs={6}>
-                                <Form.Control type="text" 
-                                              value={subject}
-                                              placeholder="Ingrese nombre materia"
-                                              onChange={ (e) => setSubject(e.target.value)}              
-                                />
-                            </Col>
-                            <Col xs={6}>
-                                <Button onClick={ (e) => filterBySubject(e) } type="image" src={next}/>
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                    
-                </Form> 
-                <Form>
-                    <h5>Filtrar por horario</h5>
-                    
-                        <FormGroup> {/* TODO: validaciones que no den conjunto vacío */}
-                        <Row>
-                            <Col xs={4}>
-                                <Form.Control as="select" custom placeholder="Desde"> 
-                                    {/* TODO hacer que se vea el value="Desde* idem Hasta*/}
-                                    {optionsHours} 
-                                </Form.Control>
-                            </Col>    
+        <>
+            <Form >
+                <h5>Filtrar por nombre materia</h5>
+                <FormGroup>
+                    <Row>
+                        <Col xs={6}>
+                            <Form.Control type="text" 
+                                          value={subject}
+                                          placeholder="Ingrese nombre materia"
+                                          onChange={ (e) => setSubject(e.target.value)}/>
+                        </Col>
+                        <Col xs={6}>
+                            <Button variant="outline-light">
+                                <Image src={next} 
+                                       onClick={ (e) => filterBySubject(e) }/>
+                            </Button>
+                        </Col>
+                    </Row>
+                </FormGroup>
+            </Form> 
+            <Form>
+                <h5>Filtrar por horario</h5>
+                    <FormGroup> 
+                    <Row>
+                        <Col xs={4}>
+                            <Form.Control as="select"
+                                          value={startHour}
+                                          custom 
+                                          placeholder="Desde"
+                                          onChange={ (e) => setStartHour(e.target.value)}> 
+                                {optionsHours} 
+                            </Form.Control>
+                        </Col>    
+                        <Col xs={4}>
+                            <Form.Control as="select" 
+                                          value={endHour}
+                                          custom 
+                                          placeholder="Hasta"
+                                          onChange={ (e) => setEndHour(e.target.value)}>>
+                                {optionsHours}
+                            </Form.Control>
+                        </Col>
+                        <Col xs={4}>
+                            <Button variant="outline-light">
+                                <Image src={next} 
+                                       onClick={ (e) => filterBySchedule(e) }/>
+                            </Button>
+                        </Col>
+                    </Row>
+                </FormGroup>
+            </Form>
 
-                            <Col xs={4}>
-                                <Form.Control as="select" custom placeholder="Hasta">
-                                    {optionsHours}
-                                </Form.Control>
-                            </Col>
-
-                            <Col xs={4}>
-                                <input type="image" src={next}/>
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                </Form>
-
-                <Form>
-                    <h5>Filtrar por Nro de aula</h5>
-                    <FormGroup>
-                        <Row>
-                            <Col xs={6}>
-                                <Form.Control type="text" placeholder="Ingrese número de aula"/>
-                            </Col>
-                            <Col xs={6}>
-                                <input  type="image" src={next}/>
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                </Form>
-
-   
-                
-        </div>
+            <Form>
+                <h5>Filtrar por Nro de aula</h5>
+                <FormGroup>
+                    <Row>
+                        <Col xs={6}>
+                            <Form.Control type="text" 
+                                          placeholder="Ingrese número de aula"
+                                          onChange={ (e) => setClassroomNumber(e.target.value)}/>
+                        </Col>
+                        <Col xs={6}>
+                            <Button variant="outline-light">
+                                <Image src={next} 
+                                       onClick={ (e) => filterByNumberOf(e) }/>
+                            </Button>
+                        </Col>
+                    </Row>
+                </FormGroup>
+            </Form>
+        </>
     )
 };
 
