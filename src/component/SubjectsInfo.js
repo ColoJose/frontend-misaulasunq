@@ -7,8 +7,6 @@ import Axios from 'axios';
 
 function SubjectsInfo({subjects}) {
 
-
-
     return (
 
         <div>
