@@ -8,6 +8,7 @@ import "./Home.css";
 import Filters from './Filters.js';
 import SubjectsInfo from './SubjectsInfo.js';
 import UnqMap from '../resources/plantaBajaUnq.png';
+import Map from '../component/Map';
 
 function Search() {
 
@@ -23,7 +24,8 @@ function Search() {
                     <SubjectsInfo subjects={subjects} />
                 </Col>
                 <Col xs={4}>
-                    <img src={UnqMap} alt="mapa-unq"/>
+                    <Map/>
+                    {/* <img src={UnqMap} alt="mapa-unq"/> */}
                 </Col>
             </Row>
 
