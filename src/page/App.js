@@ -4,6 +4,7 @@ import Home from '../component/Home';
 import NavbarApp from '../component/Navbar';
 import { Route, Router, Switch } from 'react-router-dom';
 import Search from '../component/Search';
+import AdminProfile from '../component/AdminProfile';
 import history from '../utils/history';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -22,7 +23,7 @@ class App extends React.Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Home}  />
-            {/* <Route exact path="/" component={Search}  /> */}
+            <Route exact path="admin" component={AdminProfile} />
           </Switch> 
         </Router>
         </Row>
