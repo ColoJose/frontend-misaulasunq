@@ -1,21 +1,11 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
-import MapIcon from '../resources/mapIcon.png'; /// agregar icono
+import { ListGroup, Accordion, Card, Button } from 'react-bootstrap';
+import CommissionInfo from './CommissionInfo';
 import Axios from 'axios';
 
 function SubjectsInfo({subjects}) {
-    // let subjectsAux= undefined;
-
-    // useEffect( () => {
-        
-    //     if(subjects !== undefined){
-            
-    //         subjectsAux = subjects
-    //         console.log(subjectsAux);
-    //     }
-    // })
 
     return (
 
@@ -23,25 +13,27 @@ function SubjectsInfo({subjects}) {
             {subjects !== undefined ? 
                         ( subjects.map( subject => {
                             return(
-                            <ListGroup key={subject.subjectCode}>
-                                <ListGroup.Item>Materia: {subject.name}</ListGroup.Item>
-                                {/* <ListGroup.Item>Aula: {subject.}</ListGroup.Item>
-                                <ListGroup.Item>Comisión</ListGroup.Item>
-                                <ListGroup.Item>Horario </ListGroup.Item>
-                                <ListGroup.Item><img  src={MapIcon}/></ListGroup.Item> */}
-                        </ListGroup>) }))
+                            <Accordion key={subject.id.toString()}>
+                                <Card>
+                                    <Card.Header>
+                                        <Accordion.Toggle as={Button} variant="link">
+                                            {subject.name}
+                                        </Accordion.Toggle>    
+                                    </Card.Header>
+                                    <CommissionInfo commissions={subject.commissions}/>
+                                </Card>
+                            </Accordion>) }))
+                            // <ListGroup key={subject.subjectCode}>
+                            //         <ListGroup.Item>Materia: {subject.name}</ListGroup.Item>
+                            //         <CommissionInfo commissions={subject.commissions} />
+                            //       <ListGroup.Item>Aula: {subject.}</ListGroup.Item>
+                            //     <ListGroup.Item>Comisión</ListGroup.Item>
+                            //     <ListGroup.Item>Horario </ListGroup.Item>
+                            //     <ListGroup.Item><img  src={MapIcon}/></ListGroup.Item> 
+                            // </ListGroup>) }))
                         
-                    :
-
-                (<p>Loading</p>) 
-
-
-                    
-
-            }
+                    : <p>Loading</p>}
         </div>
-
-
     )
 }
 

@@ -17,7 +17,7 @@ function Search() {
         <Container className="container">
             <Row className="main">
                 <Col xs={3} className="justify-content-start" >
-                    <Filters retrieveSubjects={(test) => setSubjects(test)} />
+                    <Filters retrieveSubjects={setSubjects} />
                 </Col>
                 <Col xs={5}>
                     <SubjectsInfo subjects={subjects} />
