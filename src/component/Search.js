@@ -7,8 +7,8 @@ import Row from 'react-bootstrap/Row';
 import "./Home.css";
 import Filters from './Filters.js';
 import SubjectsInfo from './SubjectsInfo.js';
-import UnqMap from '../resources/plantaBajaUnq.png';
-import Map from '../component/Map';
+import UnqMap from '../resources/PlantaBajaUnq.png';
+import MapModal from '../component/MapModal';
 
 function Search() {
 
@@ -24,7 +24,7 @@ function Search() {
                     <SubjectsInfo subjects={subjects} />
                 </Col>
                 <Col xs={4}>
-                    <Map/>
+                    <MapModal/>
                     {/* <img src={UnqMap} alt="mapa-unq"/> */}
                 </Col>
             </Row>
