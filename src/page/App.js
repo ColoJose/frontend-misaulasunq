@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Home from '../component/Home';
 import NavbarApp from '../component/Navbar';
 import { Route, Router, Switch } from 'react-router-dom';
-import Search from '../component/Search';
+import Home from '../component/Home';
+import AdminProfile from '../component/AdminProfile';
 import history from '../utils/history';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row';
@@ -23,8 +23,7 @@ class App extends React.Component {
         <Row className="margin-top">
         <Router history={history}>
           <Switch>
-            {/* <Route exact path="/" component={Home}  /> */}
-            <Route exact path="/" component={Search}  />
+            <Route exact path="/" component={Home}  />
           </Switch> 
         </Router>
         </Row>

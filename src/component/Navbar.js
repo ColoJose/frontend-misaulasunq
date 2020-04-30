@@ -11,10 +11,12 @@ import Image from 'react-bootstrap/Image';
 import './Navbar.css';
 import history from '../utils/history';
 
+import { useAuth0 } from '../react-auth0-spa';
+
 function NavbarApp() {
 
     const [subject,setSubject] = useState('');
-    
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
     const handleSubmit = (e) => {
         //e.preventDefault();
@@ -49,8 +51,13 @@ function NavbarApp() {
                 </Form>
 
                 <Nav  className="col-6 justify-content-end">
-                    <Navbar.Text >  |  </Navbar.Text>
-                    <Navbar.Text >Login</Navbar.Text>
+                    {!isAuthenticated && (
+                        <Navbar.Text onClick={ () => loginWithRedirect({}) }>Login</Navbar.Text>
+                    )}
+                    
+                    {isAuthenticated && (
+                        <Navbar.Text onClick={ () => logout() }>Logout</Navbar.Text>
+                    )}
                 </Nav>
             </Navbar>
         </Row>
