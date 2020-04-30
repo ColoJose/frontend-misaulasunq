@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import './Home.css';
+import { useAuth0} from '../react-auth0-spa';
+import AdminProfile from './AdminProfile';
+import Search from './Search';
 
 function Home() {
-        // imagen de la unq con blur y alguna gilada en el medio
+        
+        const { isAuthenticated } = useAuth0();
+
         return (
-                 <div className="bg-image"> &nbsp;</div>
+                 <div>
+                        { isAuthenticated ?
+                                <AdminProfile /> :
+                                <Search />
+                        }
+                 </div>
         )
 }
 
