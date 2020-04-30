@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
-import Home from '../component/Home';
 import NavbarApp from '../component/Navbar';
 import { Route, Router, Switch } from 'react-router-dom';
-import Search from '../component/Search';
+import Home from '../component/Home';
 import AdminProfile from '../component/AdminProfile';
 import history from '../utils/history';
 import { Container, Row, Col } from 'react-bootstrap';

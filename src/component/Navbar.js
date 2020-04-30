@@ -8,9 +8,12 @@ import logoApp from '../resources/lab.png';
 // css
 import './Navbar.css';
 
+import { useAuth0 } from '../react-auth0-spa';
+
 function NavbarApp() {
 
     const [subject,setSubject] = useState('');
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
     const handleSubmit = (e) => {
         history.push("/search");
@@ -44,9 +47,14 @@ function NavbarApp() {
                     </Button>
                 </Form>
 
-                <Nav className="col-3 justify-content-end">
-                    <Navbar.Text >  |  </Navbar.Text>
-                    <Navbar.Text >Login</Navbar.Text>
+                <Nav  className="col-3 justify-content-end">
+                    {!isAuthenticated && (
+                        <Navbar.Text onClick={ () => loginWithRedirect({}) }>Login</Navbar.Text>
+                    )}
+                    
+                    {isAuthenticated && (
+                        <Navbar.Text onClick={ () => logout() }>Logout</Navbar.Text>
+                    )}
                 </Nav>
             </Navbar>
         </Row>

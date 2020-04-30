@@ -1,30 +1,21 @@
-import React ,{useState} from 'react';
-// BootStrap imports
-import { Container, Col, Row } from 'react-bootstrap';
-// components and internal resources imports
-import "./Home.css";
-import Filters from './Filters.js';
-import SubjectsInfo from './subject information/SubjectsInfo.js';
+import React, { useState } from 'react';
+import './Home.css';
+import { useAuth0} from '../react-auth0-spa';
+import AdminProfile from './AdminProfile';
+import Search from './Search';
 
 function Home() {
+        
+        const { isAuthenticated } = useAuth0();
 
-    const [subjects,setSubjects] = useState();
-
-    return (
-        <Container className="container" 
-                   style={{marginLeft:"1%"}}>
-            <div className="bgImage"/>
-            <Row className="main">
-                <Col className="justify-content-start"
-                     xs={3.5}>
-                    <Filters retrieveSubjects={setSubjects} />
-                </Col>
-                <Col xs={8.5}>
-                    <SubjectsInfo subjects={subjects} />
-                </Col>
-            </Row>
-        </Container>
-    )
-};
+        return (
+                 <div>
+                        { isAuthenticated ?
+                                <AdminProfile /> :
+                                <Search />
+                        }
+                 </div>
+        )
+}
 
 export default Home;
