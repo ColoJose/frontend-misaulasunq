@@ -1,21 +1,17 @@
 import React ,{useState} from 'react';
 // BootStrap imports
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Container, Col, Row } from 'react-bootstrap';
 // components and internal resources imports
 import "./Home.css";
 import Filters from './Filters.js';
-import SubjectsInfo from './SubjectsInfo.js';
-import UnqMap from '../resources/PlantaBajaUnq.png';
-import MapModal from '../component/MapModal';
+import SubjectsInfo from './subject information/SubjectsInfo.js';
 
 function Search() {
 
     const [subjects,setSubjects] = useState();
 
     return (
-        <Container className="container">
+        <Container className="container" style={{marginLeft:"1%"}}>
             <Row className="main">
                 <Col xs={3} className="justify-content-start" >
                     <Filters retrieveSubjects={setSubjects} />
@@ -24,7 +20,7 @@ function Search() {
                     <SubjectsInfo subjects={subjects} />
                 </Col>
                 <Col xs={4}>
-                    <MapModal/>
+                    {/* <MapModal/> */}
                     {/* <img src={UnqMap} alt="mapa-unq"/> */}
                 </Col>
             </Row>

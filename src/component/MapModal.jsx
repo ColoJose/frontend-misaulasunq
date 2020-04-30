@@ -1,10 +1,12 @@
 import React ,{useState} from 'react';
-//Bootstrap
-import { Button } from "react-bootstrap";
-import Modal from 'react-bootstrap/Modal';
+// Bootstrap
+import { Button, Modal } from "react-bootstrap";
+// Resources
 import Map from './Map';
+// react-icons
+import { BsGeoAlt } from 'react-icons/bs';
 
-function MapModal(){
+function MapModal({classRoomNumber}){
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -13,9 +15,9 @@ function MapModal(){
     //TODO: Evaluar si se separa en componetes mas pequeños
     return (
         <>
-          <Button variant="primary" 
+          <Button variant="outline-danger"
                   onClick={handleShow}>
-            Ver en Mapa
+              <BsGeoAlt size='1em'/>
           </Button>
 
           <Modal show={show} 
@@ -24,10 +26,12 @@ function MapModal(){
                  aria-labelledby="contained-modal-title-vcenter"
                  centered>
             <Modal.Header closeButton>
-              <Modal.Title>Ubicación del Aula {"CyT-1"} en la UNQ</Modal.Title>
+              <Modal.Title>
+                Ubicación del Aula {classRoomNumber} en la UNQ
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-center">
-              <Map classroom={"CyT-1"}/>
+              <Map classroom={classRoomNumber}/>
             </Modal.Body>
           </Modal>
         </>
