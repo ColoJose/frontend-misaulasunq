@@ -21,8 +21,8 @@ class App extends React.Component {
         <Row style={{height:"87%"}}> {/*className="margin-top">*/}
         <Router history={history}>
           <Switch>
-            {/* <Route exact path="/" component={Home}  /> */}
-            <Route exact path="/" component={Search}  />
+            <Route exact path="/" component={Home}  />
+            {/* <Route exact path="/" component={Search}  /> */}
           </Switch> 
         </Router>
         </Row>

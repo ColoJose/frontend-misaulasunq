@@ -6,17 +6,36 @@
     height: 100%;
 
 } */
+body{
+  background-color: #f3f3f4;
+}
 
-.bg-image {
+/* .bgImage{
+  height:100%;
+  width:100%;
+  text-align:center;
+  background:url("https://eltermometroweb.com/wp-content/uploads/2016/08/rectoradounq-678x332.jpg") no-repeat center;
+  background-size:cover;
+  -webkit-filter: blur(8px);
+  -moz-filter: blur(8px);
+  -o-filter: blur(8px);
+  -ms-filter: blur(8px);
+  filter: blur(8px);
+  position: absolute;
+  left:0;
+  top: 0;
+} */
+
+/* .bg-image {
   background-image: url("https://eltermometroweb.com/wp-content/uploads/2016/08/rectoradounq-678x332.jpg");
   display: block;
   filter: blur(8px);
   -webkit-filter: blur(8px);
 
-  height: 1000px;
+  height: 1000px;*/
 
   /* Center and scale the image nicely */
-  background-position: center;
+  /*background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+} */

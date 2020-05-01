@@ -1,4 +1,11 @@
-
 .color-navbar{
-    background-color: #bd003a;
+    background-color: #832d1c;
+}
+
+.size-navbar{
+    height: 8%;
+}
+
+.font-navbarBrand{
+    color: #ffffff !important;
 }
