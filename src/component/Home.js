@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Home.css';
-import { useAuth0} from '../react-auth0-spa';
+import { useAuth0 } from '../react-auth0-spa';
 import AdminProfile from './AdminProfile';
 import Search from './Search';
 
 function Home() {
         
-        const { isAuthenticated } = useAuth0();
+    const { isAuthenticated } = useAuth0();
 
+    if(isAuthenticated){
         return (
-                 <div>
-                        { isAuthenticated ?
-                                <AdminProfile /> :
-                                <Search />
-                        }
-                 </div>
+            <AdminProfile/>
         )
+    } else {
+        return (
+            <Search/>            
+        )
+    }
+        
 }
 
 export default Home;

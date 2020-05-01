@@ -12,7 +12,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <Container  style={{height:"inherit", maxWidth: "98%"}}>
+      <Container style={{height:"inherit", maxWidth: "98%"}}>
         <Row style={{height:"13%"}}>
           <Col xs={12}>
           <NavbarApp />

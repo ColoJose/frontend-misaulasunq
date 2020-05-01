@@ -12,14 +12,17 @@ function Search() {
 
     return (
         <Container className="container" 
-                   style={{marginLeft:"1%"}}>
-            <div className="bgImage"/>
+                   fluid
+                   style={{marginLeft:"1%", marginRight:"1%",maxWidth: "98%"}}>
             <Row className="main">
                 <Col className="justify-content-start"
-                     xs={3.5}>
+                     style={{paddingRight:"4%"}}
+                     xs={4}>
                     <Filters retrieveSubjects={setSubjects} />
                 </Col>
-                <Col xs={8.5}>
+                <Col className="justify-content-center"
+                     style={{paddingRight:"8%"}}
+                     xs={8}>
                     <SubjectsInfo subjects={subjects} />
                 </Col>
             </Row>
