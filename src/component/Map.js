@@ -37,13 +37,12 @@ class Map extends React.Component {
       let pin = new Image();
       let classroomNumber = this.state.classroomToShow;
       let piso = '';
-
+      let classRoomSetting = Aulas[classroomNumber];
+      let pinPosX;
+      let pinPosy;
       pin.src = PinIcon;
       pin.width = 25;
       pin.height = 25;
-
-      let pinPosX = Aulas[classroomNumber].x-(pin.width/2);
-      let pinPosy = Aulas[classroomNumber].y-pin.height;
 
       switch(Aulas[classroomNumber].piso) {
         case 'baja':
@@ -61,36 +60,40 @@ class Map extends React.Component {
         default:
           this.setState({ imagevailable: false  });
       }
+
+      if(classRoomSetting !== null && classRoomSetting !== undefined){
+        pinPosX = classRoomSetting.x-(pin.width/2);
+        pinPosy = classRoomSetting.y-pin.height;
       
-      img.width = 800;
-      img.height = 500;
+        img.width = 800;
+        img.height = 500;
 
-      img.onload = function() {
-        ctx.width = 800;
-        ctx.height = 500;
-        ctx.drawImage(img, 0, 0,img.width,img.height); //los dos ultimos parametros designan la dimension de la imagen
-        
-        ctx.drawImage(pin, pinPosX, pinPosy,pin.width,pin.height);
+        img.onload = function() {
+          ctx.width = 800;
+          ctx.height = 500;
+          ctx.drawImage(img, 0, 0,img.width,img.height); //los dos ultimos parametros designan la dimension de la imagen
+          
+          ctx.drawImage(pin, pinPosX, pinPosy,pin.width,pin.height);
 
-        // Nombre aula
-        ctx.font = '25px arial';
-        ctx.textAlign = "center";
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 0.60;
-        ctx.fillStyle = "#bd2130";
-        ctx.fillText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
-        ctx.strokeText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
-        
-        // Nombre Piso
-        ctx.font = '32px arial';
-        ctx.textAlign = "center";
-        // ctx.strokeStyle = 'black';
-        ctx.lineWidth = 0.60;
-        ctx.fillStyle = 'black';
-        // ctx.fillStyle = "#bd2130";
-        ctx.fillText(piso, ctx.width/2, 32);
-        // ctx.strokeText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
-      };
+          // Nombre aula
+          ctx.font = '25px arial';
+          ctx.textAlign = "center";
+          ctx.strokeStyle = 'black';
+          ctx.lineWidth = 0.60;
+          ctx.fillStyle = "#bd2130";
+          ctx.fillText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
+          ctx.strokeText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
+          
+          // Nombre Piso
+          ctx.font = '32px arial';
+          ctx.textAlign = "center";
+          ctx.lineWidth = 0.60;
+          ctx.fillStyle = 'black';
+          ctx.fillText(piso, ctx.width/2, 32);
+        };
+      } else {
+        this.setState({ imagevailable: false  });
+      }      
     }
   };
     
