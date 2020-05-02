@@ -24,6 +24,13 @@ export default class SubjectAPI{
         );
     }
 
+    getCurrentDaySubjects() {
+        return axios.get(
+            `${API_CONFIG.endPoint}/subjectAPI/currentDaySubjects`,
+            this.getHeader()
+        )
+    }
+
     getHeader(){
         return {
             headers: {
