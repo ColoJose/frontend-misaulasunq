@@ -1,7 +1,7 @@
 import React from 'react';
-import { Accordion, Card } from 'react-bootstrap';
-import CommissionInfo from '../commission/CommissionInfo';
-import SubjectsHeader from './SubjectHeader';
+
+import SubjectsAccordion from './SubjectsAccordion';
+import CurrentDaySubjects from './CurrentDaySubjects';
 
 function SubjectsInfo({subjects}) {
     //TODO: Tiene que ser una pantalla de de carga y/o sin resultados pero en el componente padre
@@ -11,22 +11,14 @@ function SubjectsInfo({subjects}) {
                 {
                     subjects.map( 
                         subject => {
-                            return(
-                                <Accordion defaultActiveKey 
-                                           key={subject.id.toString()}>
-                                    <Card>
-                                        <SubjectsHeader subject={subject}/>
-                                        <CommissionInfo commissions={subject.commissions}/>
-                                    </Card>
-                                </Accordion>
-                            )
+                            return <SubjectsAccordion subject={subject}/>
                         }
                     )
                 }
             </>
         );
     } else {
-        return (<p>Loading</p>);
+        return <CurrentDaySubjects />;
     }
     
 }
