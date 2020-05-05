@@ -1,5 +1,5 @@
-
 import React from 'react';
+// resources
 import UnqMapPB from '../resources/PlantaBajaUnq.png';
 import UnqMapP1 from '../resources/PrimerPisoUnq.png';
 import UnqMapP2 from '../resources/SegundoPisoUnq.png';
@@ -12,115 +12,140 @@ import { Badge} from "react-bootstrap";
 
 class Map extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-    this.canvas = React.createRef();
-    
-    this.state = {  
-      classroomToShow: props.classroom,
-      imageAvailable: true
-    };
-    
-    this.draw = this.draw.bind(this);
-  };
+    constructor(props, context) {
+        super(props, context);
+        this.canvas = React.createRef();
 
-  componentDidMount() {
-    this.draw();
-  };
+        this.shouldShowMap = this.shouldShowMap.bind(this)
+        this.draw = this.draw.bind(this);
+        this.drawText = this.drawText.bind(this);
+        this.drawStroke = this.drawStroke.bind(this);
+        this.handleImageLoad = this.handleImageLoad.bind(this);
 
-  //TODO: Refactorizar. Acomodar variables, extracion a metodos, poner mas claro el codigo
-  draw() {
-    let canvas = this.canvas.current;
-    if (canvas !== null && canvas.getContext) {
-      let ctx = canvas.getContext('2d');
-      let img = new Image();
-      let pin = new Image();
-      let classroomNumber = this.state.classroomToShow;
-      let piso = '';
-      let classRoomSetting = Aulas[classroomNumber];
-      let pinPosX;
-      let pinPosy;
-      pin.src = PinIcon;
-      pin.width = 25;
-      pin.height = 25;
-
-      switch(Aulas[classroomNumber].piso) {
-        case 'baja':
-          img.src = UnqMapPB;
-          piso = 'Planta Baja';
-          break;
-        case 'primer':
-          img.src = UnqMapP1;
-          piso = 'Primer Piso';
-          break;
-        case 'segundo':
-          img.src = UnqMapP2;
-          piso = 'Segundo Piso';
-          break;
-        default:
-          this.setState({ imagevailable: false  });
-      }
-
-      if(classRoomSetting !== null && classRoomSetting !== undefined){
-        pinPosX = classRoomSetting.x-(pin.width/2);
-        pinPosy = classRoomSetting.y-pin.height;
-      
-        img.width = 800;
-        img.height = 500;
-
-        img.onload = function() {
-          ctx.width = 800;
-          ctx.height = 500;
-          ctx.drawImage(img, 0, 0,img.width,img.height); //los dos ultimos parametros designan la dimension de la imagen
-          
-          ctx.drawImage(pin, pinPosX, pinPosy,pin.width,pin.height);
-
-          // Nombre aula
-          ctx.font = '25px arial';
-          ctx.textAlign = "center";
-          ctx.strokeStyle = 'black';
-          ctx.lineWidth = 0.60;
-          ctx.fillStyle = "#bd2130";
-          ctx.fillText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
-          ctx.strokeText(classroomNumber, Aulas[classroomNumber].x, pinPosy-5);
-          
-          // Nombre Piso
-          ctx.font = '32px arial';
-          ctx.textAlign = "center";
-          ctx.lineWidth = 0.60;
-          ctx.fillStyle = 'black';
-          ctx.fillText(piso, ctx.width/2, 32);
+        this.state = {
+            classRoom: Aulas[props.classroom],
+            classroomToShow: props.classroom,
+            imageAvailable: this.shouldShowMap(Aulas[props.classroom])
         };
-      } else {
-        this.setState({ imagevailable: false  });
-      }      
+    };
+
+    shouldShowMap(classroom){
+        return classroom !== null 
+            && classroom !== undefined 
+            && ["baja", "primer", "segundo"].includes(classroom.piso);
     }
-  };
-    
-  render(){
-    if(this.state.imageAvailable){
-      return (
-        <>
-          <canvas id="map" 
-                  ref={this.canvas}
-                  width="800" 
-                  height="500">
-          </canvas>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <p className="align-middle text-center text-wrap">
-            <Badge pill variant="danger">
-              <BsExclamationTriangleFill size='12.5%' style={{marginTop:"3%", marginBottom:"3%"}}/>
-              <p>Ubicacion No Disponible</p>
-            </Badge>
-          </p>
-        </>
-      );
+
+    draw() {
+        let canvas = this.canvas.current;
+
+        if(canvas !== null && canvas !== undefined && this.state.imageAvailable) {
+            let img = new Image(800,500);
+            let pin = new Image(25,25);
+            pin.src = PinIcon;
+
+            let piso = '';
+            switch(this.state.classRoom.piso) {
+                case 'baja':
+                    img.src = UnqMapPB;
+                    piso = 'Planta Baja';
+                    break;
+                case 'primer':
+                    img.src = UnqMapP1;
+                    piso = 'Primer Piso';
+                    break;
+                case 'segundo':
+                    img.src = UnqMapP2;
+                    piso = 'Segundo Piso';
+                    break;
+            }
+            let pinPosX = this.state.classRoom.x-(pin.width/2);
+            let pinPosY = this.state.classRoom.y-pin.height;
+
+            img.onload = () => this.handleImageLoad(canvas.getContext('2d'),img,pin,piso,pinPosX,pinPosY);
+        };
+    };
+
+    handleImageLoad(canvasContext,map,pin,floor,pinPosX,pinPosY){
+        canvasContext.width = 800;
+        canvasContext.height = 500;
+        canvasContext.drawImage(map, 0, 0,map.width,map.height);
+        canvasContext.drawImage(pin, pinPosX, pinPosY,pin.width,pin.height);
+
+        // Nombre aula
+        this.drawText(
+            canvasContext, 
+            '25px arial', 
+            "center", 
+            0.60, 
+            "#bd2130", 
+            this.state.classroomToShow, 
+            this.state.classRoom.x, 
+            pinPosY-5
+        );
+        this.drawStroke(
+            canvasContext, 
+            0.60, 
+            'black', 
+            this.state.classroomToShow, 
+            this.state.classRoom.x, 
+            pinPosY-5
+        );
+        // Nombre Piso
+        this.drawText(
+            canvasContext, 
+            '32px arial', 
+            "center", 
+            0.60, 
+            'black', 
+            floor, 
+            canvasContext.width/2, 
+            32
+        );
     }
-  }    
+
+    drawText(canvasContext, font, align, lineWidth, style, floor, posX, posY){
+        canvasContext.font = font;
+        canvasContext.textAlign = align;
+        canvasContext.lineWidth = lineWidth;
+        canvasContext.fillStyle = style;
+        canvasContext.fillText(floor, posX, posY);
+    };
+
+    drawStroke(canvasContext, lineWidth, style, classroomNumber, posX, posY){
+        canvasContext.lineWidth = lineWidth;
+        canvasContext.strokeStyle = style;
+        canvasContext.strokeText(classroomNumber, posX, posY);
+    };
+
+    componentDidMount() {
+        this.draw();
+    };
+
+    render(){
+        if(this.state.imageAvailable){
+            return (
+                <>
+                    <canvas id="map"
+                            ref={this.canvas}
+                            width="800"
+                            height="500">
+                    </canvas>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <p className="align-middle text-center text-wrap">
+                        <Badge pill variant="danger">
+                            <BsExclamationTriangleFill size='12.5%' 
+                                                       style={{marginTop:"3%", marginBottom:"3%"}}/>
+                            <p>Ubicación No Disponible</p>
+                        </Badge>
+                    </p>
+                </>
+            );
+        }
+    };
 }
 
 export default Map;
