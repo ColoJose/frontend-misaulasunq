@@ -35,26 +35,30 @@ function NavbarApp() {
                       className="col-6 justify-content-center" 
                       onSubmit={handleSubmit}>
                     <FormControl type="text" 
-                                 //placeholder="Buscar aula por materia" 
+                                 placeholder="Ingrese lo que busca" 
                                  className="mr-sm-2"
                                  value={subject}
                                  onChange={ (e) =>  setSubject(e.target.value)}
-                                 disabled />
+                                 disabled 
+                                 hidden/>
                     <Button type="submit" 
                             variant="light" 
-                            disabled>
+                            disabled 
+                            hidden>
                         Search
                     </Button>
                 </Form>
 
                 <Nav  className="col-3 justify-content-end">
-                    {!isAuthenticated && (
-                        <Navbar.Text onClick={ () => loginWithRedirect({}) }>Login</Navbar.Text>
-                    )}
+                    <Navbar.Text hidden={isAuthenticated}
+                                 onClick={ () => loginWithRedirect({}) }>
+                        Login
+                    </Navbar.Text>
                     
-                    {isAuthenticated && (
-                        <Navbar.Text onClick={ () => logout() }>Logout</Navbar.Text>
-                    )}
+                    <Navbar.Text hidden={!isAuthenticated}
+                                 onClick={ () => logout() }>
+                        Logout
+                    </Navbar.Text>
                 </Nav>
             </Navbar>
         </Row>

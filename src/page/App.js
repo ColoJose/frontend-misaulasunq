@@ -12,21 +12,21 @@ class App extends React.Component {
   render() {
 
     return (
-      <Container style={{height:"inherit", maxWidth: "98%"}}>
-        <Row style={{height:"13%"}}>
-          <Col xs={12}>
-          <NavbarApp />
-          </Col>
-        </Row>
-        <Row style={{height:"87%"}}> {/*className="margin-top">*/}
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/" component={Home}  />
-            <Route exact path="admin" component={AdminProfile} />
-          </Switch> 
-        </Router>
-        </Row>
-      </Container>
+        <Container className="app-Container">
+            <Row className="app-left-row">
+                <Col xs={12}>
+                    <NavbarApp />
+                </Col>
+            </Row>
+            <Row className="app-right-row">
+                <Router history={history}>
+                    <Switch>
+                        <Route exact path="/" component={Home}  />
+                        <Route exact path="/admin" component={AdminProfile} />
+                    </Switch> 
+                </Router>
+            </Row>
+        </Container>
     )
   }
 }

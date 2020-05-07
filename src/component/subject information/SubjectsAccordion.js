@@ -4,15 +4,16 @@ import CommissionInfo from '../commission/CommissionInfo';
 import SubjectsHeader from './SubjectHeader';
 
 const SubjectsAccordion = ({subject}) => {
-
     return (
-        <Accordion defaultActiveKey 
-                   key={subject.id.toString()}>
-            <Card>
-                <SubjectsHeader subject={subject}/>
-                <CommissionInfo commissions={subject.commissions}/>
-            </Card>
-        </Accordion>
+        <>
+            <Accordion defaultActiveKey 
+                       key={subject.id.toString()}>
+                <Card>
+                    <SubjectsHeader subject={subject}/>
+                    <CommissionInfo commissions={subject.commissions}/>
+                </Card>
+            </Accordion>
+        </>
     )
 }
 

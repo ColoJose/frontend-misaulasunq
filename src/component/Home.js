@@ -2,7 +2,7 @@ import React from 'react';
 import './Home.css';
 import { useAuth0 } from '../react-auth0-spa';
 import AdminProfile from './AdminProfile';
-import Search from './Search';
+import Main from './Main';
 
 function Home() {
         
@@ -11,11 +11,11 @@ function Home() {
     if(isAuthenticated){
         return (
             <AdminProfile/>
-        )
+        );
     } else {
         return (
-            <Search/>            
-        )
+            <Main/>            
+        );
     }
         
 }

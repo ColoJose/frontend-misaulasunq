@@ -1,26 +1,41 @@
 import React from 'react';
-
+import { Card, Col } from 'react-bootstrap';
 import SubjectsAccordion from './SubjectsAccordion';
-import CurrentDaySubjects from './CurrentDaySubjects';
+import NotFound from '../NotFound';
 
-function SubjectsInfo({subjects}) {
-    //TODO: Tiene que ser una pantalla de de carga y/o sin resultados pero en el componente padre
-    if(subjects !== undefined){
-        return (
-            <>
-                {
+function SubjectsInfo({subjects, notFound, title}) {
+
+    const subjectsResult = (subjects) => {
+        return (<>{
                     subjects.map( 
                         subject => {
-                            return <SubjectsAccordion subject={subject}/>
+                            return <SubjectsAccordion key={subject.id.toString()} 
+                                                      subject={subject}/>
                         }
                     )
-                }
-            </>
+                }</>);
+    };
+
+    if(notFound){
+        return (
+            <Col xs={{span: 5,offset: 3}}>
+                <NotFound className="text-center"
+                          label={"No se ha Encontrado Ninguna Materia."}/>
+            </Col>
         );
     } else {
-        return <CurrentDaySubjects />;
+        return (
+            <>
+                <Card>
+                    <Card.Header as="h5" 
+                                 className="text-center">
+                        {title}
+                    </Card.Header>
+                </Card>
+                {subjectsResult(subjects)}
+            </>
+        );
     }
-    
 }
 
 export default SubjectsInfo;

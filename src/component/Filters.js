@@ -21,40 +21,33 @@ const Filters = (props) => {
     const filterBySubject = (e) =>{
         e.preventDefault();
         const subjectApi = new SubjectAPI();
-        subjectApi.getSubjectsByName(subject)
-                .then( resp =>{
-                    props.retrieveSubjects(resp.data);
-                }).catch(e => {
-                    console.log(e)
-                })
+        fetchResolver(subjectApi.getSubjectsByName(subject),"Materias Filtradas por Nombre");
     }
      
     const filterBySchedule = (e) => {
         e.preventDefault();
         const subjectApi = new SubjectAPI();
-        subjectApi.getSubjectsBySchedule(startHour, endHour)
-                .then( resp =>{
-                    props.retrieveSubjects(resp.data);
-                }).catch(e => {
-                    console.log(e)
-                })
+        fetchResolver(subjectApi.getSubjectsBySchedule(startHour, endHour),"Materias Filtradas por Horario");
     }
 
     const filterByNumberOf = (e) => {
         e.preventDefault();
         const subjectApi = new SubjectAPI();
-        subjectApi.getSubjectsByClassroomNumber(classroomNumber)
-                .then( resp =>{
-                    props.retrieveSubjects(resp.data);
-                }).catch(e => {
-                    console.log(e)
-                })
+        fetchResolver(subjectApi.getSubjectsByClassroomNumber(classroomNumber),"Materias Filtradas por Número de Aula");
+    }
+
+    const fetchResolver = (promise, title) =>{
+        promise.then( resp =>{
+            props.handleSearchResult(resp.data, false, title);
+        }).catch(e => {
+            props.handleSearchResult([], true);
+        })
     }
 
     return (
         <>
             <Card>
-                <Card.Header as="h5">Filtros</Card.Header>
+                <Card.Header as="h5">Filtros de Materias</Card.Header>
                 <Card.Body>
                     <Form>
                         <h6>Filtrar por nombre materia</h6>
@@ -77,7 +70,7 @@ const Filters = (props) => {
                     </Form> 
                     <Form>
                         <h6>Filtrar por horario</h6>
-                            <FormGroup> 
+                        <FormGroup> 
                             <Row>
                                 <Col xs={4}>
                                     <Form.Control as="select"

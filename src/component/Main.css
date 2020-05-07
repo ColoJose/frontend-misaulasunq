@@ -1,16 +1,20 @@
-
-
 .Home {
     height: inherit;
 }
-
 .main {
     height: 85%;
-    /* background-color: e2e3de; */
 }
-
 .container {
     height:inherit;
     max-width: 100%;
     background-color: #e2e3de;
+    margin-Left: 1%;
+    margin-Right: 1%;
+    max-Width: 98%;
+}
+.col-Filter{
+    padding-Right: 4%;
+}
+.col-Subjects{
+    padding-Right: 8%;
 }

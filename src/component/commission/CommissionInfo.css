@@ -1,5 +1,19 @@
-
-
-/* .container {
-    width: 120%;
-} */
+.accordion-Collapse{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.list-Group{
+    width: 100%;
+}
+.list-Item{
+    padding-top: 3px; 
+    padding-bottom: 3px;
+}
+.hours-Title{
+    padding-Left: 6px; 
+    padding-Bottom: 3px;
+}
+.subject-Row{
+    padding-Left: 12px;
+    margin-Bottom: 6px;
+}

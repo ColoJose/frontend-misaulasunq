@@ -5,6 +5,7 @@ import UnqMapP1 from '../resources/PrimerPisoUnq.png';
 import UnqMapP2 from '../resources/SegundoPisoUnq.png';
 import PinIcon from '../resources/locationIcon.png';
 import Aulas from '../resources/AulasCoord.json';
+import NotFound from './NotFound';
 // react-icons
 import { BsExclamationTriangleFill } from 'react-icons/bs';
 //Bootstrap
@@ -133,17 +134,7 @@ class Map extends React.Component {
                 </>
             );
         } else {
-            return (
-                <>
-                    <p className="align-middle text-center text-wrap">
-                        <Badge pill variant="danger">
-                            <BsExclamationTriangleFill size='12.5%' 
-                                                       style={{marginTop:"3%", marginBottom:"3%"}}/>
-                            <p>Ubicación No Disponible</p>
-                        </Badge>
-                    </p>
-                </>
-            );
+            return <NotFound label={"Ubicación No Disponible"}/>
         }
     };
 }
