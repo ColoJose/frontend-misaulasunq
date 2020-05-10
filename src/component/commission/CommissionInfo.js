@@ -43,7 +43,7 @@ function CommissionInfo({commissions}) {
                                 <h5>{commission.name}</h5>
                             </ListGroup.Item>
                             <ListGroup.Item className="list-Item">
-                                <h7 className="hours-Title">Horarios</h7>
+                                <h6 className="hours-Title">Horarios</h6>
                                 {commissionsList(commission)}
                             </ListGroup.Item>
                         </ListGroup>

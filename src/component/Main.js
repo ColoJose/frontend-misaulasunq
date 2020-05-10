@@ -1,6 +1,8 @@
 import React, {useEffect, useReducer} from 'react';
 // BootStrap imports
 import { Container, Col, Row } from 'react-bootstrap';
+// Semantic UI
+import { Dimmer, Loader } from 'semantic-ui-react';
 // components and internal resources imports
 import Filters from './Filters.js';
 import SubjectsInfo from './subject information/SubjectsInfo.js';
@@ -12,11 +14,15 @@ function Main() {
 
     const [state, setState] = useReducer(
         (state, newState) => ({...state, ...newState}),
-        {subjects: [], notFound: true, subjectResultTitle:"Materias Del Día"}
+        {subjects: [], notFound: true, subjectResultTitle:"Materias Del Día",searching:true}
     )
 
-    const handleSearchResult = (subjectsToSet = [], founded = true, title = "Materias Del Día" ) => {
-        setState({subjects: subjectsToSet, notFound: founded, subjectResultTitle:title})
+    const startSearching = (itsSearching = true) => {
+        setState({searching: itsSearching});
+    }
+
+    const handleSearchResult = (subjectsToSet = [], founded = true, title = "Materias Del Día", itsSearching = false) => {
+        setState({subjects: subjectsToSet, notFound: founded, subjectResultTitle:title, searching:itsSearching})
     }
 
     // The empty Array indicates which this effect only executes on the first rendering
@@ -24,7 +30,7 @@ function Main() {
         const subjectApi = new SubjectAPI();
         subjectApi.getCurrentDaySubjects()
                 .then( resp =>{
-                    handleSearchResult(resp.data, false);
+                    handleSearchResult(resp.data,false);
                 }).catch(e => {
                     handleSearchResult();
                 })
@@ -36,7 +42,8 @@ function Main() {
             <Row className="main">
                 <Col className="justify-content-start col-Filter"
                      xs={4}>
-                    <Filters handleSearchResult={handleSearchResult}/>
+                    <Filters handleSearchResult={handleSearchResult}
+                             searching={startSearching}/>
                 </Col>
                 <Col className="justify-content-center col-Subjects"
                      xs={8}>
@@ -44,6 +51,9 @@ function Main() {
                                   notFound={state.notFound}
                                   title={state.subjectResultTitle}/>
                 </Col>
+                <Dimmer active={state.searching}>
+                    <Loader indeterminate>Preparing Files</Loader>
+                </Dimmer>
             </Row>
         </Container>
     )
