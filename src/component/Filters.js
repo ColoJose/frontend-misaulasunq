@@ -2,13 +2,21 @@ import SubjectAPI from "../Api/SubjectAPI";
 // React
 import React, {useState} from 'react';
 // Bootstrap
-import { Card, Row, Col, Button, Form, FormGroup, Image } from 'react-bootstrap';
+import { Card, Col, Button, Form, FormGroup, Image } from 'react-bootstrap';
 // Resources
 import next from '../resources/next.png';
 // CSS
 import "./Filters.css"
 
-const hours = ["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"]
+const SearchType = Object.freeze({
+    "bySubject":"bySubject", 
+    "bySchedule":"bySchedule", 
+    "byClassroom":"byClassroom"
+});
+const hours = Object.freeze([
+    "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
+    "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
+]);
 const optionsHours = hours.map( (hs) => <option key={hs.toString()}>{hs}</option>)
 
 const Filters = (props) => {
@@ -18,22 +26,23 @@ const Filters = (props) => {
     const [startHour, setStartHour] = useState("07:00");
     const [endHour, setEndHour] = useState("22:00");
 
-    const filterBySubject = (e) =>{
-        e.preventDefault();
-        const subjectApi = new SubjectAPI();
-        fetchResolver(subjectApi.getSubjectsByName(subject),"Materias Filtradas por Nombre");
+    const filterBySubject = (subjectApi) =>{
+        fetchResolver(
+            subjectApi.getSubjectsByName(subject),
+            "Materias Filtradas por Nombre");
     }
      
-    const filterBySchedule = (e) => {
-        e.preventDefault();
-        const subjectApi = new SubjectAPI();
-        fetchResolver(subjectApi.getSubjectsBySchedule(startHour, endHour),"Materias Filtradas por Horario");
+    const filterBySchedule = (subjectApi) => {
+        fetchResolver(
+            subjectApi.getSubjectsBySchedule(
+                startHour, endHour),
+                "Materias Filtradas por Horario");
     }
 
-    const filterByNumberOf = (e) => {
-        e.preventDefault();
-        const subjectApi = new SubjectAPI();
-        fetchResolver(subjectApi.getSubjectsByClassroomNumber(classroomNumber),"Materias Filtradas por Número de Aula");
+    const filterByNumberOf = (subjectApi) => {
+        fetchResolver(
+            subjectApi.getSubjectsByClassroomNumber(classroomNumber),
+            "Materias Filtradas por Número de Aula");
     }
 
     const fetchResolver = (promise, title) =>{
@@ -44,34 +53,44 @@ const Filters = (props) => {
         })
     }
 
+    const submitHandler = (event, searchType) => {
+        props.searching();
+        event.preventDefault();
+
+        const subjectApi = new SubjectAPI();
+
+        switch (searchType) {
+            case SearchType.bySubject:
+                filterBySubject(subjectApi);
+                break;
+            case SearchType.bySchedule:
+                filterBySchedule(subjectApi);
+                break;
+            case SearchType.byClassroom:
+                filterByNumberOf(subjectApi);
+                break;
+            default:
+                props.searching(false);
+        }
+    }
+
     return (
         <>
             <Card>
                 <Card.Header as="h5">Filtros de Materias</Card.Header>
                 <Card.Body>
-                    <Form>
-                        <h6>Filtrar por nombre materia</h6>
-                        <FormGroup>
-                            <Row>
-                                <Col xs={9}>
-                                    <Form.Control type="text" 
-                                                  value={subject}
-                                                  placeholder="Ingrese nombre materia"
-                                                  onChange={ (e) => setSubject(e.target.value)}/>
-                                </Col>
-                                <Col xs={3}>
-                                    <Button variant="outline-light">
-                                        <Image src={next} 
-                                               onClick={ (e) => filterBySubject(e) }/>
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </FormGroup>
-                    </Form> 
-                    <Form>
-                        <h6>Filtrar por horario</h6>
+                    {
+                        searchFormFor(
+                            "Filtrar por nombre materia",
+                            (e) => submitHandler(e, SearchType.bySubject),
+                            "Ingrese nombre materia",
+                            (e) => setSubject(e.target.value)
+                        )
+                    }
+                    <Form onSubmit={(e) => submitHandler(e, SearchType.bySchedule)}>
+                        <Form.Label as="h6">Filtrar por horario</Form.Label>
                         <FormGroup> 
-                            <Row>
+                            <Form.Row>
                                 <Col xs={4}>
                                     <Form.Control as="select"
                                                     value={startHour}
@@ -81,48 +100,60 @@ const Filters = (props) => {
                                         {optionsHours} 
                                     </Form.Control>
                                 </Col>    
-                                <Col xs={1}/>
+                                <Col xs={2}/>
                                 <Col xs={4}>
                                     <Form.Control as="select" 
                                                     value={endHour}
                                                     custom 
                                                     placeholder="Hasta"
-                                                    onChange={ (e) => setEndHour(e.target.value)}>>
+                                                    onChange={ (e) => setEndHour(e.target.value)}>
                                         {optionsHours}
                                     </Form.Control>
                                 </Col>
                                 <Col xs={2}>
-                                    <Button variant="outline-light">
-                                        <Image src={next} 
-                                                onClick={ (e) => filterBySchedule(e) }/>
+                                    <Button type="submit"
+                                            variant="outline-light">
+                                        <Image src={next}/>
                                     </Button>
                                 </Col>
-                            </Row>
+                            </Form.Row>
                         </FormGroup>
                     </Form>
-
-                    <Form>
-                        <h6>Filtrar por Nro de aula</h6>
-                        <FormGroup>
-                            <Row>
-                                <Col xs={9}>
-                                    <Form.Control type="text" 
-                                                  placeholder="Ingrese número de aula"
-                                                  onChange={ (e) => setClassroomNumber(e.target.value)}/>
-                                </Col>
-                                <Col xs={3}>
-                                    <Button variant="outline-light">
-                                        <Image src={next} 
-                                               onClick={ (e) => filterByNumberOf(e) }/>
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </FormGroup>
-                    </Form>
+                    {
+                        searchFormFor(
+                            "Filtrar por Nro de aula",
+                            (e) => submitHandler(e, SearchType.byClassroom),
+                            "Ingrese número de aula",
+                            (e) => setClassroomNumber(e.target.value)
+                        )
+                    }
                 </Card.Body>
             </Card>
         </>
     )
 };
+
+const searchFormFor = (label, submitHandler, placeHolder, onInputChangeHandler) =>{
+    return (
+    <Form onSubmit={submitHandler}>
+        <Form.Label as="h6">{label}</Form.Label>
+        <FormGroup>
+            <Form.Row>
+                <Col xs={10}>
+                    <Form.Control type="text" 
+                                required
+                                placeholder={placeHolder}
+                                onChange={onInputChangeHandler}/>
+                </Col>
+                <Col xs={2}>
+                    <Button type="submit"
+                            variant="outline-light">
+                        <Image src={next}/>
+                    </Button>
+                </Col>
+            </Form.Row>
+        </FormGroup>
+    </Form>);
+}
 
 export default Filters;
