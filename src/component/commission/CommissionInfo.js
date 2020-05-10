@@ -1,19 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Accordion, Row, Col, ListGroup} from 'react-bootstrap';
 import MapModal from '../MapModal';
 import './CommissionInfo.css';
 
 function CommissionInfo({commissions}) {
-
-    // show/hide commission dialog
-    const [show, setShow] = useState(false);
-    const handleClose = () => { setShow(false)}
-    const handleShow = () => { setShow(true) }
-
-    let commissionDialogProps = {
-        show: show,
-        handleClose:handleClose,
-    }
 
     const commissionsList = (commission) => {
         return commission.schedules.map( schedule =>{

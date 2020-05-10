@@ -1,14 +1,18 @@
-import React ,{useState} from 'react';
+import React, {useState} from 'react';
 // Bootstrap
 import { Button, Modal } from "react-bootstrap";
 // Resources
 import Map from './Map';
 // react-icons
 import { BsGeoAlt } from 'react-icons/bs';
+// Semantic UI
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 function MapModal({classRoomNumber}){
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(true);
 
+    const handleReady = () => setLoading(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -31,7 +35,12 @@ function MapModal({classRoomNumber}){
               </Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-center">
-              <Map classroom={classRoomNumber}/>
+              <Dimmer active={loading} inverted>
+                  <Loader indeterminate>Cargando Mapa</Loader>
+              </Dimmer>
+              <Map classroom={classRoomNumber}
+                   mapReady={handleReady} 
+              />
             </Modal.Body>
           </Modal>
         </>
