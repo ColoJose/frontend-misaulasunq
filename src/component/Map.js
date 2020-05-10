@@ -6,10 +6,6 @@ import UnqMapP2 from '../resources/SegundoPisoUnq.png';
 import PinIcon from '../resources/locationIcon.png';
 import Aulas from '../resources/AulasCoord.json';
 import NotFound from './NotFound';
-// react-icons
-import { BsExclamationTriangleFill } from 'react-icons/bs';
-//Bootstrap
-import { Badge} from "react-bootstrap";
 
 class Map extends React.Component {
 
@@ -54,10 +50,9 @@ class Map extends React.Component {
                     img.src = UnqMapP1;
                     piso = 'Primer Piso';
                     break;
-                case 'segundo':
+                default:
                     img.src = UnqMapP2;
                     piso = 'Segundo Piso';
-                    break;
             }
             let pinPosX = this.state.classRoom.x-(pin.width/2);
             let pinPosY = this.state.classRoom.y-pin.height;
@@ -102,6 +97,8 @@ class Map extends React.Component {
             canvasContext.width/2, 
             32
         );
+        
+        this.props.mapReady();
     }
 
     drawText(canvasContext, font, align, lineWidth, style, floor, posX, posY){

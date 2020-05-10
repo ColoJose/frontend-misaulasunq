@@ -52,7 +52,7 @@ function Main() {
                                   title={state.subjectResultTitle}/>
                 </Col>
                 <Dimmer active={state.searching}>
-                    <Loader indeterminate>Preparing Files</Loader>
+                    <Loader indeterminate>Buscando...</Loader>
                 </Dimmer>
             </Row>
         </Container>
