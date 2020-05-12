@@ -74,6 +74,38 @@ const Filters = (props) => {
         }
     }
 
+    const makeSuggestionsOptions = (suggestionsList) =>{
+        return suggestionsList.map(
+            (suggestion) => <option key={suggestion}>{suggestion}</option>)
+    }
+
+    const searchFormFor = (label, submitHandler, placeHolder, onInputChangeHandler, suggestions, dataListId) =>{
+        return (
+        <Form onSubmit={submitHandler}>
+            <Form.Label as="h6">{label}</Form.Label>
+            <FormGroup>
+                <Form.Row>
+                    <Col xs={10}>
+                        <Form.Control list={dataListId}
+                                      type="text"
+                                      required
+                                      placeholder={placeHolder}
+                                      onChange={onInputChangeHandler}/>
+                        <datalist id={dataListId}>
+                            {makeSuggestionsOptions(suggestions)}
+                        </datalist>
+                    </Col>
+                    <Col xs={2}>
+                        <Button type="submit"
+                                variant="outline-light">
+                            <Image src={next}/>
+                        </Button>
+                    </Col>
+                </Form.Row>
+            </FormGroup>
+        </Form>);
+    }
+
     return (
         <>
             <Card>
@@ -84,7 +116,9 @@ const Filters = (props) => {
                             "Filtrar por nombre materia",
                             (e) => submitHandler(e, SearchType.bySubject),
                             "Ingrese nombre materia",
-                            (e) => setSubject(e.target.value)
+                            (e) => setSubject(e.target.value),
+                            props.subjectSuggestions,
+                            "subjectsOptions"
                         )
                     }
                     <Form onSubmit={(e) => submitHandler(e, SearchType.bySchedule)}>
@@ -124,7 +158,9 @@ const Filters = (props) => {
                             "Filtrar por Nro de aula",
                             (e) => submitHandler(e, SearchType.byClassroom),
                             "Ingrese número de aula",
-                            (e) => setClassroomNumber(e.target.value)
+                            (e) => setClassroomNumber(e.target.value),
+                            props.classroomSuggestions,
+                            "classroomOptions"
                         )
                     }
                 </Card.Body>
@@ -132,28 +168,5 @@ const Filters = (props) => {
         </>
     )
 };
-
-const searchFormFor = (label, submitHandler, placeHolder, onInputChangeHandler) =>{
-    return (
-    <Form onSubmit={submitHandler}>
-        <Form.Label as="h6">{label}</Form.Label>
-        <FormGroup>
-            <Form.Row>
-                <Col xs={10}>
-                    <Form.Control type="text" 
-                                required
-                                placeholder={placeHolder}
-                                onChange={onInputChangeHandler}/>
-                </Col>
-                <Col xs={2}>
-                    <Button type="submit"
-                            variant="outline-light">
-                        <Image src={next}/>
-                    </Button>
-                </Col>
-            </Form.Row>
-        </FormGroup>
-    </Form>);
-}
 
 export default Filters;
