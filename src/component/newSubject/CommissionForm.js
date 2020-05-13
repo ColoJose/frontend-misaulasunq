@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Button, Form} from 'react-bootstrap';
 import './CommissionForm.css';
+import ScheduleForm from './ScheduleForm';
 
 export default function CommissionForm() {
+
+    const [showModalSchedule,setShowModalSchedule] = useState(false);
+    //const showScheduleForm = () => { setShowScheduleModal(true)};
+
+    const closeModalSchedule = ()=>{ setShowModalSchedule(false); }
+    const openCloseModal = () => { setShowModalSchedule(true); }
     return (
         <>
             <Form>
@@ -16,11 +23,14 @@ export default function CommissionForm() {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Semestre</Form.Label>
-                    <Form.Control type="number"/>
+                    <Form.Control />
                 </Form.Group>
 
-                <Button>Agregar schedule</Button>
+                <Button onClick={ () => openCloseModal()}>Agregar schedule</Button>
                 <Button className="commissionButton">Agregar commisión</Button>
+                <ScheduleForm show={showModalSchedule} 
+                              onHide={closeModalSchedule} 
+                />
             </Form>
         </>
     )

@@ -8,6 +8,7 @@ import history from '../utils/history';
 import { Container, Row, Col } from 'react-bootstrap';
 import NewSubjectForm from '../component/newSubject/NewSubjectForm';
 
+
 class App extends React.Component {
   
   render() {
