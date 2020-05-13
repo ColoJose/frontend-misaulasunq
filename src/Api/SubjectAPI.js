@@ -3,6 +3,13 @@ import axios from 'axios';
 
 export default class SubjectAPI{
 
+    getSubjectSuggestions(){
+        return axios.get(
+            `${API_CONFIG.endPoint}/subjectAPI/suggestions`
+            , this.getHeader()
+        );
+    }
+
     getSubjectsBySchedule(startHour, endHour){
         return axios.get(
             `${API_CONFIG.endPoint}/subjectAPI/betweenHours/${startHour}/${endHour}`
