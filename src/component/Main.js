@@ -45,18 +45,16 @@ function Main() {
                 }).catch(e => {
                     handleSearchResult();
                 });
-                setState({subjectSuggestions: subjectApi.getSubjectSuggestions(), subjectSuggestionsLoaded: true});
-                setState({classroomSuggestions: classroomApi.getClassroomSuggestions(), classroomSuggestionsLoaded: true});
-        // subjectApi.getSubjectSuggestions().then( resp =>{
-        //             setState({subjectSuggestions: resp.data, subjectSuggestionsLoaded: true});
-        //         }).catch(e => {
-        //             setState({subjectSuggestions: [], subjectSuggestionsLoaded: true});
-        //         });
-        // classroomApi.getClassroomSuggestions().then( resp =>{
-        //             setState({classroomSuggestions: resp.data, classroomSuggestionsLoaded: true});
-        //         }).catch(e => {
-        //             setState({classroomSuggestions: [], classroomSuggestionsLoaded: true});
-        //         });
+        subjectApi.getSubjectSuggestions().then( resp =>{
+                    setState({subjectSuggestions: resp.data, subjectSuggestionsLoaded: true});
+                }).catch(e => {
+                    setState({subjectSuggestions: [], subjectSuggestionsLoaded: true});
+                });
+        classroomApi.getClassroomSuggestions().then( resp =>{
+                    setState({classroomSuggestions: resp.data, classroomSuggestionsLoaded: true});
+                }).catch(e => {
+                    setState({classroomSuggestions: [], classroomSuggestionsLoaded: true});
+                });
       }, []) 
 
     const loadingIncomplete = () => {

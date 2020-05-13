@@ -3,12 +3,11 @@ import axios from "axios";
 
 export default class ClassroomAPI{
 
-    getClassroomSuggestions(startHour, endHour){
-        // return axios.get(
-        //     `${API_CONFIG.endPoint}/subjectAPI/betweenHours/${startHour}/${endHour}`
-        //     , this.getHeader()
-        // );
-        return ["CyT-1", "CyT-1", "52"];
+    getClassroomSuggestions(){
+        return axios.get(
+            `${API_CONFIG.endPoint}/classroomAPI/suggestions`
+            , this.getHeader()
+        );
     }
 
     getHeader(){
