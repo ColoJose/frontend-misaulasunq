@@ -13,9 +13,11 @@ export default function NewSubjectForm() {
                 <Container fluid="md">
                     <Row>
                         <Col xs={6}>
+                            <h3>Info general materia</h3>
                             <GeneralInfoForm />
                         </Col>
                         <Col xs={6}>
+                            <h3>Comisiones</h3>
                             <CommissionForm />
                         </Col>
                     </Row>

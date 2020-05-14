@@ -1,7 +1,6 @@
 
-
 export default 
-    Commission = {
+    commission = {
         "name":"",
         "anio":"",
         "semestre":"",
