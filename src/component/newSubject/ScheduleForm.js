@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
 import { v1 as uuid} from 'uuid';
-import { cleanup } from '@testing-library/react';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( day => <option>{day}</option>)
@@ -35,10 +34,14 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         setAula('');
     }
 
-    const handleSubmit = () => {
+    const handleSubmitAgregate = () => {
         addSchedule(schedule);
         cleanUp();
         return onHide();
+    }
+
+    const handleSubmitModify = () => {
+
     }
 
 
@@ -84,8 +87,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={onHide}>Cerrar</Button>
-                <Button onClick={() => handleSubmit()}>Agregar schedule</Button>
+                <Button onClick={ () => onHide()}>Cerrar</Button>
+                <Button onClick={() => handleSubmitAgregate()}>Agregar schedule</Button>
             </Modal.Footer>
         </Modal>
     )
