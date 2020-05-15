@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Modal, Button, Form} from 'react-bootstrap';
+import {Modal, Form} from 'react-bootstrap';
 import { v1 as uuid} from 'uuid';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
@@ -9,11 +9,11 @@ const hours = Object.freeze([
     "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
 ]);
 
-const optionsHours = 
+let optionsHours = 
             hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
 
-
 export default function ScheduleForm({show, onHide, addSchedule}) {
+
 
     const [startTime,setStartTime] = useState(optionsHours[0].key);
     const [endTime,setEndTime] = useState(optionsHours[0].key);
@@ -34,23 +34,22 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         setAula('');
     }
 
-    const handleSubmitAgregate = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         addSchedule(schedule);
         cleanUp();
         return onHide();
     }
 
-    const handleSubmitModify = () => {
-
-    }
-
-
+    // const handleSubmitModify = () => {
+        // TODO
+    // }
 
     return (
         <Modal show={show} >
             <Modal.Header>Nuevo schedule</Modal.Header>
-            <Modal.Body>
-                <Form>
+                <Modal.Body>
+                    <Form onSubmit={handleSubmit} data-toggle="validator" role="form">
                     <Form.Group>
                         <Form.Label>Hora comienzo</Form.Label>
                         <Form.Control 
@@ -82,14 +81,15 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                         <Form.Label>Aula</Form.Label>
                         <Form.Control 
                             value={aula}
-                            onChange={ (e) => setAula(e.target.value)}/>
+                            onChange={ (e) => setAula(e.target.value)}
+                            required/>
                     </Form.Group>
+
+                    <button type="button" className="btn btn-info" onClick={ () => onHide()}>Cerrar</button>
+                    <button type="submit" className="btn btn-info">Agregar schedule</button> 
+                    {/* onClick={() => handleSubmitAgregate()} */}
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={ () => onHide()}>Cerrar</Button>
-                <Button onClick={() => handleSubmitAgregate()}>Agregar schedule</Button>
-            </Modal.Footer>
         </Modal>
     )
 }

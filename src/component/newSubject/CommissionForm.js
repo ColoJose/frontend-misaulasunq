@@ -61,12 +61,13 @@ export default function CommissionForm({addCommission}) {
 
     return (
         <>
-            <Form>
+            <Form data-toggle="validator">
                 <Form.Group>
                     <Form.Label>Nombre comisión</Form.Label>
                     <Form.Control 
                         value={name}
-                        onChange={(e) => setName(e.target.value)} />
+                        onChange={(e) => setName(e.target.value)} 
+                        required/>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Año</Form.Label>
@@ -87,14 +88,12 @@ export default function CommissionForm({addCommission}) {
                 </Form.Group>
 
                 <Button onClick={ () => openCloseModal()}>Agregar schedule</Button>
-                <Button className="commissionButton"
-                        onClick={ () => addCommissionHandle()}>Agregar commisión</Button>
                 <ScheduleForm show={showModalSchedule} 
                               onHide={closeModalSchedule}
                               addSchedule={addSchedule}
                               
                 />
-            </Form>
+            
             <Card>
                 <Card.Header>Schedules agregados</Card.Header>
                 <ListGroup>
@@ -110,7 +109,9 @@ export default function CommissionForm({addCommission}) {
                     
                 </ListGroup>
             </Card>
-            
+            <Button className="commissionButton"
+                        onClick={ () => addCommissionHandle()}>Agregar commisión</Button>
+            </Form>
         </>
     )
 }
