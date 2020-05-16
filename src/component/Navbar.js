@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // bootstrap
 import { Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
 // resoruces
-import logoApp from '../resources/lab.png';
+import logoApp from '../resources/logo-app.png';
 // css
 import './Navbar.css';
 
@@ -26,7 +26,7 @@ function NavbarApp() {
                     className="size-navbar color-navbar"
                     variant="light">
                 <Navbar.Brand className="col-3 justify-content-start">
-                    <Image src={logoApp} 
+                    <Image style={{width:"15%"}} src={logoApp} 
                            rounded/>
                     <Navbar.Brand className="font-navbarBrand">Mis Aulas UNQ</Navbar.Brand>           
                 </Navbar.Brand>
