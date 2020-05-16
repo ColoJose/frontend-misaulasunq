@@ -12,8 +12,7 @@ export default function NewSubjectForm() {
     const [commissions, setCommissions] = useState([]);
 
     const addCommission = (commission) => {
-        setCommissions([]);
-        setCommissions([...commissions, commission])
+        setCommissions(commissions.concat([commission]));
         console.log(commissions);
     }
 
@@ -27,19 +26,20 @@ export default function NewSubjectForm() {
     }
 
     return  (
+        
         <Card className="wrapper">
             <Card.Header>Formulario nueva materia</Card.Header>
             <Card.Body>
                 <Container fluid="md">
                     <Row>
                         <Col xs={6}>
-                            <h3>Info general materia</h3>
+                            <h2>Info general materia</h2>
                             <GeneralInfoForm 
                                 commissions={commissions}
                                 joinDataSubject={joinDataSubject}/>
                         </Col>
                         <Col xs={6}>
-                            <h3>Comisiones</h3>
+                            
                             <CommissionForm
                                 addCommission={addCommission} />
                         </Col>

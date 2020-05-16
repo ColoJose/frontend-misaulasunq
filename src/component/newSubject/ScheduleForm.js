@@ -79,10 +79,11 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Aula</Form.Label>
-                        <Form.Control 
+                        <input className="form-control"
                             value={aula}
                             onChange={ (e) => setAula(e.target.value)}
-                            required/>
+                            required
+                            />
                     </Form.Group>
 
                     <button type="button" className="btn btn-info" onClick={ () => onHide()}>Cerrar</button>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {Button, Form, ListGroup, Card} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import {Button, Form, ListGroup, Card, Row, Col} from 'react-bootstrap';
 import './CommissionForm.css';
 import ScheduleForm from './ScheduleForm';
 import ScheduleItem from './ScheduleItem';
@@ -34,7 +34,7 @@ export default function CommissionForm({addCommission}) {
     // commission logic
     const [name,setName] = useState('');
     const [year,setYear] = useState(null);
-    const [semester, setSemester] = useState();
+    const [semester, setSemester] = useState('1er cuatrimestre');
     
     const commission = {
         name:name,
@@ -42,9 +42,19 @@ export default function CommissionForm({addCommission}) {
         semester:semester,
         schedules:schedules
     }
+    // esto va con la validacion del schedule
+    const [scheduleErrorVisbility, setScheduleErrorVisbility] = useState('hidden');
 
-    const addCommissionHandle = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(schedules.length === 0) {
+            
+            // validate minimo un schedule
+            
+            return;
+        }
         addCommission(commission);
+        return;
         // cleanUp();  ver el tema del clean up
     }
 
@@ -55,13 +65,21 @@ export default function CommissionForm({addCommission}) {
             commission.schedules= [] ;
 
     }
+
     
+
     // aux functions
     const allIds = () => { return schedules.map(schedule => schedule.id)};
 
     return (
         <>
-            <Form data-toggle="validator">
+            <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
+                <Row>
+                    <Col xs={8}><h2>Comisiones</h2></Col>    
+                    <Col xs={4}><Button type="submit">Agregar commisión</Button></Col>    
+                </Row>
+                
+                
                 <Form.Group>
                     <Form.Label>Nombre comisión</Form.Label>
                     <Form.Control 
@@ -74,7 +92,8 @@ export default function CommissionForm({addCommission}) {
                     <Form.Control 
                         type="number"
                         value={year}
-                        onChange={(e) => setYear(e.target.value)} />
+                        onChange={(e) => setYear(e.target.value)}
+                        required />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Semestre</Form.Label>
@@ -86,19 +105,24 @@ export default function CommissionForm({addCommission}) {
                         <option>2do cuatrimestre</option>
                     </Form.Control>
                 </Form.Group>
+            </form>
 
-                <Button onClick={ () => openCloseModal()}>Agregar schedule</Button>
-                <ScheduleForm show={showModalSchedule} 
-                              onHide={closeModalSchedule}
-                              addSchedule={addSchedule}
-                              
-                />
-            
+            {/* schedule section */}
+
+            <h3>Schedules</h3>
+
             <Card>
                 <Card.Header>Schedules agregados</Card.Header>
                 <ListGroup>
                     { schedules.length === 0 ?
-                        <ListGroup.Item>No ha agregado schedules aún</ListGroup.Item>
+                        <ListGroup.Item>
+                            <p>
+                                No ha agregado schedules aún
+                                <span hide style={{color:'red', visibility:scheduleErrorVisbility}}>Debe agregar al menos un schedule</span>
+                            </p>
+                            
+                        </ListGroup.Item>
+
                         :
                         schedules.map( function(sch){
                             return <ScheduleItem schedule={sch} 
@@ -109,9 +133,14 @@ export default function CommissionForm({addCommission}) {
                     
                 </ListGroup>
             </Card>
-            <Button className="commissionButton"
-                        onClick={ () => addCommissionHandle()}>Agregar commisión</Button>
-            </Form>
+
+            <Button onClick={ () => openCloseModal()}>Agregar schedule</Button>
+            <ScheduleForm show={showModalSchedule} 
+                            onHide={closeModalSchedule}
+                            addSchedule={addSchedule}
+                            
+            />
+
         </>
     )
 }

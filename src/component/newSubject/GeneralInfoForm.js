@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Form, ListGroup, Card, Button } from 'react-bootstrap';
 import CommissionItem from './CommissionItem';
 
+import SubjectAPI from '../../Api/SubjectAPI.js';
+
 export default function GeneralInfoForm({commissions, joinDataSubject}) {
 
     const [name,setName] = useState('');
@@ -14,14 +16,20 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
         degrees: degrees
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        joinDataSubject(generalInfo);
+    }
+ 
     return (
         <>
-            <Form>
+            <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Label>Carrera a la que pertenece</Form.Label>
                     <Form.Control as="select"
                                   value={degrees}
-                                  onChange={ (e) => setDegrees(e.target.value)}>
+                                  onChange={ (e) => setDegrees(e.target.value)}
+                                  required>
                                     <option>tpi</option>
                                     <option>biotecnologia</option>
                                     <option>terapia ocupacional</option>
@@ -29,18 +37,20 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     </Form.Control>
                 </Form.Group>
 
-                <Form.Group
-                    value={name}
-                    onChange={ (e) => setName(e.target.value)}>
+                <Form.Group>
                         <Form.Label>Nombre materia</Form.Label>
-                        <Form.Control />
+                        <Form.Control 
+                                value={name}
+                                onChange={ (e) => setName(e.target.value)}
+                                required/>
                 </Form.Group>
                 
-                <Form.Group
-                    value={subjectCode}
-                    onChange={ (e) => setSubjectCode(e.target.value)}>
+                <Form.Group>
                     <Form.Label>Código materia</Form.Label>
-                    <Form.Control />
+                    <Form.Control                     
+                        value={subjectCode}
+                        onChange={ (e) => setSubjectCode(e.target.value)}
+                        required/>
                 </Form.Group>
 
                 <Card>
@@ -53,8 +63,10 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                          
                     </ListGroup>
                 </Card>
-                <Button onClick={ () => joinDataSubject(generalInfo) }>Agregar materia</Button>
-            </Form>
+                <Form.Group>
+                    <Button type="submit">Agregar materia</Button>
+                </Form.Group>
+            </form>
         </>
     )
 }
