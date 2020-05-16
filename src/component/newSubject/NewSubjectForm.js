@@ -21,7 +21,7 @@ export default function NewSubjectForm() {
         subject.name = generalInfoSubject.name;
         subject.subjectCode = generalInfoSubject.subjectCode;
         subject.commissions = commissions;
-        subject.degrees = generalInfoSubject.degrees
+        subject.degrees = { name:generalInfoSubject.degrees,  subjects: [subject]}
         console.log(subject);
     }
 

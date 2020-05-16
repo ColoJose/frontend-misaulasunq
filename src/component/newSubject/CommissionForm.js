@@ -76,7 +76,7 @@ export default function CommissionForm({addCommission}) {
             <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Row>
                     <Col xs={8}><h2>Comisiones</h2></Col>    
-                    <Col xs={4}><Button type="submit">Agregar commisión</Button></Col>    
+                    <Col xs={4}><Button className="btn btn-danger"  type="submit">Agregar commisión</Button></Col>    
                 </Row>
                 
                 
@@ -134,7 +134,7 @@ export default function CommissionForm({addCommission}) {
                 </ListGroup>
             </Card>
 
-            <Button onClick={ () => openCloseModal()}>Agregar schedule</Button>
+            <Button className="btn btn-danger" onClick={ () => openCloseModal()}>Agregar schedule</Button>
             <ScheduleForm show={showModalSchedule} 
                             onHide={closeModalSchedule}
                             addSchedule={addSchedule}

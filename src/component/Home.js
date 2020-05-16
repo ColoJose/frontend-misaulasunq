@@ -8,15 +8,15 @@ function Home() {
         
     const { isAuthenticated } = useAuth0();
 
-    // if(isAuthenticated){
+    if(isAuthenticated){
         return (
             <AdminProfile/>
         );
-    // } else {
-    //     return (
-    //         <Main/>            
-    //     );
-    // }
+    } else {
+        return (
+            <Main/>            
+        );
+    }
         
 }
 

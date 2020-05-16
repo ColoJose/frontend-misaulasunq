@@ -64,7 +64,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     </ListGroup>
                 </Card>
                 <Form.Group>
-                    <Button type="submit">Agregar materia</Button>
+                    <Button className="btn btn-danger" type="submit">Agregar materia</Button>
                 </Form.Group>
             </form>
         </>

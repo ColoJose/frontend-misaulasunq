@@ -8,10 +8,10 @@ const AdminProfile = () => {
     }
 
     return (
-        <>
+        <div style={{width:"100%"}}>
             <h1>Adminn</h1>
-            <button onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
-        </>
+            <button className="btn btn-danger" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
+        </div>
     )
 
 }
