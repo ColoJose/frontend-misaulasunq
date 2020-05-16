@@ -20,20 +20,15 @@ function NavbarApp() {
         console.log(subject);
     }
 
-    const style = {
-        width: "50px",
-        borderRadius: "50px"
-    }
-
     return (
         <Row>
             <Navbar fixed="top" 
                     className="size-navbar color-navbar"
                     variant="light">
                 <Navbar.Brand className="col-3 justify-content-start">
-                    <Image style={{width:"15%"}} src={logoApp} 
+                    <Image className="logo-navbar" src={logoApp} 
                            rounded/>
-                    <Navbar.Brand className="font-navbarBrand">Mis Aulas UNQ</Navbar.Brand>           
+                    <Navbar.Brand className="font-navbarBrand logo-font-navbar">Mis Aulas UNQ</Navbar.Brand>           
                 </Navbar.Brand>
 
                 <Form inline 
@@ -57,15 +52,17 @@ function NavbarApp() {
                 <Nav  className="col-3 justify-content-end">
 
                     {   (loading || !user) ?
-                                        <Navbar.Text onClick={ () => loginWithRedirect({}) }>Login</Navbar.Text>
+                                        <Navbar.Text onClick={ () => loginWithRedirect({}) } 
+                                                     className="font-navbarBrand menu-profile-navbar">Login</Navbar.Text>
                                            :
-                                        <div>
-                                           <Navbar.Text><img style={style}
+                                        <div className="menu-profile-navbar">
+                                           <Navbar.Text><img className="icon-profile-navbar"
                                                              src={user.picture}
                                                              alt="profile"
                                                              >
                                                          </img></Navbar.Text>
-                                            <Navbar.Text  onClick={ () => logout() }>Logout</Navbar.Text>
+                                            <Navbar.Text onClick={ () => logout() }
+                                                         className="font-navbarBrand separation">Logout</Navbar.Text>
                                        </div>     
                     }
                     

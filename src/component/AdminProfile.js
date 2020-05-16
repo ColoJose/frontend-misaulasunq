@@ -1,5 +1,6 @@
 import React from 'react';
-import history from '../utils/history'
+import history from '../utils/history';
+import "./AdminProfile.css";
 
 const AdminProfile = () => {
 
@@ -10,7 +11,7 @@ const AdminProfile = () => {
     return (
         <div style={{width:"100%"}}>
             <h1>Adminn</h1>
-            <button className="btn btn-danger" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
+            <button className="btn btn-danger color-button" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
         </div>
     )
 

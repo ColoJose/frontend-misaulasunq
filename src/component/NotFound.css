@@ -1,3 +1,8 @@
+.branding {
+    color: var(--unq-white);
+    background-color: var(--unq-red);
+}
+
 .icon-NotFound{
     margin-Top: 3%;
     margin-Bottom: 3%;

@@ -1,11 +1,28 @@
 .color-navbar{
-    background-color: #832d1c;
+    background-color: var(--unq-red);
 }
-
+.menu-profile-navbar{
+    width: inherit;
+    text-align-last: right;
+}
+.separation{
+    margin-left: 2%;
+}
+.icon-profile-navbar{
+    width: 50px;
+    border-radius: 50px;
+}
+.logo-font-navbar{
+    vertical-align: middle;
+    margin-left: 2%;
+    font-weight: 550;
+}
+.logo-navbar{
+    width: 15%;
+}
 .size-navbar{
     height: 8%;
 }
-
 .font-navbarBrand{
-    color: #ffffff !important;
+    color: var(--unq-white) !important;
 }
