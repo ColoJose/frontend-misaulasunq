@@ -13,11 +13,16 @@ import { useAuth0 } from '../react-auth0-spa';
 function NavbarApp() {
 
     const [subject,setSubject] = useState('');
-    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, logout, user, loading } = useAuth0();
 
     const handleSubmit = (e) => {
         history.push("/search");
         console.log(subject);
+    }
+
+    const style = {
+        width: "50px",
+        borderRadius: "50px"
     }
 
     return (
@@ -50,15 +55,23 @@ function NavbarApp() {
                 </Form>
 
                 <Nav  className="col-3 justify-content-end">
-                    <Navbar.Text hidden={isAuthenticated}
-                                 onClick={ () => loginWithRedirect({}) }>
-                        Login
-                    </Navbar.Text>
+
+                    {   (loading || !user) ?
+                                        <Navbar.Text onClick={ () => loginWithRedirect({}) }>Login</Navbar.Text>
+                                           :
+                                        <div>
+                                           <Navbar.Text><img style={style}
+                                                             src={user.picture}
+                                                             alt="profile"
+                                                             >
+                                                         </img></Navbar.Text>
+                                            <Navbar.Text  onClick={ () => logout() }>Logout</Navbar.Text>
+                                       </div>     
+                    }
                     
-                    <Navbar.Text hidden={!isAuthenticated}
-                                 onClick={ () => logout() }>
-                        Logout
-                    </Navbar.Text>
+                    
+                    
+                    
                 </Nav>
             </Navbar>
         </Row>
@@ -66,3 +79,4 @@ function NavbarApp() {
 }
 
 export default NavbarApp;
+
