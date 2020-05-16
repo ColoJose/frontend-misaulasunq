@@ -6,6 +6,8 @@ import Home from '../component/Home';
 import AdminProfile from '../component/AdminProfile';
 import history from '../utils/history';
 import { Container, Row, Col } from 'react-bootstrap';
+import NewSubjectForm from '../component/newSubject/NewSubjectForm';
+
 
 class App extends React.Component {
   
@@ -23,6 +25,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" component={Home}  />
                         <Route exact path="/admin" component={AdminProfile} />
+                        <Route exact path="/admin/newsubjectform" component={NewSubjectForm} />
                     </Switch> 
                 </Router>
             </Row>
