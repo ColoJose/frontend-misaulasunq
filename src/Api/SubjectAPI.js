@@ -3,6 +3,13 @@ import axios from 'axios';
 
 export default class SubjectAPI{
 
+    getSubjectsDictatedOnDay(aDay){
+        return axios.get(
+            `${API_CONFIG.endPoint}/subjectAPI/byDay/${aDay}`
+            , this.getHeader()
+        );
+    }
+
     getSubjectSuggestions(){
         return axios.get(
             `${API_CONFIG.endPoint}/subjectAPI/suggestions`

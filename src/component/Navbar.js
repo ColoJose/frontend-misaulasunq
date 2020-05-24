@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // bootstrap
 import { Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
 // resoruces
-import logoApp from '../resources/logo-app.png';
+import logoApp from '../resources/logo-app-white.png';
 // css
 import './Navbar.css';
 
