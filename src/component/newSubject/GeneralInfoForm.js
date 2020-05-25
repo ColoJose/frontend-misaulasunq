@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, ListGroup, Card, Button } from 'react-bootstrap';
+import { Form, ListGroup, Card, Button} from 'react-bootstrap';
 import CommissionItem from './CommissionItem';
 
 import SubjectAPI from '../../Api/SubjectAPI.js';
@@ -8,7 +8,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
 
     const [allDegrees,setAllDegrees] = useState([])
     const [name,setName] = useState('');
-    const [degreeId, setDegreeId] = useState(0);
+    const [degreeId, setDegreeId] = useState(1);
     const [subjectCode, setSubjectCode] = useState('');
   
     const generalInfo = {

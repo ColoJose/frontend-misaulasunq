@@ -4,11 +4,17 @@ import './NewSubjectForm.css';
 import GeneralInfoForm from './GeneralInfoForm';
 import CommissionForm from './CommissionForm';
 import SubjectAPI from '../../Api/SubjectAPI';
+import SubjectCreatedSuccessModal from './SubjectCreatedSuccessModal';
 
 export default function NewSubjectForm() {
 
     const subject = { };
     const subjectApi = new SubjectAPI();
+
+    // modal subject created successfull -> TODO
+    const [showModalCreatesSuccess, setShowModalCreatesSuccess] = useState(true);
+    const [messageReply,setMessageReply] = useState('');
+    const handleClose = () => setShowModalCreatesSuccess(false);
 
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
@@ -28,17 +34,19 @@ export default function NewSubjectForm() {
     }
 
     const createNewSubject = () => {
-        // subjectApi.createNewSubject(subject).then( res => {
-        //     console.log(res.data)
-        // }).catch(e => {
-        //     console.log(e);
-        // })
-
-        subjectApi.getAllDegrees().then( res => {
-            console.log(res.data)
+        subjectApi.createNewSubject(subject).then( res => {
+            showModalCreatedSuccess(res.data)
         }).catch(e => {
             console.log(e);
         })
+
+    }
+
+    const showModalCreatedSuccess = (data) =>{
+        // setMessageReply(data);                   // TODO
+        // setShowModalCreatesSuccess(true);        
+        // setTimeout( () => setShowModalCreatesSuccess(false),2000);
+        alert(data);
     }
 
     return  (
@@ -62,6 +70,10 @@ export default function NewSubjectForm() {
                     </Row>
                 </Container>    
             </Card.Body>
+            <SubjectCreatedSuccessModal 
+                // show={true}
+                // message={messageReply}
+            />
         </Card>
     )
 }
