@@ -3,10 +3,12 @@ import {Card, Container, Col, Row} from 'react-bootstrap';
 import './NewSubjectForm.css';
 import GeneralInfoForm from './GeneralInfoForm';
 import CommissionForm from './CommissionForm';
+import SubjectAPI from '../../Api/SubjectAPI';
 
 export default function NewSubjectForm() {
 
     const subject = { };
+    const subjectApi = new SubjectAPI();
 
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
@@ -21,8 +23,22 @@ export default function NewSubjectForm() {
         subject.name = generalInfoSubject.name;
         subject.subjectCode = generalInfoSubject.subjectCode;
         subject.commissions = commissions;
-        subject.degrees = { name:generalInfoSubject.degrees,  subjects: [subject]}
-        console.log(subject);
+        subject.degreeId = generalInfoSubject.degreeId;
+        createNewSubject();
+    }
+
+    const createNewSubject = () => {
+        // subjectApi.createNewSubject(subject).then( res => {
+        //     console.log(res.data)
+        // }).catch(e => {
+        //     console.log(e);
+        // })
+
+        subjectApi.getAllDegrees().then( res => {
+            console.log(res.data)
+        }).catch(e => {
+            console.log(e);
+        })
     }
 
     return  (
