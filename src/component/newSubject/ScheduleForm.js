@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {Modal, Form} from 'react-bootstrap';
-import { v1 as uuid} from 'uuid';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( day => <option>{day}</option>)
@@ -21,11 +20,10 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     const [aula,setAula] = useState(null);
 
     const schedule = {
-        id: uuid(),
         startTime: startTime,
         endTime: endTime,
+        classroom: {number:aula,imageUrl:"foo"},
         day: day,
-        aula: aula,
     }
     const cleanUp = () => {
         setStartTime(optionsHours[0].key)
