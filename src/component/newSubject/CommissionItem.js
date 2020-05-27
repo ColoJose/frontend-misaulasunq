@@ -17,6 +17,6 @@ export default function CommissionItem({commission}) {
                 
             </Row>
         </ListGroup.Item>
-    )
+    );
 
 }

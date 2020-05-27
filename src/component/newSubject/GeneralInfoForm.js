@@ -6,15 +6,17 @@ import SubjectAPI from '../../Api/SubjectAPI.js';
 
 export default function GeneralInfoForm({commissions, joinDataSubject}) {
 
-    const [allDegrees,setAllDegrees] = useState([])
+    const subjectAPI = new SubjectAPI();
+
+    const [allDegrees,setAllDegrees] = useState([]);
     const [name,setName] = useState('');
     const [degreeId, setDegreeId] = useState(1);
     const [subjectCode, setSubjectCode] = useState('');
   
     const generalInfo = {
-        name:name,
-        subjectCode: subjectCode,
-        degreeId: degreeId
+        name,
+        subjectCode,
+        degreeId
     }
 
     const handleSubmit = (e) => {
@@ -23,7 +25,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
     }
  
     useEffect( async() => {
-        const degrees = await subjectAPI.getAllDegrees()
+        const degrees = await subjectAPI.getAllDegrees();
         setAllDegrees(degrees.data);
     },[]);
 
@@ -32,8 +34,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
         setDegreeId(selectedIndex);
     }
 
-    const degreesOptions = allDegrees.map( d => { return <option key={d.id.toString()}>{d.name}</option> })  
-    const subjectAPI = new SubjectAPI();
+    const degreesOptions = allDegrees.map( (d) => { return <option key={d.id.toString()}>{d.name}</option> });  
 
     return (
         <>
@@ -79,5 +80,5 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                 </Form.Group>
             </form>
         </>
-    )
+    );
 }

@@ -32,7 +32,7 @@ function Main() {
     }
 
     const handleSearchResult = (subjectsToSet = [], founded = true, title = "Materias Del Día", itsSearching = false) => {
-        setState({subjects: subjectsToSet, notFound: founded, subjectResultTitle:title, searching:itsSearching})
+        setState({subjects: subjectsToSet, notFound: founded, subjectResultTitle:title, searching:itsSearching});
     }
 
     // The empty Array indicates which this effect only executes on the first rendering
@@ -40,7 +40,7 @@ function Main() {
         const classroomApi = new ClassroomAPI();
         const subjectApi = new SubjectAPI();
         subjectApi.getCurrentDaySubjects()
-                .then( resp =>{
+                .then( resp => {
                     handleSearchResult(resp.data,false);
                 }).catch(e => {
                     handleSearchResult();
@@ -85,6 +85,6 @@ function Main() {
             </Row>
         </Container>
     )
-};
+}
 
 export default Main; 

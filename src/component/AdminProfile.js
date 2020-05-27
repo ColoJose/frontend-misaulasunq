@@ -5,7 +5,7 @@ import "./AdminProfile.css";
 const AdminProfile = () => {
 
     const goNewSubjectForm = () => {
-        history.push('/admin/newsubjectform')
+        history.push('/admin/newsubjectform');
     }
 
     return (
@@ -13,7 +13,7 @@ const AdminProfile = () => {
             <h1>Adminn</h1>
             <button className="btn btn-danger color-button" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
         </div>
-    )
+    );
 
 }
 

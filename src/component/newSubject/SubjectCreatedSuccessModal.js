@@ -12,6 +12,6 @@ const SubjectCreatedSuccessModal = () => {
             <Modal.Body></Modal.Body>
         </Modal>
     );
-}
+};
 
 export default SubjectCreatedSuccessModal;

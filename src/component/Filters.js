@@ -31,6 +31,14 @@ const Filters = (props) => {
     const [endHour, setEndHour] = useState("22:00");
     const [selectedDay, setSelectedDay] = useState("Lunes");
 
+    const fetchResolver = (promise, title) =>{
+        promise.then( resp =>{
+            props.handleSearchResult(resp.data, false, title);
+        }).catch(e => {
+            props.handleSearchResult([], true);
+        })
+    }
+
     const filterBySubject = (subjectApi) =>{
         fetchResolver(
             subjectApi.getSubjectsByName(subject),
@@ -54,14 +62,6 @@ const Filters = (props) => {
         fetchResolver(
             subjectApi.getSubjectsDictatedOnDay(selectedDay),
             "Materias Filtradas por Día");
-    }
-
-    const fetchResolver = (promise, title) =>{
-        promise.then( resp =>{
-            props.handleSearchResult(resp.data, false, title);
-        }).catch(e => {
-            props.handleSearchResult([], true);
-        })
     }
 
     const submitHandler = (event, searchType) => {
@@ -202,7 +202,7 @@ const Filters = (props) => {
                 </Card.Body>
             </Card>
         </>
-    )
+    );
 };
 
 export default Filters;

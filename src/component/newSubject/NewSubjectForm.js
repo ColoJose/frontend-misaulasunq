@@ -21,7 +21,6 @@ export default function NewSubjectForm() {
 
     const addCommission = (commission) => {
         setCommissions(commissions.concat([commission]));
-        console.log(commissions);
     }
 
     const joinDataSubject = (generalInfoSubject) => {
@@ -35,7 +34,7 @@ export default function NewSubjectForm() {
 
     const createNewSubject = () => {
         subjectApi.createNewSubject(subject).then( res => {
-            showModalCreatedSuccess(res.data)
+            showModalCreatedSuccess(res.data);
         }).catch(e => {
             console.log(e);
         })
