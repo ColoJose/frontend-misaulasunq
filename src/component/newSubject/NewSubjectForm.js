@@ -8,6 +8,13 @@ import SubjectCreatedSuccessModal from './SubjectCreatedSuccessModal';
 
 export default function NewSubjectForm() {
 
+    const showModalCreatedSuccess = (data) =>{
+        // setMessageReply(data);                   // TODO
+        // setShowModalCreatesSuccess(true);        
+        // setTimeout( () => setShowModalCreatesSuccess(false),2000);
+        alert(data);
+    }
+
     const subject = { };
     const subjectApi = new SubjectAPI();
 
@@ -41,12 +48,7 @@ export default function NewSubjectForm() {
 
     }
 
-    const showModalCreatedSuccess = (data) =>{
-        // setMessageReply(data);                   // TODO
-        // setShowModalCreatesSuccess(true);        
-        // setTimeout( () => setShowModalCreatesSuccess(false),2000);
-        alert(data);
-    }
+
 
     return  (
         

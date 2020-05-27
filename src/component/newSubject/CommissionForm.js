@@ -7,21 +7,24 @@ import ScheduleItem from './ScheduleItem';
 // note: sch as schedule
 
 export default function CommissionForm({addCommission}) {
+    // aux functions
+    const allIds = () => { return schedules.map( (schedule) => schedule.id)};
+
     // modal logic
     const [showModalSchedule,setShowModalSchedule] = useState(false);
-    const closeModalSchedule = ()=>{ setShowModalSchedule(false); }
+    const closeModalSchedule = () =>{ setShowModalSchedule(false); }
     const openCloseModal = () => { setShowModalSchedule(true); }
 
     // schedule logic
     const [schedules, setSchedules] = useState([]);
     const addSchedule = (newSchedule) => {
         setSchedules([...schedules,newSchedule]);
-    }
+    };
 
     // VER
     const deleteSchedule = (id) => {
-        let indexSchDelete = allIds().indexOf(id)
-        schedules.splice(indexSchDelete,1)
+        let indexSchDelete = allIds().indexOf(id);
+        schedules.splice(indexSchDelete,1);
     }
 
     // VER
@@ -64,11 +67,6 @@ export default function CommissionForm({addCommission}) {
             commission.schedules= [] ;
 
     }
-
-    
-
-    // aux functions
-    const allIds = () => { return schedules.map( (schedule) => schedule.id)};
 
     return (
         <>
@@ -142,5 +140,5 @@ export default function CommissionForm({addCommission}) {
             />
 
         </>
-    )
+    );
 }
