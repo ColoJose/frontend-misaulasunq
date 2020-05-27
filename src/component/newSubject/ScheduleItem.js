@@ -6,7 +6,6 @@ import deleteIcon from '../../resources/delete.png';
 
 export default function ScheduleItem({schedule, deleteSchedule, modifySchedule}) {
 
-
     return (
         <ListGroup key={schedule.id}>
             <Row>
