@@ -19,4 +19,5 @@ export default function ScheduleItem({schedule, deleteSchedule, modifySchedule})
             </Row>
         </ListGroup>
     );
+    
 }
