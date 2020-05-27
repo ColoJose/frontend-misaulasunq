@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Modal, Form} from 'react-bootstrap';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-const optionDays = days.map( day => <option>{day}</option>)
+const optionDays = days.map( (day) => <option>{day}</option>)
 const hours = Object.freeze([
     "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
     "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
@@ -20,15 +20,16 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     const [aula,setAula] = useState(null);
 
     const schedule = {
-        startTime: startTime,
-        endTime: endTime,
+        startTime,
+        endTime,
         classroom: {number:aula,imageUrl:"foo"},
-        day: day,
-    }
+        day,
+    };
+
     const cleanUp = () => {
-        setStartTime(optionsHours[0].key)
-        setEndTime(optionsHours[0].key)
-        setDay(days[0])
+        setStartTime(optionsHours[0].key);
+        setEndTime(optionsHours[0].key);
+        setDay(days[0]);
         setAula('');
     }
 

@@ -6,7 +6,7 @@ import { Card, Col, Button, Form, FormGroup, Image } from 'react-bootstrap';
 // Resources
 import next from '../resources/next.png';
 // CSS
-import "./Filters.css"
+import "./Filters.css";
 
 const SearchType = Object.freeze({
     "bySubject":"bySubject", 
@@ -19,9 +19,9 @@ const hours = Object.freeze([
     "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
 ]);
 const days = Object.freeze(["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"]);
-const makeOptions = (optionsToMake)=>{return optionsToMake.map((option)=><option key={option.toString()}>{option}</option>);}
-const optionsHours = makeOptions(hours)
-const optionsDays = makeOptions(days)
+const makeOptions = (optionsToMake) => {return optionsToMake.map((option)=><option key={option.toString()}>{option}</option>);}
+const optionsHours = makeOptions(hours);
+const optionsDays = makeOptions(days);
 
 const Filters = (props) => {
 
@@ -37,7 +37,7 @@ const Filters = (props) => {
         }).catch(e => {
             props.handleSearchResult([], true);
         })
-    }
+    };
 
     const filterBySubject = (subjectApi) =>{
         fetchResolver(
@@ -88,12 +88,12 @@ const Filters = (props) => {
         }
     }
 
-    const makeSuggestionsOptions = (suggestionsList) =>{
+    const makeSuggestionsOptions = (suggestionsList) => {
         return suggestionsList.map(
             (suggestion) => <option key={suggestion}>{suggestion}</option>)
     }
 
-    const searchFormFor = (label, submitHandler, placeHolder, onInputChangeHandler, suggestions, dataListId) =>{
+    const searchFormFor = (label, submitHandler, placeHolder, onInputChangeHandler, suggestions, dataListId) => {
         return (
         <Form onSubmit={submitHandler}>
             <Form.Label as="h6">{label}</Form.Label>

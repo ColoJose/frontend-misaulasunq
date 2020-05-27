@@ -42,7 +42,7 @@ export default class SubjectAPI {
         return axios.get(
             `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/currentDaySubjects`,
             this.getHeader()
-        )
+        );
     }
 
     getAllDegrees() {

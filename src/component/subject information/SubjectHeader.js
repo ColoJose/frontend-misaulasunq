@@ -15,7 +15,7 @@ function SubjectsHeader({subject}) {
                 </Accordion.Toggle>    
             </Card.Header>
         </>
-    )
+    );
 }
 
 export default SubjectsHeader;

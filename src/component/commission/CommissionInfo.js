@@ -6,7 +6,7 @@ import './CommissionInfo.css';
 function CommissionInfo({commissions}) {
 
     const commissionsList = (commission) => {
-        return commission.schedules.map( schedule =>{
+        return commission.schedules.map( (schedule) => {
             return( 
                 <Row key={schedule.id.toString()} 
                      className="subject-Row">
@@ -17,9 +17,9 @@ function CommissionInfo({commissions}) {
                         <MapModal classRoomNumber={schedule.classroom.number}/>
                     </Col>
                 </Row>
-            )
+            );
         })
-    }
+    };
 
     return (
         <>

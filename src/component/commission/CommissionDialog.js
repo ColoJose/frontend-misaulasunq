@@ -6,9 +6,9 @@ function CommissionDialog(props) {
 
     const { show, handleClose, commission } = props;
 
-    const scheduleList = (schedules) =>{
+    const scheduleList = (schedules) => {
         return schedules.map( 
-            schedule =>{
+            (schedule) => {
                 return( 
                     <p key={schedule.id.toString()}>  {schedule.day} de {schedule.startTime} a {schedule.endTime} en aula {schedule.classroom.number}</p>
                 )
