@@ -17,7 +17,6 @@ function NavbarApp() {
 
     const handleSubmit = (e) => {
         history.push("/search");
-        console.log(subject);
     }
 
     return (

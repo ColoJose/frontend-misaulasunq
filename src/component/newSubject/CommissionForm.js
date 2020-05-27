@@ -28,7 +28,6 @@ export default function CommissionForm({addCommission}) {
     const modifySchedule = (schedule) => {
         openCloseModal();
         deleteSchedule(schedule.id);
-        console.log(schedules);
     }
 
     // commission logic
@@ -37,10 +36,10 @@ export default function CommissionForm({addCommission}) {
     const [semester, setSemester] = useState('Primer cuatrimestre');
     
     const commission = {
-        name:name,
-        semester:semester,
-        year:year,
-        schedules:schedules
+        name,
+        semester,
+        year,
+        schedules
     }
     // esto va con la validacion del schedule
     const [scheduleErrorVisbility, setScheduleErrorVisbility] = useState('hidden');
@@ -69,7 +68,7 @@ export default function CommissionForm({addCommission}) {
     
 
     // aux functions
-    const allIds = () => { return schedules.map(schedule => schedule.id)};
+    const allIds = () => { return schedules.map( (schedule) => schedule.id)};
 
     return (
         <>
@@ -128,7 +127,7 @@ export default function CommissionForm({addCommission}) {
                         schedules.map( function(sch){
                             return <ScheduleItem schedule={sch} 
                                                  deleteSchedule={deleteSchedule}
-                                                 modifySchedule={modifySchedule} />
+                                                 modifySchedule={modifySchedule} />;
                         })
                     }
                     

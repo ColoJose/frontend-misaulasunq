@@ -13,7 +13,7 @@ class Map extends React.Component {
         super(props, context);
         this.canvas = React.createRef();
 
-        this.shouldShowMap = this.shouldShowMap.bind(this)
+        this.shouldShowMap = this.shouldShowMap.bind(this);
         this.draw = this.draw.bind(this);
         this.drawText = this.drawText.bind(this);
         this.drawStroke = this.drawStroke.bind(this);
@@ -24,7 +24,7 @@ class Map extends React.Component {
             classroomToShow: props.classroom,
             imageAvailable: this.shouldShowMap(Aulas[props.classroom])
         };
-    };
+    }
 
     shouldShowMap(classroom){
         return classroom !== null 
