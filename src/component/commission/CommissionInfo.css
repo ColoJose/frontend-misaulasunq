@@ -1,19 +1,18 @@
-.accordion-Collapse{
-    padding-left: 0px;
-    padding-right: 0px;
-}
-.list-Group{
+.list-Group {
     width: 100%;
 }
-.list-Item{
+
+.list-Item {
     padding-top: 3px; 
     padding-bottom: 3px;
 }
-.hours-Title{
-    padding-Left: 6px; 
-    padding-Bottom: 3px;
+
+.hours-Title {
+    padding-left: 6px; 
+    padding-bottom: 3px;
 }
-.subject-Row{
-    padding-Left: 12px;
-    margin-Bottom: 6px;
+
+.subject-Row {
+    padding-left: 12px;
+    margin-bottom: 6px;
 }

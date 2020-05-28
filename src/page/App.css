@@ -1,13 +1,10 @@
-.margin-top {
-    margin-top: 100px;
-}
-.app-Container{
+.margin-top { margin-top: 100px; }
+
+.app-Container {
     height: inherit;
     max-width: 98%;
 }
-.app-left-row{
-    height: 13%;
-}
-.app-right-row{
-    height: 87%;
-}
+
+.app-left-row { height: 13%; }
+
+.app-right-row { height: 87%; }
