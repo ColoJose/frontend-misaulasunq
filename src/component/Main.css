@@ -1,20 +1,15 @@
-.Home {
-    height: inherit;
-}
-.main {
-    height: 85%;
-}
+.Home { height: inherit; }
+
+.main { height: 85%; }
+
 .container {
-    height:inherit;
+    height: inherit;
     max-width: 100%;
     background-color: #e2e3de;
-    margin-Left: 1%;
-    margin-Right: 1%;
-    max-Width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
 }
-.col-Filter{
-    padding-Right: 4%;
-}
-.col-Subjects{
-    padding-Right: 8%;
-}
+
+.col-Filter { padding-right: 4%; }
+
+.col-Subjects { padding-right: 8%; }
