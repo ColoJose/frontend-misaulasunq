@@ -4,12 +4,13 @@ import history from '../utils/history';
 import "./AdminProfile.css";
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
+import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
 
 const AdminProfile = () => {
 
     const subjectApi= new SubjectAPI();
     const [allSubjects,setAllSubjects] = useState([]);
-
+    
     useEffect( () => {
         subjectApi.getAllSubjects().then( (resp) => {
             setAllSubjects(resp.data);
@@ -20,6 +21,21 @@ const AdminProfile = () => {
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
+    }
+
+    const selectSubjectTo = (id,mode,subjectPart) => {
+        if(mode==="delete") {
+            deleteSubject(id);
+        }else{
+            editSubject(id,subjectPart);
+        }
+    }
+
+    const deleteSubject = (id) => { }
+
+    const editSubject = (id,subjectPart) => {
+        if(subjectPart=== "generalInfo"); //editGeneralInfo(id);
+        if(subjectPart=== "commissions"); //editCommissions(id);
     }
 
     return (
@@ -34,7 +50,8 @@ const AdminProfile = () => {
                         allSubjects.map( (subject) => {
                             return <SubjectInfoAdmin 
                                         key={subject.id}
-                                        subject={subject}/>
+                                        subject={subject}
+                                        selectSubjectTo={selectSubjectTo}/>
                         })
                     }
                 </ListGroup>
@@ -47,3 +64,4 @@ const AdminProfile = () => {
 }
 
 export default AdminProfile;
+
