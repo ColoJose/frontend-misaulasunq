@@ -27,6 +27,7 @@ class Map extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        //Bindings
         this.shouldShowMap = this.shouldShowMap.bind(this)
         this.draw = this.drawMaps.bind(this);
         this.drawText = this.drawText.bind(this);
@@ -42,6 +43,7 @@ class Map extends React.Component {
         this.renderRouteSelection = this.renderRouteSelection.bind(this);
         this.parkingRouteAvailable = this.parkingRouteAvailable.bind(this);
         this.mainRouteAvailable = this.mainRouteAvailable.bind(this);
+        this.drawPinAtPointAndFloor = this.drawPinAtPointAndFloor.bind(this);
 
         //Canvas Layers reference
         this.canvasPBMap = React.createRef();
@@ -127,7 +129,27 @@ class Map extends React.Component {
         }
     };
 
-    drawPin(canvasContext,percentCoordX,percentCoordY){
+    drawPin(classroom){
+        let floorToReturn = MapFloor.BAJA;
+        switch (classroom.piso.toUpperCase()) {
+            case 'BAJA':
+                this.drawPinAtPointAndFloor(this.canvasPBPath.current.getContext('2d'),classroom.x,classroom.y);
+                floorToReturn = MapFloor.BAJA;
+                break;
+            case 'PRIMER':
+                this.drawPinAtPointAndFloor(this.canvasP1Path.current.getContext('2d'),classroom.x,classroom.y);
+                floorToReturn = MapFloor.PRIMER;
+                break
+            default:
+                this.drawPinAtPointAndFloor(this.canvasP2Path.current.getContext('2d'),classroom.x,classroom.y);
+                floorToReturn = MapFloor.SEGUNDO;
+                break;
+        }
+
+        return floorToReturn;
+    }
+
+    drawPinAtPointAndFloor(canvasContext,percentCoordX,percentCoordY){
         let pin = new Image(25,25);
         pin.src = PinIcon;
         let coordX = this.calculateCoord(this.defaultWidth, percentCoordX);
@@ -194,16 +216,28 @@ class Map extends React.Component {
     };
 
     drawPath(canvasContext, actualNode, nextNode){
+        let actualNodeX = this.calculateCoord(this.defaultWidth,actualNode.x);
+        let actualNodeY = this.calculateCoord(this.defaultHeigth,actualNode.y);
+        let nextNodeX = this.calculateCoord(this.defaultWidth,nextNode.x);
+        let nextNodeY = this.calculateCoord(this.defaultHeigth,nextNode.y);
+
         canvasContext.beginPath();
         canvasContext.lineWidth = "3";
         canvasContext.strokeStyle = "#bd2130";
-        canvasContext.moveTo(
-            this.calculateCoord(this.defaultWidth,actualNode.x),
-            this.calculateCoord(this.defaultHeigth,actualNode.y));
-        canvasContext.lineTo(
-            this.calculateCoord(this.defaultWidth,nextNode.x),
-            this.calculateCoord(this.defaultHeigth,nextNode.y));
+        canvasContext.moveTo(actualNodeX,actualNodeY);
+        canvasContext.lineTo(nextNodeX,nextNodeY);
         canvasContext.stroke();
+
+        // Dibuja la cabeza de flecha
+        if(actualNode.piso.toUpperCase() !== nextNode.piso.toUpperCase()){
+            canvasContext.beginPath();
+            canvasContext.moveTo(nextNodeX, nextNodeY);
+            canvasContext.lineTo(nextNodeX+3, nextNodeY);
+            canvasContext.lineTo(nextNodeX, nextNodeY+2);
+            canvasContext.lineTo(nextNodeX-3, nextNodeY);
+            canvasContext.closePath();
+            canvasContext.stroke();
+        }
     };
 
     componentDidMount() {
@@ -230,20 +264,8 @@ class Map extends React.Component {
                 disableMapButtons = true;
             }
 
-            switch (classroom.piso.toUpperCase()) {
-                case 'BAJA':
-                    this.drawPin(this.canvasPBPath.current.getContext('2d'),classroom.x,classroom.y);
-                    floorToshow = MapFloor.BAJA;
-                    break;
-                case 'PRIMER':
-                    this.drawPin(this.canvasP1Path.current.getContext('2d'),classroom.x,classroom.y);
-                    floorToshow = MapFloor.PRIMER;
-                    break
-                default:
-                    this.drawPin(this.canvasP2Path.current.getContext('2d'),classroom.x,classroom.y);
-                    floorToshow = MapFloor.SEGUNDO;
-                    break;
-            }
+            floorToshow = this.drawPin(classroom);
+
             this.setState({ disableButtons: disableMapButtons, mapToShow: floorToshow, routeSelected: routeToDraw });
         } else {
             this.props.mapReady();
@@ -286,13 +308,13 @@ class Map extends React.Component {
                             name="Estacionamiento"
                             disabled={!this.parkingRouteAvailable()}
                             checked={this.state.routeSelected === Route.ESTACIONAMIENTO}
-                            onChange={()=>{this.setState({routeSelected: Route.ESTACIONAMIENTO});}}/>
+                            onChange={()=>{this.reDrawRoute(Route.ESTACIONAMIENTO)}}/>
                 <Form.Check type="radio"
                             label="Entrada Principal"
                             name="Entrada Principal"
                             disabled={!this.mainRouteAvailable()}
                             checked={this.state.routeSelected === Route.PRINCIPAL}
-                            onChange={()=>{this.setState({routeSelected: Route.PRINCIPAL});}}/>
+                            onChange={()=>{this.reDrawRoute(Route.PRINCIPAL)}}/>
             </>;
         } else {
             return <>
@@ -300,6 +322,27 @@ class Map extends React.Component {
             </>;
         }
     };
+
+    reDrawRoute(newRouteSelected){
+        //limpiar los 3 canvas de ruta
+        let canvasPathPB = this.canvasPBPath.current.getContext('2d');
+        let canvasPathP1 = this.canvasP1Path.current.getContext('2d');
+        let canvasPathP2 = this.canvasP2Path.current.getContext('2d');
+        canvasPathPB.clearRect(0, 0, this.defaultWidth, this.defaultHeigth);
+        canvasPathP1.clearRect(0, 0, this.defaultWidth, this.defaultHeigth);
+        canvasPathP2.clearRect(0, 0, this.defaultWidth, this.defaultHeigth);
+        let route = this.pathFromMainEntrance;
+
+        if(newRouteSelected === Route.ESTACIONAMIENTO){
+            route =  this.pathFromParkingEntrance;
+        }
+
+        //re dibujar ruta
+        this.drawRoute(route);
+        let floorToshow = this.drawPin(Aulas[this.state.classroomToShow]);
+
+        this.setState({routeSelected: newRouteSelected});
+    }
 
     render(){
         if(this.state.imageAvailable){
