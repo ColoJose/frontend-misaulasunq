@@ -25,14 +25,14 @@ function Main() {
             subjectSuggestions: [],
             classroomSuggestions: [],
         }
-    )
+    );
 
     const startSearching = (itsSearching = true) => {
         setState({searching: itsSearching});
     }
 
     const handleSearchResult = (subjectsToSet = [], founded = true, title = "Materias Del Día", itsSearching = false) => {
-        setState({subjects: subjectsToSet, notFound: founded, subjectResultTitle:title, searching:itsSearching})
+        setState({subjects: subjectsToSet, notFound: founded, subjectResultTitle:title, searching:itsSearching});
     }
 
     // The empty Array indicates which this effect only executes on the first rendering
@@ -40,22 +40,22 @@ function Main() {
         const classroomApi = new ClassroomAPI();
         const subjectApi = new SubjectAPI();
         subjectApi.getCurrentDaySubjects()
-                .then( resp =>{
+                .then( (resp) => {
                     handleSearchResult(resp.data,false);
                 }).catch(e => {
                     handleSearchResult();
                 });
-        subjectApi.getSubjectSuggestions().then( resp =>{
+        subjectApi.getSubjectSuggestions().then( (resp) => {
                     setState({subjectSuggestions: resp.data, subjectSuggestionsLoaded: true});
                 }).catch(e => {
                     setState({subjectSuggestions: [], subjectSuggestionsLoaded: true});
                 });
-        classroomApi.getClassroomSuggestions().then( resp =>{
+        classroomApi.getClassroomSuggestions().then( (resp) => {
                     setState({classroomSuggestions: resp.data, classroomSuggestionsLoaded: true});
                 }).catch(e => {
                     setState({classroomSuggestions: [], classroomSuggestionsLoaded: true});
                 });
-      }, []) 
+      }, []); 
 
     const loadingIncomplete = () => {
         return state.searching  || !state.subjectSuggestionsLoaded || !state.classroomSuggestionsLoaded;
@@ -85,6 +85,6 @@ function Main() {
             </Row>
         </Container>
     )
-};
+}
 
 export default Main; 

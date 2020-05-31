@@ -14,7 +14,7 @@ const SubjectsAccordion = ({subject}) => {
                 </Card>
             </Accordion>
         </>
-    )
-}
+    );
+};
 
 export default SubjectsAccordion;

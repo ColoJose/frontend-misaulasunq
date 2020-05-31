@@ -7,40 +7,42 @@ import ScheduleItem from './ScheduleItem';
 // note: sch as schedule
 
 export default function CommissionForm({addCommission}) {
+    // aux functions
+    const allIds = () => { return schedules.map( (schedule) => schedule.id)};
+
     // modal logic
     const [showModalSchedule,setShowModalSchedule] = useState(false);
-    const closeModalSchedule = ()=>{ setShowModalSchedule(false); }
+    const closeModalSchedule = () =>{ setShowModalSchedule(false); }
     const openCloseModal = () => { setShowModalSchedule(true); }
 
     // schedule logic
     const [schedules, setSchedules] = useState([]);
     const addSchedule = (newSchedule) => {
         setSchedules([...schedules,newSchedule]);
-    }
+    };
 
     // VER
     const deleteSchedule = (id) => {
-        let indexSchDelete = allIds().indexOf(id)
-        schedules.splice(indexSchDelete,1)
+        let indexSchDelete = allIds().indexOf(id);
+        schedules.splice(indexSchDelete,1);
     }
 
     // VER
     const modifySchedule = (schedule) => {
         openCloseModal();
         deleteSchedule(schedule.id);
-        console.log(schedules);
     }
 
     // commission logic
     const [name,setName] = useState('');
     const [year,setYear] = useState(null);
-    const [semester, setSemester] = useState('1er cuatrimestre');
+    const [semester, setSemester] = useState('Primer cuatrimestre');
     
     const commission = {
-        name:name,
-        year:year,
-        semester:semester,
-        schedules:schedules
+        name,
+        semester,
+        year,
+        schedules
     }
     // esto va con la validacion del schedule
     const [scheduleErrorVisbility, setScheduleErrorVisbility] = useState('hidden');
@@ -65,11 +67,6 @@ export default function CommissionForm({addCommission}) {
             commission.schedules= [] ;
 
     }
-
-    
-
-    // aux functions
-    const allIds = () => { return schedules.map(schedule => schedule.id)};
 
     return (
         <>
@@ -101,8 +98,9 @@ export default function CommissionForm({addCommission}) {
                         as="select"
                         value={semester}
                         onChange={ (e) => setSemester(e.target.value)} >
-                        <option>1er cuatrimestre</option>
-                        <option>2do cuatrimestre</option>
+                        <option>Primer cuatrimestre</option>
+                        <option>Segundo cuatrimestre</option>
+                        <option>Anual</option>
                     </Form.Control>
                 </Form.Group>
             </form>
@@ -127,7 +125,7 @@ export default function CommissionForm({addCommission}) {
                         schedules.map( function(sch){
                             return <ScheduleItem schedule={sch} 
                                                  deleteSchedule={deleteSchedule}
-                                                 modifySchedule={modifySchedule} />
+                                                 modifySchedule={modifySchedule} />;
                         })
                     }
                     
@@ -142,5 +140,5 @@ export default function CommissionForm({addCommission}) {
             />
 
         </>
-    )
+    );
 }

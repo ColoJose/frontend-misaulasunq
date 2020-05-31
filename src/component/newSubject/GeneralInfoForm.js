@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { Form, ListGroup, Card, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, ListGroup, Card, Button} from 'react-bootstrap';
 import CommissionItem from './CommissionItem';
 
 import SubjectAPI from '../../Api/SubjectAPI.js';
 
 export default function GeneralInfoForm({commissions, joinDataSubject}) {
 
+    const subjectAPI = new SubjectAPI();
+
+    const [allDegrees,setAllDegrees] = useState([]);
     const [name,setName] = useState('');
-    const [degrees, setDegrees] = useState([]);
+    const [degreeId, setDegreeId] = useState(1);
     const [subjectCode, setSubjectCode] = useState('');
   
     const generalInfo = {
-        name:name,
-        subjectCode: subjectCode,
-        degrees: degrees
+        name,
+        subjectCode,
+        degreeId
     }
 
     const handleSubmit = (e) => {
@@ -21,19 +24,28 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
         joinDataSubject(generalInfo);
     }
  
+    useEffect( async() => {
+        const degrees = await subjectAPI.getAllDegrees();
+        setAllDegrees(degrees.data);
+    },[]);
+
+    const setDegreeAux = (e) =>{
+        const selectedIndex = e.target.options.selectedIndex;
+        setDegreeId(selectedIndex);
+    }
+
+    const degreesOptions = allDegrees.map( (d) => { return <option key={d.id.toString()}>{d.name}</option> });  
+
     return (
         <>
             <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Label>Carrera a la que pertenece</Form.Label>
                     <Form.Control as="select"
-                                  value={degrees}
-                                  onChange={ (e) => setDegrees(e.target.value)}
-                                  required>
-                                    <option>tpi</option>
-                                    <option>biotecnologia</option>
-                                    <option>terapia ocupacional</option>
-                                    {/* TODO: que devuelva todas las carreras con un get de la api */}
+                                    //  value={degreeId}
+                                     onChange={ (e) => setDegreeAux(e)}
+                                     required>
+                                      {degreesOptions}
                     </Form.Control>
                 </Form.Group>
 
@@ -68,5 +80,5 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                 </Form.Group>
             </form>
         </>
-    )
+    );
 }

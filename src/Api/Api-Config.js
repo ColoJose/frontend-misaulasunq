@@ -5,5 +5,6 @@ export const API_CONFIG = {
     contentType: "application/json",
     allowMethods: "GET,PUT,POST",
     allowOrigin: "*",
-    endPoint: "http://localhost:8090"
+    endPoint: "http://localhost:8090",
+    subjectAPI:"subjectAPI"
   };

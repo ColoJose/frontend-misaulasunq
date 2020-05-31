@@ -1,19 +1,22 @@
-.color-button{
+.color-button {
     color: var(--unq-white);
     background-color: var(--unq-red);
     border-color: var(--unq-red);
 }
-.color-button:hover{
+
+.color-button:hover {
     background-color: #a52f17;
     border-color: #a52f17;
 }
+
 .color-button:focus {
     background-color: #97301b;
     border-color: #97301b;
     box-shadow: 0 0 0 0.2rem rgba(197, 35, 19, 0.52);
     outline: 0;
 }
+
 .color-button:active {
-    background-color: #ac2f16 !important;
-    border-color: #ac2f16 !important;
+    background-color: #ac2f16;
+    border-color: #ac2f16;
 }

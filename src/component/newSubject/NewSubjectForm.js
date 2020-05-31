@@ -3,17 +3,31 @@ import {Card, Container, Col, Row} from 'react-bootstrap';
 import './NewSubjectForm.css';
 import GeneralInfoForm from './GeneralInfoForm';
 import CommissionForm from './CommissionForm';
+import SubjectAPI from '../../Api/SubjectAPI';
+import SubjectCreatedSuccessModal from './SubjectCreatedSuccessModal';
 
 export default function NewSubjectForm() {
 
+    const showModalCreatedSuccess = (data) =>{
+        // setMessageReply(data);                   // TODO
+        // setShowModalCreatesSuccess(true);        
+        // setTimeout( () => setShowModalCreatesSuccess(false),2000);
+        alert(data);
+    }
+
     const subject = { };
+    const subjectApi = new SubjectAPI();
+
+    // modal subject created successfull -> TODO
+    const [showModalCreatesSuccess, setShowModalCreatesSuccess] = useState(true);
+    const [messageReply,setMessageReply] = useState('');
+    const handleClose = () => setShowModalCreatesSuccess(false);
 
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
 
     const addCommission = (commission) => {
         setCommissions(commissions.concat([commission]));
-        console.log(commissions);
     }
 
     const joinDataSubject = (generalInfoSubject) => {
@@ -21,9 +35,20 @@ export default function NewSubjectForm() {
         subject.name = generalInfoSubject.name;
         subject.subjectCode = generalInfoSubject.subjectCode;
         subject.commissions = commissions;
-        subject.degrees = { name:generalInfoSubject.degrees,  subjects: [subject]}
-        console.log(subject);
+        subject.degreeId = generalInfoSubject.degreeId;
+        createNewSubject();
     }
+
+    const createNewSubject = () => {
+        subjectApi.createNewSubject(subject).then( res => {
+            showModalCreatedSuccess(res.data);
+        }).catch(e => {
+            console.log(e);
+        })
+
+    }
+
+
 
     return  (
         
@@ -46,6 +71,10 @@ export default function NewSubjectForm() {
                     </Row>
                 </Container>    
             </Card.Body>
+            <SubjectCreatedSuccessModal 
+                // show={true}
+                // message={messageReply}
+            />
         </Card>
     )
 }
