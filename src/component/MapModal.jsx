@@ -17,14 +17,6 @@ function MapModal({classRoomNumber}){
   const handleClose = () => setState({show: false, loading: true});
   const handleShow = () => setState({show: true});
 
-    // const [show, setShow] = useState(false);
-    // const [loading, setLoading] = useState(true);
-
-    // const handleReady = () => setLoading(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
-
-    //TODO: Evaluar si se separa en componetes mas pequeños
     return (
         <>
           <Button variant="outline-danger"

@@ -1,6 +1,6 @@
 import React from 'react';
 import history from '../utils/history';
-import "./AdminProfile.css";
+import "./ButtonBranding.css";
 
 const AdminProfile = () => {
 

@@ -1,0 +1,18 @@
+.map-container{
+    position: relative;
+}
+.button-Group{
+    margin: 0.5%;
+}
+.canvas-Map{
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translateX(-50%);
+}
+.canvas-front{
+    z-index: 2;
+}
+.canvas-back{
+    z-index: 1;
+}
