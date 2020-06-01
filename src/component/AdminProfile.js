@@ -5,6 +5,7 @@ import "./AdminProfile.css";
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
+import "./ButtonBranding.css";
 
 const AdminProfile = () => {
 

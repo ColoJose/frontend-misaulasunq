@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
 // Bootstrap
 import { Button, Modal } from "react-bootstrap";
 // Resources
@@ -7,16 +7,16 @@ import Map from './Map';
 import { BsGeoAlt } from 'react-icons/bs';
 // Semantic UI
 import { Dimmer, Loader } from 'semantic-ui-react';
+// css
+import './MapModal.css';
 
 function MapModal({classRoomNumber}){
-    const [show, setShow] = useState(false);
-    const [loading, setLoading] = useState(true);
 
-    const handleReady = () => setLoading(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  const [state, setState] = useReducer((state, newState) => ({...state, ...newState}),{show: false, loading: true});
+  const handleReady = () => setState({loading: false});
+  const handleClose = () => setState({show: false, loading: true});
+  const handleShow = () => setState({show: true});
 
-    //TODO: Evaluar si se separa en componetes mas pequeños
     return (
         <>
           <Button variant="outline-danger"
@@ -24,7 +24,7 @@ function MapModal({classRoomNumber}){
               <BsGeoAlt size='1em'/>
           </Button>
 
-          <Modal show={show} 
+          <Modal show={state.show} 
                  onHide={handleClose}
                  size="xl"
                  aria-labelledby="contained-modal-title-vcenter"
@@ -35,7 +35,7 @@ function MapModal({classRoomNumber}){
               </Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-center">
-              <Dimmer active={loading} inverted>
+              <Dimmer active={state.loading} inverted>
                   <Loader indeterminate>Cargando Mapa</Loader>
               </Dimmer>
               <Map classroom={classRoomNumber}
