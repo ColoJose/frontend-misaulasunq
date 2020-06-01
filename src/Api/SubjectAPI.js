@@ -3,6 +3,13 @@ import axios from 'axios';
 
 export default class SubjectAPI {
 
+    getAllSubjects() {
+        return axios.get(
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/all-subjects`,
+            this.getHeader()
+        )
+    }
+
     getSubjectsDictatedOnDay(aDay){
         return axios.get(
             `${API_CONFIG.endPoint}/subjectAPI/byDay/${aDay}`
@@ -56,6 +63,13 @@ export default class SubjectAPI {
         return axios.post(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/new-subject`,
                             subject,
                             this.getHeader()
+        )
+    }
+
+    editGeneralInfoSubject(id, objToEdit) {
+        return axios.put(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/edit-general-info/`+id,
+                        objToEdit,
+                        this.getHeader()
         )
     }
 
