@@ -13,20 +13,14 @@ export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
     const [showGeneralInfoModal, setShowGeneralInfoModal] = useState(false);
     const [showCommissionsModal, setShowCommissionsModal] =  useState(false);
 
-    const editGeneralInfo = () => {
-        setShowGeneralInfoModal(true);
-        // selectSubjectTo(id,"edit","info")
-    }
+    const hideGeneralInfoModal = () => { setShowGeneralInfoModal(false) };
+    const hideCommissionModal = () => { setShowCommissionsModal(false) };
 
-    const editCommissions = () => {
-        setShowCommissionsModal(true);
-        // selectSubjectTo(id,"edit","commissions")
-    }
     const editPopover = (
             <Popover id="popover-basic">
               <Popover.Title as="h3">¿Qué va a editar?</Popover.Title>
-              <Popover.Content onClick={ () => editGeneralInfo() }>Editar info general</Popover.Content>
-              <Popover.Content onClick={ () => editCommissions() }>Editar comisiones</Popover.Content>
+              <Popover.Content onClick={ () => setShowGeneralInfoModal(true) }>Editar info general</Popover.Content>
+              <Popover.Content onClick={ () => setShowCommissionsModal(true) }>Editar comisiones</Popover.Content>
             </Popover>
     );
 
@@ -48,13 +42,18 @@ export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
                         </Col>
                 </Row>
             </ListGroup.Item>
+
             <EditGeneralInfo 
-                subject={undefined}
-                show={showGeneralInfoModal} />
+                subject={subject}
+                show={showGeneralInfoModal} 
+                hide={hideGeneralInfoModal}
+                selectSubjectTo={selectSubjectTo} />
 
             <EditCommissions 
                 subject={subject}
-                show={showCommissionsModal} /> 
+                show={showCommissionsModal}
+                hide={hideCommissionModal} 
+                selectSubjectTo={selectSubjectTo}/> 
         </>
     )
 

@@ -17,25 +17,35 @@ const AdminProfile = () => {
         }).catch( (e) => {
             console.log(e);
         })
-    }, [])
+    }, [setAllSubjects])
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
     }
-
-    const selectSubjectTo = (id,mode,subjectPart) => {
+    
+    const selectSubjectTo = (subject,mode,objToPost) => {
         if(mode==="delete") {
-            deleteSubject(id);
+            deleteSubject(subject.id);
         }else{
-            editSubject(id,subjectPart);
+            editSubject(subject.id,mode,objToPost);
         }
     }
 
     const deleteSubject = (id) => { }
 
-    const editSubject = (id,subjectPart) => {
-        if(subjectPart=== "generalInfo"); //editGeneralInfo(id);
-        if(subjectPart=== "commissions"); //editCommissions(id);
+    // edit functions
+
+    const editSubject = (id,mode,objToPost) => {
+        if(mode=== "generalInfo") editGeneralInfo(id,objToPost);
+        if(mode=== "commissions");editCommissions(id,objToPost);
+    }
+
+    const editCommissions = (id, objToPost) => { console.log("edit commissions") }
+
+    const editGeneralInfo = (id,objToPost) => { 
+        subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
+            alert(`Actualizó correctamente la mteria ${resp.data.name}`);
+        }).catch( (e) => console.log(e) )
     }
 
     return (

@@ -66,6 +66,13 @@ export default class SubjectAPI {
         )
     }
 
+    editGeneralInfoSubject(id, objToEdit) {
+        return axios.put(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/edit-general-info/`+id,
+                        objToEdit,
+                        this.getHeader()
+        )
+    }
+
     getHeader(){
         return {
             headers: {

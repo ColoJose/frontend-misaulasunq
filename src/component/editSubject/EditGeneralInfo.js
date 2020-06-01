@@ -1,39 +1,54 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
- const EditGeneralInfo = ({subject,show}) => {
+ const EditGeneralInfo = (props) => {
 
-   const [name, setName] = useState('nombre'); // subject.name
-   const [subjectCode, setSubjectCode] = useState('comisiones'); // subject.commissions
+   const {subject, show, hide, selectSubjectTo} = props;
 
-    return (
+   const [name, setName] = useState(subject.name);
+   const [subjectCode, setSubjectCode] = useState(subject.subjectCode);
+
+   const generalInfoToPost = {
+      name,
+      subjectCode
+   }
+   const handleSubmit = (e) => {
+      e.preventDefault(); 
+      selectSubjectTo(subject,"generalInfo",generalInfoToPost);
+      console.log("pass select subject2");
+      hide();
+   }
+   
+   return (
          <Modal show={show}>
             <Modal.Header>
                <Modal.Title>Editar información general</Modal.Title>
             </Modal.Header>   
-            <Modal.Body>
-               <Form>
-                  <Form.Group>
-                     <Form.Label>Nombre materia</Form.Label>
-                     <Form.Control
-                        type="text"
-                        value={name}
-                        onChange={ (e) => setName(e.target.value)}
-                        required/>
-                  </Form.Group>
-                  <Form.Group>
-                     <Form.Label>Código materia</Form.Label>
-                     <Form.Control 
-                        type="text"
-                        value={subjectCode}
-                        onChange={ (e) => setSubjectCode(e.target.value)}/>
-                  </Form.Group>
-               </Form>
-            </Modal.Body>
-            <Modal.Footer>
-               <Button>Guardar cambios</Button>
-               <Button>Cerrar</Button>
-            </Modal.Footer>
+            <Form onSubmit={handleSubmit}>
+               <Modal.Body>
+                     <Form.Group>
+                        <Form.Label>Nombre materia</Form.Label>
+                        <Form.Control
+                           type="text"
+                           value={name}
+                           onChange={ (e) => setName(e.target.value)}
+                           required />
+                     </Form.Group>
+                     <Form.Group>
+                        <Form.Label>Código materia</Form.Label>
+                        <Form.Control 
+                           type="text"
+                           value={subjectCode}
+                           onChange={ (e) => setSubjectCode(e.target.value)}
+                           required />
+                     </Form.Group>
+                  
+               </Modal.Body>
+               <Modal.Footer>
+                  <Button type="submit">Guardar cambios</Button>
+                  <Button onClick={ () => hide() }>Cerrar</Button>
+               </Modal.Footer>
+            </Form>
          </Modal>
 )
 }
