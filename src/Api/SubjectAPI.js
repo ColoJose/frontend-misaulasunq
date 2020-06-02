@@ -73,6 +73,12 @@ export default class SubjectAPI {
         )
     }
 
+    getCommissionsBySubjectId(id) {
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/edit-general-info/commissions/${id}`, // edit/commissions
+                          this.getHeader()
+        )
+    }
+
     getHeader(){
         return {
             headers: {
