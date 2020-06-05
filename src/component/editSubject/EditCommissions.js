@@ -1,14 +1,12 @@
 import React,  { useEffect, useState }from 'react';
 import { Form, Container, Row, Col, Card, Nav, Accordion } from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
-import ScheduleEditItem from './ScheduleEditItem';
+import ScheduleEditAccordion from './ScheduleEditAccordion';
 
 const EditCommissions = (props) => {
 
    const subjectApi = new SubjectAPI();
    const [commissions, setCommissions] = useState([]);
-   
-
 
    const [name, setName] = useState();
    const [year, setYear] = useState();
@@ -24,16 +22,18 @@ const EditCommissions = (props) => {
       semester: '',
       year: 0
    }
-
    const [selectedCommission, setSelectedCommission] = useState(emptyCommission);
-
+   
    useEffect( () => {
       subjectApi.getCommissionsBySubjectId(props.match.params.idSubject).then( (resp) => {
          setCommissions(resp.data);
+         setSelectedCommission(resp.data[0])
       }).catch( (e) => {
          console.log(e);
       })
-   }, [selectedCommission,setSelectedCommission]);
+   }, []);
+
+   const updateSchedule = () => { }
 
    return (
          <Container>
@@ -86,13 +86,8 @@ const EditCommissions = (props) => {
                                        }
                               </Col>
                               <Col xs={6}>
-                                 <Accordion defaultActiveKey="0">
-                                    {
-                                       selectedCommission.schedules.map( (sch) => {
-                                          return <ScheduleEditItem scheduleGiven={sch} />
-                                       })
-                                    }
-                                 </Accordion>
+                                 <ScheduleEditAccordion schedules={selectedCommission.schedules} 
+                                                        />
                               </Col>
                            </Row>
                         </Form>

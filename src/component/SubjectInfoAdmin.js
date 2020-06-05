@@ -4,7 +4,6 @@ import { ListGroup, Row, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import edit from '../resources/edit-tools.png';
 import info from '../resources/delete.png'
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
-import EditCommissions from '../component/editSubject/EditCommissions';
 import history from '../utils/history';
 
 export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
