@@ -86,8 +86,7 @@ const EditCommissions = (props) => {
                                        }
                               </Col>
                               <Col xs={6}>
-                                 <ScheduleEditAccordion schedules={selectedCommission.schedules} 
-                                                        />
+                                 <ScheduleEditAccordion schedules={selectedCommission.schedules} />
                               </Col>
                            </Row>
                         </Form>
