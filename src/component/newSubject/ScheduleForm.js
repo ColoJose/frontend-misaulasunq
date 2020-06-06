@@ -87,7 +87,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
 
                     <button type="button" className="btn btn-info" onClick={ () => onHide()}>Cerrar</button>
                     <button type="submit" className="btn btn-info">Agregar schedule</button> 
-                    {/* onClick={() => handleSubmitAgregate()} */}
                 </Form>
             </Modal.Body>
         </Modal>

@@ -18,7 +18,7 @@ const AdminProfile = () => {
         }).catch( (e) => {
             console.log(e);
         })
-    }, [setAllSubjects])
+    }, [allSubjects,setAllSubjects])
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
