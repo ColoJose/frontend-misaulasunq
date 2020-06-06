@@ -6,7 +6,7 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
-    if (true) {
+    if (loading || isAuthenticated) {
       return;
     }
     const fn = async () => {
