@@ -258,6 +258,7 @@ class Map extends React.Component {
                 routeToDraw = Route.ESTACIONAMIENTO;
             }
 
+            //TODO tiene que deshabiitar solo los opcioens de ruta
             if(Array.isArray(route) && route.length){
                 this.drawRoute(route);
             } else {

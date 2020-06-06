@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
 import history from '../utils/history';
-import "./AdminProfile.css";
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';

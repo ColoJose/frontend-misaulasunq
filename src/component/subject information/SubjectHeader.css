@@ -1,2 +1,7 @@
 
-.subject-Header-Button { font-weight: bold; }
+.subject-Header-Card{
+    padding: 0px;
+}
+.subject-Header-Button{
+    font-weight: bold;
+}
