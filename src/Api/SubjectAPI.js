@@ -79,10 +79,10 @@ export default class SubjectAPI {
         )
     }
 
-    updateCommission(commission, subjectId) {
+    updateCommission(commissions, subjectId) {
         const id = subjectId
         return axios.put(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/edit/commissions/${id}`,
-                          commission,
+                          commissions,
                           this.getHeader()
         )
     }

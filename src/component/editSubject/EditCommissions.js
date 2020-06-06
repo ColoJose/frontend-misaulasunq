@@ -40,9 +40,11 @@ const EditCommissions = (props) => {
    }
 
    const updateCommission = () => {
-      subjectApi.updateCommission(selectedCommission, idSubject).then( (resp) => {
+      subjectApi.updateCommission(commissions, idSubject).then( (resp) => {
          alert(`La comisión ${selectedCommission.name} se actualizó correctamente`);
       }).catch((e) => console.log(e));
+      // console.log(commissions);
+      // console.log(idSubject);
    }
 
    return (
