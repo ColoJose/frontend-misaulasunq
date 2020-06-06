@@ -13,17 +13,34 @@ const hours = Object.freeze([
 let optionsHours = 
             hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
 
- const ScheduleEditItem = ({schedule}) => {
+ const ScheduleEditItem = ({schedule, updateSchedule}) => {
      
 
     const [startTime, setStartTime] = useState(schedule.startTime);
+    const [endTime, setEndTime] = useState(schedule.endTime);
+    const [day, setDay] = useState(schedule.day);
+    const [classroom, setClassroom] = useState(schedule.classroom.number);
 
-    const setStartTimeAux = (startTime) => { schedule.startTime = startTime;  }
-    const setEndTime = (endTime) => { schedule.endTime = endTime}
-    const setDay = (day) => { schedule.day = day }
-    const setClassroom = (classroom) => { schedule.classroom.number = classroom }
+    const setStartTimeAux = (startTime) => { 
+        setStartTime(startTime);
+        updateSchedule(schedule.id, "startTime", startTime);  
+    }
 
-    const sendData = () => { }
+    const setEndTimeAux = (endTime) => { 
+        setEndTime(endTime);
+        updateSchedule(schedule.id,"endTime",endTime);
+    }
+
+
+    const setDayAux = (day) => { 
+        setDay(day);
+        updateSchedule(schedule.id,"day",day);
+    }
+
+    const setClassroomAux = (classroom) => {
+        setClassroom(classroom);
+        updateSchedule(schedule.id,"classroom",classroom);
+    }
 
     return (
         <Card>
@@ -34,13 +51,14 @@ let optionsHours =
         </Card.Header>
         <Card.Body>
             <Accordion.Collapse>
-                <Form data-toggle="validator" role="form" onChange={ () => sendData() }>
+                <Form data-toggle="validator" role="form">  
+                {/* onChange={ () => updateSchedule(updatedSchedule, schedule.id) } */}
                 <Form.Group >
                     <Form.Label>Hora comienzo</Form.Label>
                     <Form.Control
                         as="select"
                         value={startTime}
-                        onChange={(e) => setStartTime(e.target.value) }>
+                        onChange={(e) => setStartTimeAux(e.target.value) }>
                             <option>{startTime}</option>
                             {optionsHours}
                     </Form.Control>
@@ -49,9 +67,9 @@ let optionsHours =
                     <Form.Label>Hora fin</Form.Label>
                     <Form.Control
                         as="select"
-                        value={schedule.endTime}
-                        onChange={(e) => setEndTime(e.target.value) }>
-                            <option>{schedule.endTime}</option>
+                        value={endTime}
+                        onChange={(e) => setEndTimeAux(e.target.value) }>
+                            <option>{endTime}</option>
                             {optionsHours}
                     </Form.Control>
                 </Form.Group>
@@ -59,17 +77,17 @@ let optionsHours =
                     <Form.Label>Dia</Form.Label>
                     <Form.Control 
                         as="select"
-                        value={schedule.day}
-                        onChange={ (e) => setDay(e.target.value) }>
-                            <option selected>{schedule.day}</option>
+                        value={day}
+                        onChange={ (e) => setDayAux(e.target.value) }>
+                            <option selected>{day}</option>
                             {optionDays}
                     </Form.Control>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Aula</Form.Label>
                     <input className="form-control"
-                        value={schedule.classroom.number}
-                        onChange={ (e) => setClassroom(e.target.value) }
+                        value={classroom}
+                        onChange={ (e) => setClassroomAux(e.target.value) }
                         required
                         />
                 </Form.Group>

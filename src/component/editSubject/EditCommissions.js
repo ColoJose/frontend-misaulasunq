@@ -1,19 +1,13 @@
 import React,  { useEffect, useState }from 'react';
-import { Form, Container, Row, Col, Card, Nav, Accordion } from 'react-bootstrap';
+import { Form, Container, Row, Col, Card, Nav, Button } from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import ScheduleEditAccordion from './ScheduleEditAccordion';
 
 const EditCommissions = (props) => {
 
+   const { idSubject } = props.match.params;
    const subjectApi = new SubjectAPI();
    const [commissions, setCommissions] = useState([]);
-
-   const [name, setName] = useState();
-   const [year, setYear] = useState();
-   const [semester, setSemester] = useState();
-
-   const handleSubmit = () => { 
-   }
 
    // to avoid undefined selectedCommission when rendering
    const emptyCommission = {
@@ -23,9 +17,13 @@ const EditCommissions = (props) => {
       year: 0
    }
    const [selectedCommission, setSelectedCommission] = useState(emptyCommission);
+
+   const [name, setName] = useState(selectedCommission.name);
+   const [year, setYear] = useState(selectedCommission.year);
+   const [semester, setSemester] = useState(selectedCommission.semester);
    
    useEffect( () => {
-      subjectApi.getCommissionsBySubjectId(props.match.params.idSubject).then( (resp) => {
+      subjectApi.getCommissionsBySubjectId(idSubject).then( (resp) => {
          setCommissions(resp.data);
          setSelectedCommission(resp.data[0])
       }).catch( (e) => {
@@ -33,7 +31,19 @@ const EditCommissions = (props) => {
       })
    }, []);
 
-   const updateSchedule = () => { }
+   const setNameAux = (name) => { selectedCommission.name = name; setName(name) }
+   const setYearAux = (year) => { selectedCommission.year = year; setYear(year); console.log(selectedCommission.year) }
+   const setSemesterAux = (semester) => { selectedCommission.semester = semester; setSemester(semester); console.log(selectedCommission.semester) }
+
+   const updateSchedules = (schedules) => { 
+      selectedCommission.schedules = schedules;
+   }
+
+   const updateCommission = () => {
+      subjectApi.updateCommission(selectedCommission, idSubject).then( (resp) => {
+         alert(`La comisión ${selectedCommission.name} se actualizó correctamente`);
+      }).catch((e) => console.log(e));
+   }
 
    return (
          <Container>
@@ -57,36 +67,38 @@ const EditCommissions = (props) => {
                            <Row>
                               <Col xs={6}>
                                     {commissions === undefined ? <p>Cargando...</p> :
-                                          <div>
+                                       <div>
                                           <Form.Group>
                                              <Form.Label>Nombre comisión</Form.Label>
                                              <Form.Control type="text"
-                                                         value={selectedCommission.name}
-                                                         onChange={ (e) => setName(e.target.value)} 
-                                                         required />   
+                                                           value={selectedCommission.name}
+                                                           onChange={ (e) => setNameAux(e.target.value) } 
+                                                           required />   
                                           </Form.Group>
                                           <Form.Group>
                                              <Form.Label>Año</Form.Label>   
                                              <Form.Control type="number" 
-                                                         value={selectedCommission.year}
-                                                         onChange={ (e) => setYear(e.target.value)}
-                                                         required />
+                                                           value={selectedCommission.year}
+                                                           onChange={ (e) => setYearAux(e.target.value)}
+                                                           required />
                                           </Form.Group>
                                           <Form.Group>
                                              <Form.Label>Semestre</Form.Label>
                                              <Form.Control as="select"
-                                                         value={selectedCommission.semester}
-                                                         onChange={ (e) => setSemester(e.target.value)} >
+                                                           value={selectedCommission.semester}
+                                                           onChange={ (e) => setSemesterAux(e.target.value) } >
                                                 <option>Primer cuatrimestre</option>
                                                 <option>Segundo cuatrimestre</option>
                                                 <option>Anual</option>
                                              </Form.Control>
                                           </Form.Group>    
                                        </div>
-                                       }
+                                    }
+                                    <Button className="btn btn-danger" onClick={ () => updateCommission() }>Modificar comisión</Button>
                               </Col>
                               <Col xs={6}>
-                                 <ScheduleEditAccordion schedules={selectedCommission.schedules} />
+                                 <ScheduleEditAccordion schedules={selectedCommission.schedules}
+                                                        updateSchedules={updateSchedules}/>
                               </Col>
                            </Row>
                         </Form>

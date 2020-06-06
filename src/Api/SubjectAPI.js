@@ -74,7 +74,15 @@ export default class SubjectAPI {
     }
 
     getCommissionsBySubjectId(id) {
-        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/edit-general-info/commissions/${id}`, // edit/commissions
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/commissions/${id}`, // edit/commissions
+                          this.getHeader()
+        )
+    }
+
+    updateCommission(commission, subjectId) {
+        const id = subjectId
+        return axios.put(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/edit/commissions/${id}`,
+                          commission,
                           this.getHeader()
         )
     }
