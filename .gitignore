@@ -116,3 +116,6 @@ temp/
 .idea/**/dictionaries
 .idea/**/shelf
 .idea*
+
+# Jest Snapshots
+__snapshots__/
