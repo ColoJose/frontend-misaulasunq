@@ -5,6 +5,10 @@ import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
 import "./ButtonBranding.css";
+// toastify
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { editConfig } from '../utils/toast-config';
 
 const AdminProfile = () => {
 
@@ -17,7 +21,7 @@ const AdminProfile = () => {
         }).catch( (e) => {
             console.log(e);
         })
-    }, [allSubjects,setAllSubjects])
+    }, [])
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
@@ -44,9 +48,11 @@ const AdminProfile = () => {
 
     const editGeneralInfo = (id,objToPost) => { 
         subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
-            alert(`Actualizó correctamente la mteria ${resp.data.name}`);
+            editGeneralInfoSuccess(resp.data.name);
         }).catch( (e) => console.log(e) )
     }
+
+    const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }
 
     return (
         <div style={{width:"100%"}}>
@@ -66,8 +72,6 @@ const AdminProfile = () => {
                     }
                 </ListGroup>
             </Card>
-            
-            
         </div>
     );
 
