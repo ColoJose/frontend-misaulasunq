@@ -33,7 +33,8 @@ export default function NewSubjectForm() {
 
     const createNewSubject = () => {
         subjectApi.createNewSubject(subject).then( res => {
-            newSubjectCreatedSuccess(res.data);
+            console.log(res.data)
+           // newSubjectCreatedSuccess(res.data);
         }).catch(e => {
             console.log(e);
         })

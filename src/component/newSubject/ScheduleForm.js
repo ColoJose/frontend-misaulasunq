@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {Modal, Form} from 'react-bootstrap';
+import SubjectAPI from '../../Api/SubjectAPI';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -13,11 +14,30 @@ let optionsHours =
 
 export default function ScheduleForm({show, onHide, addSchedule}) {
 
+    const subjectApi = new SubjectAPI();
 
     const [startTime,setStartTime] = useState(optionsHours[0].key);
     const [endTime,setEndTime] = useState(optionsHours[0].key);
     const [day, setDay] = useState(days[0]);
-    const [aula,setAula] = useState(null);
+    const [aulasOptions, setAulasOptions] = useState([]);
+    
+    const componentIsMounted = useRef(false);
+
+
+    useEffect(() => {
+        return componentIsMounted.current = true;    
+    }, []);
+
+    useEffect(() => {
+        subjectApi.getAllClassrooms().then( (resp) => {
+            if(componentIsMounted.current){
+                setAulasOptions(resp.data);
+                console.log("it works")
+            }
+        }).catch( (e) => console.log(e) );
+    }, []);
+
+    const [aula,setAula] = useState([]);
 
     const schedule = {
         startTime,
@@ -40,9 +60,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         return onHide();
     }
 
-    // const handleSubmitModify = () => {
-        // TODO
-    // }
+    
 
     return (
         <Modal show={show} >
@@ -64,7 +82,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                             as="select"
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}>
-                                {optionsHours}
+                                {optionsHours}    
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -78,11 +96,13 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Aula</Form.Label>
-                        <input className="form-control"
+                        <Form.Control className="form-control"
+                            as="select"
                             value={aula}
                             onChange={ (e) => setAula(e.target.value)}
-                            required
-                            />
+                            required>
+                                {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
+                        </Form.Control>
                     </Form.Group>
 
                     <button type="button" className="btn btn-info" onClick={ () => onHide()}>Cerrar</button>

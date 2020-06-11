@@ -87,6 +87,11 @@ export default class SubjectAPI {
         )
     }
 
+    getAllClassrooms() {
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.classroomAPI}/suggestions`,
+                         this.getHeader());
+    }
+
     getHeader(){
         return {
             headers: {
