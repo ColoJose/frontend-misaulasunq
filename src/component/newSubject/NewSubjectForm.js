@@ -21,7 +21,7 @@ export default function NewSubjectForm() {
     const addCommission = (commission) => {
         setCommissions(commissions.concat([commission]));
     }
-
+    
     const joinDataSubject = (generalInfoSubject) => {
         setGeneralInfoSubject(generalInfoSubject);
         subject.name = generalInfoSubject.name;
@@ -33,12 +33,10 @@ export default function NewSubjectForm() {
 
     const createNewSubject = () => {
         subjectApi.createNewSubject(subject).then( res => {
-            console.log(res.data)
-           // newSubjectCreatedSuccess(res.data);
+           newSubjectCreatedSuccess(res.data);
         }).catch(e => {
             console.log(e);
         })
-
     }
     const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
@@ -56,7 +54,6 @@ export default function NewSubjectForm() {
                                 joinDataSubject={joinDataSubject}/>
                         </Col>
                         <Col xs={6}>
-                            
                             <CommissionForm
                                 addCommission={addCommission} />
                         </Col>

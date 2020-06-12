@@ -20,9 +20,9 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     const [endTime,setEndTime] = useState(optionsHours[0].key);
     const [day, setDay] = useState(days[0]);
     const [aulasOptions, setAulasOptions] = useState([]);
-    
-    const componentIsMounted = useRef(false);
+    const [classroom,setClassroom] = useState();
 
+    const componentIsMounted = useRef(false);
 
     useEffect(() => {
         return componentIsMounted.current = true;    
@@ -32,25 +32,25 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         subjectApi.getAllClassrooms().then( (resp) => {
             if(componentIsMounted.current){
                 setAulasOptions(resp.data);
-                console.log("it works")
+                setClassroom(resp.data[0]);
             }
         }).catch( (e) => console.log(e) );
     }, []);
 
-    const [aula,setAula] = useState([]);
+    
 
     const schedule = {
         startTime,
         endTime,
-        classroom: {number:aula,imageUrl:"foo"},
-        day,
+        classroom: {number:classroom},
+        day
     };
 
     const cleanUp = () => {
-        setStartTime(optionsHours[0].key);
-        setEndTime(optionsHours[0].key);
+        setStartTime(optionsHours[0]);
+        setEndTime(optionsHours[0]);
         setDay(days[0]);
-        setAula('');
+        setClassroom(aulasOptions[0]);
     }
 
     const handleSubmit = (e) => {
@@ -59,8 +59,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         cleanUp();
         return onHide();
     }
-
-    
 
     return (
         <Modal show={show} >
@@ -98,8 +96,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                         <Form.Label>Aula</Form.Label>
                         <Form.Control className="form-control"
                             as="select"
-                            value={aula}
-                            onChange={ (e) => setAula(e.target.value)}
+                            value={classroom}
+                            onChange={ (e) => setClassroom(e.target.value)}
                             required>
                                 {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
                         </Form.Control>
