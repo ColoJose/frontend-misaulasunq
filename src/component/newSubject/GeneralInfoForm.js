@@ -66,7 +66,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                         maxLength="10" />
                 </Form.Group>
 
-                <Card>
+                <Card id="addedCommissionsSection">
                     <Card.Header>Comisiones agregadas</Card.Header>
                     <ListGroup>
                         { commissions.length === 0 ? <ListGroup.Item>No ha agregado comisiones aún</ListGroup.Item>

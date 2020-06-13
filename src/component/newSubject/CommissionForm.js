@@ -29,8 +29,8 @@ export default function CommissionForm({addCommission}) {
 
     // VER
     const modifySchedule = (schedule) => {
-        openCloseModal();
-        deleteSchedule(schedule.id);
+        // openCloseModal();
+        // deleteSchedule(schedule.id);
     }
 
     // commission logic
@@ -44,17 +44,9 @@ export default function CommissionForm({addCommission}) {
         year,
         schedules
     }
-    // esto va con la validacion del schedule
-    const [scheduleErrorVisbility, setScheduleErrorVisbility] = useState('hidden');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(schedules.length === 0) {
-            
-            // validate minimo un schedule
-            
-            return;
-        }
         addCommission(commission);
         return;
         // cleanUp();  ver el tema del clean up
@@ -109,14 +101,13 @@ export default function CommissionForm({addCommission}) {
 
             <h3>Schedules</h3>
 
-            <Card>
+            <Card id="addedSchedulesSection">
                 <Card.Header>Schedules agregados</Card.Header>
                 <ListGroup>
                     { schedules.length === 0 ?
                         <ListGroup.Item>
                             <p>
                                 No ha agregado schedules aún
-                                <span hide style={{color:'red', visibility:scheduleErrorVisbility}}>Debe agregar al menos un schedule</span>
                             </p>
                             
                         </ListGroup.Item>

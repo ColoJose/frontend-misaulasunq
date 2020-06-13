@@ -7,10 +7,11 @@ import SubjectAPI from '../../Api/SubjectAPI';
 // toastify
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { newSubjectConfig } from '../../utils/toast-config';
+import { newSubjectConfig, commissionError, scheduleError } from '../../utils/toast-config';
+// validator
+import { isValidCommission, isValidSubject } from '../../utils/formValidator';
 
 export default function NewSubjectForm() {
-
 
     const subject = {};
     const subjectApi = new SubjectAPI();
@@ -19,8 +20,21 @@ export default function NewSubjectForm() {
     const [commissions, setCommissions] = useState([]);
 
     const addCommission = (commission) => {
-        setCommissions(commissions.concat([commission]));
+        
+        if(isValidCommission(commission)) {
+            setCommissions(commissions.concat([commission]));
+            cleanUpCommission();
+        }else {
+            schedulePart().style.border = "1px solid red";
+            toast.error("Debe agregar un schedule a la comision", scheduleError)
+        }
     }
+
+    const schedulePart = () => { return document.getElementById("addedSchedulesSection") }
+
+    const cleanUpCommission = () => {
+        // to do clean up
+     }
     
     const joinDataSubject = (generalInfoSubject) => {
         setGeneralInfoSubject(generalInfoSubject);
@@ -31,13 +45,29 @@ export default function NewSubjectForm() {
         createNewSubject();
     }
 
+    // si la materia tiene al menos una comisión procede a la llamada al back q crea la materia
     const createNewSubject = () => {
-        subjectApi.createNewSubject(subject).then( res => {
-           newSubjectCreatedSuccess(res.data);
-        }).catch(e => {
-            console.log(e);
-        })
+
+        if( isValidSubject(subject)) {
+            createNewSubjectRequest();
+        } else {
+            handleErrors();
+        }
     }
+
+    const createNewSubjectRequest = () => {
+        subjectApi.createNewSubject(subject).then( res => {
+            newSubjectCreatedSuccess(res.data);
+         }).catch(e => {
+             console.log(e);
+         })
+    }
+
+    const handleErrors = () => { 
+        document.getElementById("addedCommissionsSection").style.border = "1px solid red";
+        toast.error("Debe agregar al menos una comisión",commissionError);
+    }
+
     const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
     return  (

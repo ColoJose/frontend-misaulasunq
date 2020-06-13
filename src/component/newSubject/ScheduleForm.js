@@ -41,8 +41,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         }).catch( (e) => console.log(e) );
     }, []);
 
-    
-
     const schedule = {
         startTime,
         endTime,
@@ -50,12 +48,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         day
     };
 
-    const cleanUp = () => {
-        setStartTime(hours[0]);
-        setEndTime(hours[0]);
-        setDay(days[0]);
-        setClassroom(aulasOptions[0]);
-    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -79,6 +72,15 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         var selectHours = document.getElementsByClassName("selectHours");
         selectHours[0].style.border = "1px solid red";
         selectHours[1].style.border = "1px solid red";
+        
+    }
+
+    const cleanUp = () => {
+        setStartTime(hours[0]);
+        setEndTime(hours[0]);
+        setDay(days[0]);
+        setClassroom(aulasOptions[0]);
+        document.getElementById("addedSchedulesSection").style.border = "";
     }
 
     function invalidHoursErrorMessage() { return"La materia debe tener al menos dos horas de diferencia"}

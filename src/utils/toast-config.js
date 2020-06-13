@@ -9,4 +9,14 @@ const newSubjectConfig = {
     position: toast.POSITION.BOTTOM_RIGHT,
 }
 
-export { editConfig, newSubjectConfig }
+const scheduleError = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 4000
+}
+
+const commissionError = {
+    position: toast.POSITION.BOTTOM_LEFT,
+    autoClose: 4000
+}
+
+export { editConfig, newSubjectConfig, commissionError, scheduleError }
