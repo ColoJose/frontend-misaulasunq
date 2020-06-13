@@ -62,7 +62,8 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     <Form.Control                     
                         value={subjectCode}
                         onChange={ (e) => setSubjectCode(e.target.value)}
-                        required/>
+                        required
+                        maxLength="10" />
                 </Form.Group>
 
                 <Card>

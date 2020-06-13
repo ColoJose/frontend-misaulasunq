@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Modal, Form} from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
+import { areValidHours } from '../../utils/formValidator';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -16,11 +17,14 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
 
     const subjectApi = new SubjectAPI();
 
-    const [startTime,setStartTime] = useState(optionsHours[0].key);
-    const [endTime,setEndTime] = useState(optionsHours[0].key);
+    const [startTime,setStartTime] = useState(hours[0]);
+    const [endTime,setEndTime] = useState(hours[0]);
     const [day, setDay] = useState(days[0]);
     const [aulasOptions, setAulasOptions] = useState([]);
     const [classroom,setClassroom] = useState();
+    // validations
+    const [hoursValidation, setHoursValidation] = useState(false);
+
 
     const componentIsMounted = useRef(false);
 
@@ -47,18 +51,37 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     };
 
     const cleanUp = () => {
-        setStartTime(optionsHours[0]);
-        setEndTime(optionsHours[0]);
+        setStartTime(hours[0]);
+        setEndTime(hours[0]);
         setDay(days[0]);
         setClassroom(aulasOptions[0]);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addSchedule(schedule);
-        cleanUp();
-        return onHide();
+        validateFields()
     }
+
+    const validateFields = () => {
+        if(  areValidHours(startTime, endTime)) {
+            addSchedule(schedule);
+            setHoursValidation(false);
+            cleanUp();
+            return onHide();            
+        }else {
+            showErrorHours();
+            return;
+        }
+    }
+
+    const showErrorHours = () => {
+        setHoursValidation(true)
+        var selectHours = document.getElementsByClassName("selectHours");
+        selectHours[0].style.border = "1px solid red";
+        selectHours[1].style.border = "1px solid red";
+    }
+
+    function invalidHoursErrorMessage() { return"La materia debe tener al menos dos horas de diferencia"}
 
     return (
         <Modal show={show} >
@@ -67,21 +90,29 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                     <Form onSubmit={handleSubmit} data-toggle="validator" role="form">
                     <Form.Group>
                         <Form.Label>Hora comienzo</Form.Label>
-                        <Form.Control 
+                        <Form.Control
+                            className={"selectHours"}  
                             as="select"
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}>
                                 {optionsHours}
                         </Form.Control>
+                        {
+                            hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
+                        }
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Hora fin</Form.Label>
-                        <Form.Control 
+                        <Form.Control
+                            className={"selectHours"} 
                             as="select"
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}>
                                 {optionsHours}    
                         </Form.Control>
+                        {
+                            hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
+                        }
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Dia</Form.Label>
@@ -105,6 +136,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
 
                     <button type="button" className="btn btn-info" onClick={ () => onHide()}>Cerrar</button>
                     <button type="submit" className="btn btn-info">Agregar schedule</button> 
+
                 </Form>
             </Modal.Body>
         </Modal>
