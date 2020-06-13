@@ -5,6 +5,7 @@ import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
 import "./ButtonBranding.css";
+import MassiveLoadModal from './massiveLoad/MassiveLoadModal';
 
 const AdminProfile = () => {
 
@@ -37,7 +38,7 @@ const AdminProfile = () => {
 
     const editSubject = (id,mode,objToPost) => {
         if(mode=== "generalInfo") editGeneralInfo(id,objToPost);
-        if(mode=== "commissions");editCommissions(id,objToPost);
+        if(mode=== "commissions") editCommissions(id,objToPost);
     }
 
     const editCommissions = (id, objToPost) => { console.log("edit commissions") }
@@ -53,6 +54,7 @@ const AdminProfile = () => {
             <h1>Panel de administrador/a</h1>
             <button className="btn btn-danger color-button" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
             <h3></h3>
+            <MassiveLoadModal/>
             <Card>
                 <Card.Title>Todas las materias</Card.Title>
                 <ListGroup>
