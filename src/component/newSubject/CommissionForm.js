@@ -3,6 +3,8 @@ import {Button, Form, ListGroup, Card, Row, Col} from 'react-bootstrap';
 import './CommissionForm.css';
 import ScheduleForm from './ScheduleForm';
 import ScheduleItem from './ScheduleItem';
+// css
+import '../ButtonBranding.css';
 
 // note: sch as schedule
 
@@ -63,7 +65,7 @@ export default function CommissionForm({addCommission}) {
             <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Row>
                     <Col xs={8}><h2>Comisiones</h2></Col>    
-                    <Col xs={4}><Button className="btn btn-danger"  type="submit">Agregar commisión</Button></Col>    
+                    <Col xs={4}><Button className="btn btn-danger color-button"  type="submit">Agregar commisión</Button></Col>    
                 </Row>
                 
                 
@@ -100,7 +102,17 @@ export default function CommissionForm({addCommission}) {
             <h3>Schedules</h3>
 
             <Card id="addedSchedulesSection">
-                <Card.Header>Schedules agregados</Card.Header>
+                <Row>
+                    <Col xs={8}>
+                        <Card.Header>Schedules agregados</Card.Header>
+                    </Col>
+                    <Col xs={4}>
+                        <div className="add-schedule-button">
+                            <Button className="btn btn-danger color-button" onClick={ () => openCloseModal()}>Agregar schedule</Button>
+                        </div>
+                    </Col>
+                </Row>
+                
                 <ListGroup>
                     { schedules.length === 0 ?
                         <ListGroup.Item>
@@ -121,7 +133,7 @@ export default function CommissionForm({addCommission}) {
                 </ListGroup>
             </Card>
 
-            <Button className="btn btn-danger" onClick={ () => openCloseModal()}>Agregar schedule</Button>
+
             <ScheduleForm show={showModalSchedule} 
                             onHide={closeModalSchedule}
                             addSchedule={addSchedule}

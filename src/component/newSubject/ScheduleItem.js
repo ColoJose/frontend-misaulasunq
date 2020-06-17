@@ -3,6 +3,7 @@ import { Row, Col, ListGroup} from 'react-bootstrap';
 // icons
 import editIcon from '../../resources/edit-tools.png';
 import deleteIcon from '../../resources/delete.png';
+// css
 
 export default function ScheduleItem({schedule, deleteSchedule, modifySchedule}) {
 
