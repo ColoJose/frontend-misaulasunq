@@ -59,7 +59,8 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                 
                 <Form.Group>
                     <Form.Label>Código materia</Form.Label>
-                    <Form.Control                     
+                    <Form.Control
+                        id="subjectCodeNewForm"                      
                         value={subjectCode}
                         onChange={ (e) => setSubjectCode(e.target.value)}
                         required

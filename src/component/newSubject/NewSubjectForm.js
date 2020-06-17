@@ -7,7 +7,7 @@ import SubjectAPI from '../../Api/SubjectAPI';
 // toastify
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { newSubjectConfig, commissionError, scheduleError } from '../../utils/toast-config';
+import { newSubjectConfig, commissionError, generalError } from '../../utils/toast-config';
 // validator
 import { isValidCommission, isValidSubject } from '../../utils/formValidator';
 
@@ -19,22 +19,19 @@ export default function NewSubjectForm() {
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
 
-    const addCommission = (commission) => {
+    const addCommission = (commission,cleanUpCommission) => {
         
         if(isValidCommission(commission)) {
+            document.getElementById("addedCommissionsSection").style.border = "";
             setCommissions(commissions.concat([commission]));
             cleanUpCommission();
         }else {
             schedulePart().style.border = "1px solid red";
-            toast.error("Debe agregar un schedule a la comision", scheduleError)
+            toast.error("Debe agregar un schedule a la comision", generalError)
         }
     }
 
     const schedulePart = () => { return document.getElementById("addedSchedulesSection") }
-
-    const cleanUpCommission = () => {
-        // to do clean up
-     }
     
     const joinDataSubject = (generalInfoSubject) => {
         setGeneralInfoSubject(generalInfoSubject);
@@ -58,9 +55,15 @@ export default function NewSubjectForm() {
     const createNewSubjectRequest = () => {
         subjectApi.createNewSubject(subject).then( res => {
             newSubjectCreatedSuccess(res.data);
+            document.getElementById("subjectCodeNewForm").style.border = "";
          }).catch(e => {
-             console.log(e);
+             handleErrorPostReq(e);
          })
+    }
+
+    const handleErrorPostReq = (e) => { 
+        document.getElementById("subjectCodeNewForm").style.border = "1px solid red"
+        toast.error("El código materia está repetido", generalError);
     }
 
     const handleErrors = () => { 

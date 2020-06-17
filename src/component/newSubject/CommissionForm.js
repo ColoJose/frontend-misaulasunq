@@ -35,7 +35,7 @@ export default function CommissionForm({addCommission}) {
 
     // commission logic
     const [name,setName] = useState('');
-    const [year,setYear] = useState(null);
+    const [year,setYear] = useState('2020');
     const [semester, setSemester] = useState('Primer cuatrimestre');
     
     const commission = {
@@ -47,17 +47,15 @@ export default function CommissionForm({addCommission}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addCommission(commission);
+        addCommission(commission,cleanUpCommission);
         return;
-        // cleanUp();  ver el tema del clean up
     }
 
-    const cleanUp = () => {
-            commission.name="clean";
-            commission.year=null;
-            commission.semester="";
-            commission.schedules= [] ;
-
+    const cleanUpCommission = () => { 
+        setName(" ");
+        setYear("2020");
+        setSemester("Primer cuatrimestre");
+        setSchedules([]);
     }
 
     return (
