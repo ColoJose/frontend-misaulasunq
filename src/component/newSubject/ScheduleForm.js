@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {Modal, Form} from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours } from '../../utils/formValidator';
+// css
+import '../ButtonBranding.css';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -136,8 +138,13 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                         </Form.Control>
                     </Form.Group>
 
-                    <button type="button" className="btn btn-info" onClick={ () => onHide()}>Cerrar</button>
-                    <button type="submit" className="btn btn-info">Agregar schedule</button> 
+                    <button type="button" 
+                            className="btn btn-danger color-button" 
+                            onClick={ () => onHide()}
+                            style={{marginRight: "5px"}}>
+                                Cerrar
+                    </button>
+                    <button type="submit" className="btn btn-danger color-button">Agregar schedule</button> 
 
                 </Form>
             </Modal.Body>
