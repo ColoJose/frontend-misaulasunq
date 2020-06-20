@@ -1,12 +1,15 @@
 
-.leftArrow {
+#leftArrow {
     transform: rotateZ(90deg);
+    visibility: hidden;
 }
 
-.rightArrow {
+#rightArrow {
     transform: rotateZ(-90deg);
+    margin-top: 6px;
 }
 
 .center {
     font-size: 20px;
+    margin-top: 13px;
 }

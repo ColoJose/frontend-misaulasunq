@@ -16,28 +16,26 @@ const AdminProfile = () => {
     const [allSubjects,setAllSubjects] = useState([]);
     
     const [pageNumber, setPageNumber] = useState(0);
-    const [nextPageIsEmpty, setNextPageIsEmpty] = useState(false);
-    
+    const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
+
     useEffect( () => {
         getAllSubjects(pageNumber)
     }, [])
 
-
-
-    const getAllSubjects = (pagen) => {
-        subjectApi.getAllSubjects(pagen,5).then( (resp) => { // 5 elementos para traer
+    const getAllSubjects = (pageN) => {
+        subjectApi.getAllSubjects(pageN,5).then( (resp) => { // 5 elementos para traer
             setAllSubjects(resp.data.content);
-            setPageNumber(pagen);
-            setNextPageIsEmptyAux(pagen);
+            setPageNumber(pageN);
+            setSizeContentAux(pageN);
         }).catch( (e) => {
             console.log(e);
         })
     }
 
-    const setNextPageIsEmptyAux = (pagen) => { 
-        subjectApi.getAllSubjects(pagen,5).then( (resp) => {
-            setNextPageIsEmpty(resp.data.empty)
-        }).then( (e) => { console.log(e) })
+    const setSizeContentAux = (pageN) => { 
+        subjectApi.getAllSubjects(pageN,5).then( (resp) => {
+            setSizeContent(resp.data.content.length);
+        }).catch( (e) => { console.log(e) })
     }
 
     const goNewSubjectForm = () => {
@@ -91,9 +89,9 @@ const AdminProfile = () => {
                                     })
                                 }
                             </ListGroup>
-                            <ListGroup style={{height: "60px"}}>
+                            <ListGroup style={{height: "65px"}}>
                                 <Pagination pageNumber={pageNumber}
-                                            nextPageIsEmpty={nextPageIsEmpty}
+                                            sizeContent={sizeContent}
                                             getAllSubjects={getAllSubjects} />
                             </ListGroup>
                         </Card>
