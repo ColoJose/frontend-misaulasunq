@@ -19,23 +19,23 @@ const AdminProfile = () => {
     const [nextPageIsEmpty, setNextPageIsEmpty] = useState(false);
     
     useEffect( () => {
-        getAllSubjects()
+        getAllSubjects(pageNumber)
     }, [])
 
-    const getAllSubjects = () => {
-        subjectApi.getAllSubjects(pageNumber,5).then( (resp) => { // 5 elementos para traer
+
+
+    const getAllSubjects = (pagen) => {
+        subjectApi.getAllSubjects(pagen,5).then( (resp) => { // 5 elementos para traer
             setAllSubjects(resp.data.content);
-            setPageNumber(pageNumber + 1);
-            setNextPageIsEmptyAux();
+            setPageNumber(pagen);
+            setNextPageIsEmptyAux(pagen);
         }).catch( (e) => {
             console.log(e);
         })
     }
-    
 
-    const setNextPageIsEmptyAux = () => { 
-        subjectApi.getAllSubjects(pageNumber,5).then( (resp) => {
-            console.log(resp.data.content)
+    const setNextPageIsEmptyAux = (pagen) => { 
+        subjectApi.getAllSubjects(pagen,5).then( (resp) => {
             setNextPageIsEmpty(resp.data.empty)
         }).then( (e) => { console.log(e) })
     }

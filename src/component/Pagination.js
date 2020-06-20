@@ -8,13 +8,20 @@ import arrow from '../resources/arrow.png';
     const [leftArrowVisibility, setLeftArrowVisibility] = useState(false);
     const [rightArrowVisibility, setRightArrowVisibility] = useState(true);
 
-    const handleArrows = () => {
-        getAllSubjects();
+    const handleArrowsR = () => {
+        getAllSubjects(pageNumber + 1);
+        handleLeftArrow();
+        handleRightArrow();
+    }
+
+
+    const handleArrowsL = () => {
+        getAllSubjects(pageNumber - 1);
         handleLeftArrow();
         handleRightArrow();
     }
     
-    const handleLeftArrow = () => { pageNumber===0 ? setLeftArrowVisibility(false) : setLeftArrowVisibility(true); }
+    const handleLeftArrow = () => { console.log(pageNumber); pageNumber===0 ? setLeftArrowVisibility(false) : setLeftArrowVisibility(true); }
     const handleRightArrow = () => { nextPageIsEmpty ? setRightArrowVisibility(true) : setLeftArrowVisibility(false); }
 
     return (
@@ -24,8 +31,8 @@ import arrow from '../resources/arrow.png';
                 <Col className="leftArrow" class xs={4}>
                     { leftArrowVisibility ?     
                         <Button type="submit"
-                                variant="outline-light">
-                                onClick={ () => {handleArrows()}}
+                                variant="outline-light"
+                                onClick={ () => handleArrowsL() } >
                             <Image src={arrow}/>
                         </Button> 
                         :
@@ -39,7 +46,7 @@ import arrow from '../resources/arrow.png';
                     { rightArrowVisibility ? 
                         <Button className="rightArrow"
                             variant="outline-light"
-                            onClick={ () => handleArrows() }>
+                            onClick={ () => handleArrowsR() }>
                                 <Image src={arrow}/>
                         </Button>
                         :
