@@ -5,28 +5,47 @@ import arrow from '../resources/arrow.png';
 
  const Pagination = ({pageNumber, nextPageIsEmpty, getAllSubjects}) => {
      
-    const [leftArrowVisibility, setLeftArrowVisibility] = useState("hidden");
-    const [rightArrowVisibility, setRightArrowVisibility] = useState("visible");
+    const [leftArrowVisibility, setLeftArrowVisibility] = useState(false);
+    const [rightArrowVisibility, setRightArrowVisibility] = useState(true);
+
+    const handleArrows = () => {
+        getAllSubjects();
+        handleLeftArrow();
+        handleRightArrow();
+    }
+    
+    const handleLeftArrow = () => { pageNumber===0 ? setLeftArrowVisibility(false) : setLeftArrowVisibility(true); }
+    const handleRightArrow = () => { nextPageIsEmpty ? setRightArrowVisibility(true) : setLeftArrowVisibility(false); }
 
     return (
             <Row>
                 <Col xs={5}/>
                 <Row xs={2}>
                 <Col className="leftArrow" class xs={4}>
-                    <Button type="submit"
-                            variant="outline-light">
-                        <Image src={arrow}/>
-                    </Button>
+                    { leftArrowVisibility ?     
+                        <Button type="submit"
+                                variant="outline-light">
+                                onClick={ () => {handleArrows()}}
+                            <Image src={arrow}/>
+                        </Button> 
+                        :
+                        null
+                    }
                 </Col>
                 <Col className="center" xs={4}>
-                    <p>1</p>
+                    <p>{pageNumber + 1}</p>
                 </Col>
                 <Col xs={4}>
-                    <Button className="rightArrow"
+                    { rightArrowVisibility ? 
+                        <Button className="rightArrow"
                             variant="outline-light"
-                            onClick={ () => getAllSubjects() }>
-                        <Image src={arrow}/>
-                    </Button>
+                            onClick={ () => handleArrows() }>
+                                <Image src={arrow}/>
+                        </Button>
+                        :
+                        null
+                    }
+                    
                 </Col>
                 </Row>
                 <Col xs={5}/>
