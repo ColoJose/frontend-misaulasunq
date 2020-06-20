@@ -1,0 +1,12 @@
+
+.leftArrow {
+    transform: rotateZ(90deg);
+}
+
+.rightArrow {
+    transform: rotateZ(-90deg);
+}
+
+.center {
+    font-size: 20px;
+}
