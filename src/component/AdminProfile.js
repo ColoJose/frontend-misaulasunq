@@ -3,12 +3,14 @@ import { Card, ListGroup } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
+import GenericModal from './massiveLoad/GenericModal';
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
 import "./ButtonBranding.css";
-import MassiveLoadModal from './massiveLoad/MassiveLoadModal';
+import MassiveLoad from './massiveLoad/MassiveLoad';
 
 const AdminProfile = () => {
 
+    const massiveUpload = <MassiveLoad/>
     const subjectApi= new SubjectAPI();
     const [allSubjects,setAllSubjects] = useState([]);
     
@@ -18,7 +20,7 @@ const AdminProfile = () => {
         }).catch( (e) => {
             console.log(e);
         })
-    }, [allSubjects,setAllSubjects])
+    }, [] /*[allSubjects,setAllSubjects]*/)
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
@@ -49,12 +51,18 @@ const AdminProfile = () => {
         }).catch( (e) => console.log(e) )
     }
 
+
+
     return (
         <div style={{width:"100%"}}>
             <h1>Panel de administrador/a</h1>
             <button className="btn btn-danger color-button" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
             <h3></h3>
-            <MassiveLoadModal/>
+            <GenericModal children={massiveUpload} 
+                          title="Carga de archivo" 
+                          buttonLabel="Cargar Archivo"
+                          style="btn btn-danger color-button"
+                          />
             <Card>
                 <Card.Title>Todas las materias</Card.Title>
                 <ListGroup>
