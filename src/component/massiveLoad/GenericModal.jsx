@@ -5,27 +5,41 @@ import { Button, Modal } from "react-bootstrap";
 import './Modal.css';
 import '../ButtonBranding.css';
 
-function GenericModal({title, children, buttonLabel, style}){
+function GenericModal({title, children, buttonLabel, buttonStyle, bodyStyle, size}){
 
   const [state, setState] = useReducer((state, newState) => ({...state, ...newState}),{show: false});
   const handleClose = () => setState({show: false});
   const handleShow = () => setState({show: true});
 
-  const showStyle = () => {
-    return `${style}`;
+  const showButtonStyle = () => {
+    if(buttonStyle){
+      return `${buttonStyle}`;
+    }
+    return '';
+  }
+
+  const showBodyStyle = () => {
+    if(bodyStyle){
+      return `${bodyStyle}`;
+    }
+    return '';
+  }
+
+  const getSize = () => {
+    return size;
   }
 
     return (
         <>
           <Button variant="outline-danger"
                   onClick={handleShow}
-                  className={showStyle()}>
+                  className={showButtonStyle()}>
               {buttonLabel}
           </Button>
 
           <Modal show={state.show} 
                  onHide={handleClose}
-                 size="xl"
+                 size={getSize()}
                  aria-labelledby="contained-modal-title-vcenter"
                  centered>
             <Modal.Header closeButton>
@@ -33,7 +47,7 @@ function GenericModal({title, children, buttonLabel, style}){
                 {title}
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body className="text-center">
+            <Modal.Body className={showBodyStyle()}>
               {children}
             </Modal.Body>
           </Modal>
