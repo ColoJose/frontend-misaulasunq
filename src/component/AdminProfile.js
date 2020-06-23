@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card, ListGroup, Container, Row, Col } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
-import GenericModal from './massiveLoad/GenericModal';
-import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
+import Pagination from './Pagination';
 import "./ButtonBranding.css";
-import MassiveLoad from './massiveLoad/MassiveLoad';
+// toastify
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { editConfig } from '../utils/toast-config';
 
 const AdminProfile = () => {
 
-    const massiveUpload = <MassiveLoad/>
+    // const massiveUpload = <MassiveLoad/>
     const subjectApi= new SubjectAPI();
     const [allSubjects,setAllSubjects] = useState([]);
     
+    const [pageNumber, setPageNumber] = useState(0);
+    const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
+
     useEffect( () => {
-        subjectApi.getAllSubjects().then( (resp) => {
-            setAllSubjects(resp.data);
+        getAllSubjects(pageNumber)
+    }, [])
+
+    const getAllSubjects = (pageN) => {
+        subjectApi.getAllSubjects(pageN,5).then( (resp) => { // 5 elementos para traer
+            setAllSubjects(resp.data.content);
+            setPageNumber(pageN);
+            setSizeContentAux(pageN);
         }).catch( (e) => {
             console.log(e);
         })
-    }, [] /*[allSubjects,setAllSubjects]*/)
+    }
+
+    const setSizeContentAux = (pageN) => { 
+        subjectApi.getAllSubjects(pageN,5).then( (resp) => {
+            setSizeContent(resp.data.content.length);
+        }).catch( (e) => { console.log(e) })
+    }
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
@@ -47,36 +64,43 @@ const AdminProfile = () => {
 
     const editGeneralInfo = (id,objToPost) => { 
         subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
-            alert(`Actualizó correctamente la mteria ${resp.data.name}`);
+            editGeneralInfoSuccess(resp.data.name);
         }).catch( (e) => console.log(e) )
     }
 
-
+    const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }
 
     return (
         <div style={{width:"100%"}}>
             <h1>Panel de administrador/a</h1>
             <button className="btn btn-danger color-button" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
             <h3></h3>
-            <GenericModal children={massiveUpload} 
-                          title="Carga de archivo" 
-                          buttonLabel="Cargar Archivo"
-                          style="btn btn-danger color-button"
-                          />
-            <Card>
-                <Card.Title>Todas las materias</Card.Title>
-                <ListGroup>
-                    {
-                        allSubjects.map( (subject) => {
-                            return <SubjectInfoAdmin 
-                                        key={subject.id}
-                                        subject={subject}
-                                        selectSubjectTo={selectSubjectTo}/>
-                        })
-                    }
-                </ListGroup>
-            </Card>
-            
+            <Container>
+                <Row>
+                    <Col xs={8}>
+                        <Card>
+                        <Card.Title>Todas las materias</Card.Title>
+                            <ListGroup>
+                                {
+                                    allSubjects.map( (subject) => {
+                                        return <SubjectInfoAdmin 
+                                                    key={subject.id}
+                                                    subject={subject}
+                                                    selectSubjectTo={selectSubjectTo}/>
+                                    })
+                                }
+                            </ListGroup>
+                            <ListGroup style={{height: "65px"}}>
+                                <Pagination pageNumber={pageNumber}
+                                            sizeContent={sizeContent}
+                                            getAllSubjects={getAllSubjects} />
+                            </ListGroup>
+                        </Card>
+                    </Col>
+
+                    <Col xs={4}>Completar</Col>
+                </Row>
+            </Container>
             
         </div>
     );

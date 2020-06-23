@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, ListGroup, Card, Button} from 'react-bootstrap';
 import CommissionItem from './CommissionItem';
-
 import SubjectAPI from '../../Api/SubjectAPI.js';
+// css
+import '../ButtonBranding.css';
 
 export default function GeneralInfoForm({commissions, joinDataSubject}) {
 
@@ -59,13 +60,15 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                 
                 <Form.Group>
                     <Form.Label>Código materia</Form.Label>
-                    <Form.Control                     
+                    <Form.Control
+                        id="subjectCodeNewForm"                      
                         value={subjectCode}
                         onChange={ (e) => setSubjectCode(e.target.value)}
-                        required/>
+                        required
+                        maxLength="10" />
                 </Form.Group>
 
-                <Card>
+                <Card id="addedCommissionsSection">
                     <Card.Header>Comisiones agregadas</Card.Header>
                     <ListGroup>
                         { commissions.length === 0 ? <ListGroup.Item>No ha agregado comisiones aún</ListGroup.Item>
@@ -76,7 +79,10 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     </ListGroup>
                 </Card>
                 <Form.Group>
-                    <Button className="btn btn-danger" type="submit">Agregar materia</Button>
+                    <Button className="btn btn-danger color-button" 
+                            type="submit"
+                            style={{marginTop: "7px"}}>Agregar materia
+                    </Button>
                 </Form.Group>
             </form>
         </>

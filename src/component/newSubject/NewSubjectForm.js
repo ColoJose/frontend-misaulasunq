@@ -4,32 +4,35 @@ import './NewSubjectForm.css';
 import GeneralInfoForm from './GeneralInfoForm';
 import CommissionForm from './CommissionForm';
 import SubjectAPI from '../../Api/SubjectAPI';
-import SubjectCreatedSuccessModal from './SubjectCreatedSuccessModal';
+// toastify
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { newSubjectConfig, commissionError, generalError } from '../../utils/toast-config';
+// validator
+import { isValidCommission, isValidSubject } from '../../utils/formValidator';
 
 export default function NewSubjectForm() {
 
-    const showModalCreatedSuccess = (data) =>{
-        // setMessageReply(data);                   // TODO
-        // setShowModalCreatesSuccess(true);        
-        // setTimeout( () => setShowModalCreatesSuccess(false),2000);
-        alert(data);
-    }
-
-    const subject = { };
+    const subject = {};
     const subjectApi = new SubjectAPI();
-
-    // modal subject created successfull -> TODO
-    const [showModalCreatesSuccess, setShowModalCreatesSuccess] = useState(true);
-    const [messageReply,setMessageReply] = useState('');
-    const handleClose = () => setShowModalCreatesSuccess(false);
 
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
 
-    const addCommission = (commission) => {
-        setCommissions(commissions.concat([commission]));
+    const addCommission = (commission,cleanUpCommission) => {
+        
+        if(isValidCommission(commission)) {
+            document.getElementById("addedCommissionsSection").style.border = "";
+            setCommissions(commissions.concat([commission]));
+            cleanUpCommission();
+        }else {
+            schedulePart().style.border = "1px solid red";
+            toast.error("Debe agregar un schedule a la comision", generalError)
+        }
     }
 
+    const schedulePart = () => { return document.getElementById("addedSchedulesSection") }
+    
     const joinDataSubject = (generalInfoSubject) => {
         setGeneralInfoSubject(generalInfoSubject);
         subject.name = generalInfoSubject.name;
@@ -39,16 +42,36 @@ export default function NewSubjectForm() {
         createNewSubject();
     }
 
+    // si la materia tiene al menos una comisión procede a la llamada al back q crea la materia
     const createNewSubject = () => {
-        subjectApi.createNewSubject(subject).then( res => {
-            showModalCreatedSuccess(res.data);
-        }).catch(e => {
-            console.log(e);
-        })
 
+        if( isValidSubject(subject)) {
+            createNewSubjectRequest();
+        } else {
+            handleErrors();
+        }
     }
 
+    const createNewSubjectRequest = () => {
+        subjectApi.createNewSubject(subject).then( res => {
+            newSubjectCreatedSuccess(res.data);
+            document.getElementById("subjectCodeNewForm").style.border = "";
+         }).catch(e => {
+             handleErrorPostReq(e);
+         })
+    }
 
+    const handleErrorPostReq = (e) => { 
+        document.getElementById("subjectCodeNewForm").style.border = "1px solid red"
+        toast.error("El código materia está repetido", generalError);
+    }
+
+    const handleErrors = () => { 
+        document.getElementById("addedCommissionsSection").style.border = "1px solid red";
+        toast.error("Debe agregar al menos una comisión",commissionError);
+    }
+
+    const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
     return  (
         
@@ -64,17 +87,12 @@ export default function NewSubjectForm() {
                                 joinDataSubject={joinDataSubject}/>
                         </Col>
                         <Col xs={6}>
-                            
                             <CommissionForm
                                 addCommission={addCommission} />
                         </Col>
                     </Row>
                 </Container>    
             </Card.Body>
-            <SubjectCreatedSuccessModal 
-                // show={true}
-                // message={messageReply}
-            />
         </Card>
     )
 }

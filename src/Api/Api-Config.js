@@ -6,5 +6,6 @@ export const API_CONFIG = {
     allowMethods: "GET,PUT,POST",
     allowOrigin: "*",
     endPoint: "http://localhost:8090",
-    subjectAPI:"subjectAPI"
+    subjectAPI:"subjectAPI",
+    classroomAPI:"classroomAPI"
   };

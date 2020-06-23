@@ -3,9 +3,9 @@ import axios from 'axios';
 
 export default class SubjectAPI {
 
-    getAllSubjects() {
+    getAllSubjects(pageNumber,elems) {
         return axios.get(
-            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/all-subjects`,
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/all-subjects?page=${pageNumber}&elems=${elems}`,
             this.getHeader()
         )
     }
@@ -85,6 +85,11 @@ export default class SubjectAPI {
                           commissions,
                           this.getHeader()
         )
+    }
+
+    getAllClassrooms() {
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.classroomAPI}/suggestions`,
+                         this.getHeader());
     }
 
     getHeader(){
