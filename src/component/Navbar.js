@@ -1,22 +1,60 @@
 import history from '../utils/history';
-// react
-import React, { useState } from 'react';
-// bootstrap
+import React, { useState, useEffect } from 'react';
 import { Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
-// resoruces
 import logoApp from '../resources/logo-app-white.png';
-// css
 import './Navbar.css';
-
 import { useAuth0 } from '../react-auth0-spa';
+import SubjectAPI from '../Api/SubjectAPI';
+import AuthorizeJWT from '../Api/AuthorizeJWT';
 
 function NavbarApp() {
 
-    const [subject,setSubject] = useState('');
-    const { isAuthenticated, loginWithRedirect, logout, user, loading } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, logout, user, getIdTokenClaims } = useAuth0();
+    const subjectApi = new SubjectAPI();
 
     const handleSubmit = (e) => {
         history.push("/search");
+    }
+
+    // useEffect(() => {
+    //     console.log(isAuthenticated);
+    //     isAuthenticated && localStorage.setItem("username",user.name);
+    //     isAuthenticated && localStorage.setItem("foo","foo");    
+    // }, []);
+
+    const setUserNameLocalStorage = () => { 
+        localStorage.setItem("username",user.name);
+        localStorage.setItem("isAuthenticated",true);
+    }
+
+    // const getJWT = () => {
+    //     console.log("entro al getJWT");
+    //     subjectApi.getJWT().then( (resp) => {
+    //         console.log(resp.data)
+    //     }).catch( (e) => console.log("paso x aca"));
+    // }
+
+    // async function loginWithRedirectAsync(){
+    //    await loginWithRedirect();
+    // }
+
+    const login = () => {
+            // loginWithRedirectAsync().then( (resp) => {
+            //     if( true ) {
+            //         setUserNameLocalStorage();
+            //         console.log("desp set storage")
+            //         getJWT();
+            //         console.log("desp jwt");
+            //     }
+            // })
+            if( isAuthenticated ) {
+                setUserNameLocalStorage();
+            }
+    }
+
+    const logoutAux = () => {
+        localStorage.clear();
+        logout();
     }
 
     return (
@@ -33,13 +71,6 @@ function NavbarApp() {
                 <Form inline 
                       className="col-6 justify-content-center" 
                       onSubmit={handleSubmit}>
-                    <FormControl type="text" 
-                                 placeholder="Ingrese lo que busca" 
-                                 className="mr-sm-2"
-                                 value={subject}
-                                 onChange={ (e) =>  setSubject(e.target.value)}
-                                 disabled 
-                                 hidden/>
                     <Button type="submit" 
                             variant="light" 
                             disabled 
@@ -50,19 +81,28 @@ function NavbarApp() {
 
                 <Nav  className="col-3 justify-content-end">
 
-                    {   (loading || !user) ?
-                                        <Navbar.Text onClick={ () => loginWithRedirect({}) } 
-                                                     className="font-navbarBrand menu-profile-navbar">Login</Navbar.Text>
-                                           :
+                    {   localStorage.getItem("isAuthenticated") === "true" ?
                                         <div className="menu-profile-navbar">
-                                           <Navbar.Text><img className="icon-profile-navbar"
-                                                             src={user.picture}
-                                                             alt="profile"
-                                                             >
-                                                         </img></Navbar.Text>
-                                            <Navbar.Text onClick={ () => logout() }
-                                                         className="font-navbarBrand separation">Logout</Navbar.Text>
-                                       </div>     
+                                            <Navbar.Text id="username">
+                                                {/* <p>{localStorage.getItem("username")}</p> */}
+                                                <p className="font-navbarBrand">
+                                                   Hola,&nbsp;{ localStorage.getItem("username") }
+                                                </p>
+                                            </Navbar.Text>
+                                            <Navbar.Text id="bar" className="font-navbarBrand">|</Navbar.Text>
+                                            <Navbar.Text onClick={ () => logoutAux() }
+                                                         className="font-navbarBrand separation">
+                                                            Logout
+                                            </Navbar.Text>
+                                        </div>
+
+                                            :
+                                        <Navbar.Text onClick={ () => login()} 
+                                                     className="font-navbarBrand menu-profile-navbar">
+                                                        Login
+                                        </Navbar.Text>
+                                           
+                                             
                     }
                     
                     

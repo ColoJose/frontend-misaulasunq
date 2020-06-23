@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { Card, ListGroup, Container, Row, Col } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
@@ -12,31 +12,42 @@ import { editConfig } from '../utils/toast-config';
 
 const AdminProfile = () => {
 
+    const [state, setState] = useReducer((state, newState) => ({...state, ...newState}),
+                                                               {allSubjects: [], pageNumber: 0, nextSizeContent: null});
+
+                                                                   
     const subjectApi= new SubjectAPI();
-    const [allSubjects,setAllSubjects] = useState([]);
+    // const [allSubjects,setAllSubjects] = useState([]);
     
-    const [pageNumber, setPageNumber] = useState(0);
-    const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
+    // const [pageNumber, setPageNumber] = useState(0);
+    // const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
 
     useEffect( () => {
-        getAllSubjects(pageNumber)
+        getAllSubjects(state.pageNumber)
     }, [])
 
     const getAllSubjects = (pageN) => {
-        subjectApi.getAllSubjects(pageN,5).then( (resp) => { // 5 elementos para traer
-            setAllSubjects(resp.data.content);
-            setPageNumber(pageN);
-            setSizeContentAux(pageN);
-        }).catch( (e) => {
-            console.log(e);
+        subjectApi.getAllSubjects(pageN,5)
+                    .then( (resp) => resp.data)
+                    .then( (data) => {
+                        setState({allSubjects:data.subjectsDTO});
+                        return data;
+                    }).then( (data) => {
+                        setState({pageNumber:pageN, nextSizeContent:data.nextPageSize})
+                    })
+                    .catch( (e) => {
+                        console.log(e);
         })
     }
 
-    const setSizeContentAux = (pageN) => { 
-        subjectApi.getAllSubjects(pageN,5).then( (resp) => {
-            setSizeContent(resp.data.content.length);
-        }).catch( (e) => { console.log(e) })
-    }
+    // const setSizeContentAux = (pageN) => { 
+    //     subjectApi.getAllSubjects(pageN,5)
+    //                     .then( (resp) => resp.data)
+    //                     .then( (data) =>{
+    //                         setState({sizeContent:data.content.length})
+    //                     })
+    //                     .catch( (e) => { console.log(e) })
+    // }
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
@@ -81,7 +92,7 @@ const AdminProfile = () => {
                         <Card.Title>Todas las materias</Card.Title>
                             <ListGroup>
                                 {
-                                    allSubjects.map( (subject) => {
+                                    state.allSubjects.map( (subject) => {
                                         return <SubjectInfoAdmin 
                                                     key={subject.id}
                                                     subject={subject}
@@ -90,8 +101,8 @@ const AdminProfile = () => {
                                 }
                             </ListGroup>
                             <ListGroup style={{height: "65px"}}>
-                                <Pagination pageNumber={pageNumber}
-                                            sizeContent={sizeContent}
+                                <Pagination pageNumber={state.pageNumber}
+                                            nextSizeContent={state.nextSizeContent}
                                             getAllSubjects={getAllSubjects} />
                             </ListGroup>
                         </Card>

@@ -3,14 +3,14 @@ import { Container, Col, Row, Image, Button } from 'react-bootstrap';
 import './Pagination.css';
 import arrow from '../resources/arrow.png';
 
- const Pagination = ({pageNumber, sizeContent, getAllSubjects}) => {
+ const Pagination = ({pageNumber, nextSizeContent, getAllSubjects}) => {
      
     const [leftArrowVisibility, setLeftArrowVisibility] = useState(false);
     const [rightArrowVisibility, setRightArrowVisibility] = useState(true);
 
     const handleArrows = () => {
-        handleLeftArrow();
-        handleRightArrow();
+        handleLeftArrow(pageNumber+"sarasa");
+        handleRightArrow(pageNumber+"saanaan");
     }
 
     const handleArrowsR = () => {
@@ -23,15 +23,15 @@ import arrow from '../resources/arrow.png';
         handleArrows();
     }
 
-    const handleLeftArrow = () => {  
-        pageNumber===0 ? changeArrowVisibility("leftArrow","hidden") : changeArrowVisibility("leftArrow","visible"); 
+    const handleLeftArrow = (pageNumber) => {  
+        pageNumber+1===0 ? changeArrowVisibility("leftArrow","hidden") : changeArrowVisibility("leftArrow","visible"); 
     }
 
     const handleRightArrow = () => {
-        sizeContent === 5 ? 
-            changeArrowVisibility("rightArrow","visible")
+        nextSizeContent === 0 ? 
+            changeArrowVisibility("rightArrow","hidden")
             :
-            changeArrowVisibility("rightArrow","hidden"); 
+            changeArrowVisibility("rightArrow","visible"); 
     }
 
     const changeArrowVisibility = (arrowId,visibility) => { 

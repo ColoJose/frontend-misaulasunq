@@ -92,6 +92,24 @@ export default class SubjectAPI {
                          this.getHeader());
     }
 
+    getJWT() {
+        return axios({
+            method: 'post',
+            url: 'https://dev-hlo8aufh.auth0.com/oauth/token',
+            headers: { "Content-Type": API_CONFIG.contentType},
+            data: {
+                client_id: "aHQN1HPqiXahHa0H7pRasGYPLVDu4Tkp",
+                client_secret: "eOfaTNhOLNI8-h9TSwoJyUPSSiu6EdAzlUuA8PkrTknzFVBsMFP0fK7dRFJf4ZG0",
+                audience:"https://api-tip",
+                grant_type:"client_credentials"     
+            }
+        })
+
+    // .then( (resp) => {
+    // AuthorizeJWT(resp.data.access_token).getInstance();
+    // }).catch( e => console.log(e));
+    }
+
     getHeader(){
         return {
             headers: {
