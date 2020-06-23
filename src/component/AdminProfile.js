@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, ListGroup, Container, Row, Col } from 'react-bootstrap';
+import { Card, ListGroup, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
 import Pagination from './Pagination';
+import GenericModal from './massiveLoad/GenericModal';
+import MassiveLoad from './massiveLoad/MassiveLoad';
+// css
 import "./ButtonBranding.css";
 // toastify
 import { toast } from 'react-toastify';
@@ -12,8 +15,9 @@ import { editConfig } from '../utils/toast-config';
 
 const AdminProfile = () => {
 
+    const massiveUpload = <MassiveLoad/>
     const subjectApi= new SubjectAPI();
-    const [allSubjects,setAllSubjects] = useState([]);
+    const [allSubjects, setAllSubjects] = useState([]);
     
     const [pageNumber, setPageNumber] = useState(0);
     const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
@@ -55,8 +59,8 @@ const AdminProfile = () => {
     // edit functions
 
     const editSubject = (id,mode,objToPost) => {
-        if(mode=== "generalInfo") editGeneralInfo(id,objToPost);
-        if(mode=== "commissions");editCommissions(id,objToPost);
+        if(mode === "generalInfo") editGeneralInfo(id,objToPost);
+        if(mode === "commissions") editCommissions(id,objToPost);
     }
 
     const editCommissions = (id, objToPost) => { console.log("edit commissions") }
@@ -71,14 +75,27 @@ const AdminProfile = () => {
 
     return (
         <div style={{width:"100%"}}>
-            <h1>Panel de administrador/a</h1>
-            <button className="btn btn-danger color-button" onClick={ () => goNewSubjectForm()}>Cargar nueva materia</button>
-            <h3></h3>
             <Container>
+                <Row>
+                    <h1>Panel de administrador/a</h1>
+                </Row>
+                <Row className="my-2">
+                    <Col>
+                        <ButtonGroup size="sm">
+                            <Button className="btn btn-danger color-button" 
+                                    onClick={() => goNewSubjectForm()}>Nueva Materia</Button>
+                            <GenericModal children={massiveUpload} 
+                                          title="Carga de Horarios por Archivo" 
+                                          buttonLabel="Cargar Archivo"
+                                          buttonStyle="btn btn-danger color-button"
+                                          size="xs"/>
+                        </ButtonGroup>                   
+                    </Col>
+                </Row>
                 <Row>
                     <Col xs={8}>
                         <Card>
-                        <Card.Title>Todas las materias</Card.Title>
+                        <Card.Title>Todas las Materias</Card.Title>
                             <ListGroup>
                                 {
                                     allSubjects.map( (subject) => {
@@ -100,7 +117,6 @@ const AdminProfile = () => {
                     <Col xs={4}>Completar</Col>
                 </Row>
             </Container>
-            
         </div>
     );
 
