@@ -39,9 +39,9 @@ export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
                             <img src={edit} alt="edit icon"/>
                         </OverlayTrigger>
                     </Col>
-                    <Col sm="2" onClick={ () => selectSubjectTo(id,"delete")}>
+                    {/* <Col sm="2" onClick={ () => selectSubjectTo(id,"delete")}>
                         <img src={info} alt="info icon"/>
-                        </Col>
+                    </Col> */}{/* Deshabilitado por no funcionar*/}
                 </Row>
             </ListGroup.Item>
 
