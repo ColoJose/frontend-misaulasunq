@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 
  const EditGeneralInfo = (props) => {
 
-   const {subject, show, hide, selectSubjectTo} = props;
+   const {subject, show, hide, selectSubjectTo, handleEditButtons, idEditButton} = props;
 
    const [name, setName] = useState(subject.name);
    const [subjectCode, setSubjectCode] = useState(subject.subjectCode);
@@ -16,7 +16,13 @@ import { Modal, Button, Form } from 'react-bootstrap';
       e.preventDefault(); 
       selectSubjectTo(subject,"generalInfo",generalInfoToPost);
       console.log("pass select subject2");
+      handleEditButtons(idEditButton);
       hide();
+   }
+
+   const handleClose = () => { 
+      handleEditButtons(idEditButton);
+      hide()
    }
    
    return (
@@ -46,7 +52,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
                </Modal.Body>
                <Modal.Footer>
                   <Button type="submit">Guardar cambios</Button>
-                  <Button onClick={ () => hide() }>Cerrar</Button>
+                  <Button onClick={ () =>  handleClose() }>Cerrar</Button>
                </Modal.Footer>
             </Form>
          </Modal>

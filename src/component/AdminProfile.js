@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Card, ListGroup, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+
+import React, { useState, useEffect, useReducer } from 'react';
+import { Card, ListGroup, Container, Row, Col } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
@@ -15,6 +16,13 @@ import { editConfig } from '../utils/toast-config';
 
 const AdminProfile = () => {
 
+    const [state, setState] = useReducer((state, newState) => ({...state, ...newState}),
+                                                               {allSubjects: [], pageNumber: 0, nextSizeContent: null});
+
+    const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
+    const subjectApi= new SubjectAPI();
+    const elems = 5; // cantidad de elemntos que trae el cada page
+
     const massiveUpload = <MassiveLoad/>
     const subjectApi= new SubjectAPI();
     const [allSubjects, setAllSubjects] = useState([]);
@@ -23,23 +31,21 @@ const AdminProfile = () => {
     const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
 
     useEffect( () => {
-        getAllSubjects(pageNumber)
+        getAllSubjects(state.pageNumber)
     }, [])
 
     const getAllSubjects = (pageN) => {
-        subjectApi.getAllSubjects(pageN,5).then( (resp) => { // 5 elementos para traer
-            setAllSubjects(resp.data.content);
-            setPageNumber(pageN);
-            setSizeContentAux(pageN);
-        }).catch( (e) => {
-            console.log(e);
+        subjectApi.getAllSubjects(pageN,elems)
+                    .then( (resp) => resp.data)
+                    .then( (data) => {
+                        setState({allSubjects:data.subjectsDTO});
+                        return data;
+                    }).then( (data) => {
+                        setState({pageNumber:pageN, nextSizeContent:data.nextPageSize})
+                    })
+                    .catch( (e) => {
+                        console.log(e);
         })
-    }
-
-    const setSizeContentAux = (pageN) => { 
-        subjectApi.getAllSubjects(pageN,5).then( (resp) => {
-            setSizeContent(resp.data.content.length);
-        }).catch( (e) => { console.log(e) })
     }
 
     const goNewSubjectForm = () => {
@@ -73,6 +79,32 @@ const AdminProfile = () => {
 
     const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }
 
+    const handleEditButtons = (idEditButton) => {
+        setIsPopoverEditOpen(!isPopoverEditOpen);
+        var editButtons = document
+                            .getElementsByClassName("button-edit");
+
+        var filterButtons = Array.prototype.filter.call(editButtons, function(btn){
+            return btn.id != idEditButton;
+        })
+
+        if ( isPopoverEditOpen ) {
+            enableEditButtons(filterButtons);
+        }else {
+            disableButtons(filterButtons);
+        }
+    }
+
+    const enableEditButtons = (editButtons) => { setDisabledButtons(editButtons, false) }
+    const disableButtons = (editButtons) => { setDisabledButtons(editButtons, true) }
+
+    const setDisabledButtons = (buttons,bool) => {
+        Array.prototype.map.call(buttons, function(btn){
+            return btn.disabled = bool;
+        })
+    }
+ 
+
     return (
         <div style={{width:"100%"}}>
             <Container>
@@ -98,17 +130,19 @@ const AdminProfile = () => {
                         <Card.Title>Todas las Materias</Card.Title>
                             <ListGroup>
                                 {
-                                    allSubjects.map( (subject) => {
-                                        return <SubjectInfoAdmin 
+                                    state.allSubjects.map( (subject) => {
+                                        return  <SubjectInfoAdmin 
                                                     key={subject.id}
                                                     subject={subject}
-                                                    selectSubjectTo={selectSubjectTo}/>
+                                                    selectSubjectTo={selectSubjectTo}
+                                                    handleEditButtons={handleEditButtons} />
                                     })
+                                    
                                 }
                             </ListGroup>
                             <ListGroup style={{height: "65px"}}>
-                                <Pagination pageNumber={pageNumber}
-                                            sizeContent={sizeContent}
+                                <Pagination pageNumber={state.pageNumber}
+                                            nextSizeContent={state.nextSizeContent}
                                             getAllSubjects={getAllSubjects} />
                             </ListGroup>
                         </Card>
