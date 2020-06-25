@@ -1,0 +1,15 @@
+input[type="file" i] #uploadFileInput button{
+    color: var(--unq-white);
+    background-color: var(--unq-red);
+    border-color: var(--unq-red);
+}
+/* input[type="file" i]:hover #uploadFileInput {
+    background-color: #a52f17;
+    border-color: #a52f17;
+} */
+/* input[type="file" i]:focus #uploadFileInput{
+    background-color: #97301b;
+    border-color: #97301b;
+    box-shadow: 0 0 0 0.2rem rgba(197, 35, 19, 0.52);
+    outline: 0;
+} */
