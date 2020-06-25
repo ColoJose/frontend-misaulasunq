@@ -24,7 +24,7 @@ import arrow from '../resources/arrow.png';
     }
 
     const handleLeftArrow = (pageNumber) => {  
-        pageNumber+1===0 ? changeArrowVisibility("leftArrow","hidden") : changeArrowVisibility("leftArrow","visible"); 
+        pageNumber===0 ? changeArrowVisibility("leftArrow","hidden") : changeArrowVisibility("leftArrow","visible"); 
     }
 
     const handleRightArrow = () => {

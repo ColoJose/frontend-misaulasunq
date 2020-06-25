@@ -15,19 +15,16 @@ const AdminProfile = () => {
     const [state, setState] = useReducer((state, newState) => ({...state, ...newState}),
                                                                {allSubjects: [], pageNumber: 0, nextSizeContent: null});
 
-                                                                   
+    const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
     const subjectApi= new SubjectAPI();
-    // const [allSubjects,setAllSubjects] = useState([]);
-    
-    // const [pageNumber, setPageNumber] = useState(0);
-    // const [sizeContent, setSizeContent] = useState(5); // el length del content que te retorna el page
+    const elems = 5; // cantidad de elemntos que trae el cada page
 
     useEffect( () => {
         getAllSubjects(state.pageNumber)
     }, [])
 
     const getAllSubjects = (pageN) => {
-        subjectApi.getAllSubjects(pageN,5)
+        subjectApi.getAllSubjects(pageN,elems)
                     .then( (resp) => resp.data)
                     .then( (data) => {
                         setState({allSubjects:data.subjectsDTO});
@@ -39,15 +36,6 @@ const AdminProfile = () => {
                         console.log(e);
         })
     }
-
-    // const setSizeContentAux = (pageN) => { 
-    //     subjectApi.getAllSubjects(pageN,5)
-    //                     .then( (resp) => resp.data)
-    //                     .then( (data) =>{
-    //                         setState({sizeContent:data.content.length})
-    //                     })
-    //                     .catch( (e) => { console.log(e) })
-    // }
 
     const goNewSubjectForm = () => {
         history.push('/admin/newsubjectform');
@@ -67,7 +55,7 @@ const AdminProfile = () => {
 
     const editSubject = (id,mode,objToPost) => {
         if(mode=== "generalInfo") editGeneralInfo(id,objToPost);
-        if(mode=== "commissions");editCommissions(id,objToPost);
+        if(mode=== "commissions") editCommissions(id,objToPost);
     }
 
     const editCommissions = (id, objToPost) => { console.log("edit commissions") }
@@ -79,6 +67,32 @@ const AdminProfile = () => {
     }
 
     const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }
+
+    const handleEditButtons = (idEditButton) => {
+        setIsPopoverEditOpen(!isPopoverEditOpen);
+        var editButtons = document
+                            .getElementsByClassName("button-edit");
+
+        var filterButtons = Array.prototype.filter.call(editButtons, function(btn){
+            return btn.id != idEditButton;
+        })
+
+        if ( isPopoverEditOpen ) {
+            enableEditButtons(filterButtons);
+        }else {
+            disableButtons(filterButtons);
+        }
+    }
+
+    const enableEditButtons = (editButtons) => { setDisabledButtons(editButtons, false) }
+    const disableButtons = (editButtons) => { setDisabledButtons(editButtons, true) }
+
+    const setDisabledButtons = (buttons,bool) => {
+        Array.prototype.map.call(buttons, function(btn){
+            return btn.disabled = bool;
+        })
+    }
+ 
 
     return (
         <div style={{width:"100%"}}>
@@ -93,11 +107,13 @@ const AdminProfile = () => {
                             <ListGroup>
                                 {
                                     state.allSubjects.map( (subject) => {
-                                        return <SubjectInfoAdmin 
+                                        return  <SubjectInfoAdmin 
                                                     key={subject.id}
                                                     subject={subject}
-                                                    selectSubjectTo={selectSubjectTo}/>
+                                                    selectSubjectTo={selectSubjectTo}
+                                                    handleEditButtons={handleEditButtons} />
                                     })
+                                    
                                 }
                             </ListGroup>
                             <ListGroup style={{height: "65px"}}>
