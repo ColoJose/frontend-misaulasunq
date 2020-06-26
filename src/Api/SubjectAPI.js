@@ -87,8 +87,13 @@ export default class SubjectAPI {
         )
     }
 
-    getAllClassrooms() {
+    getAllClassrooms() { //TODO: DUPLICADO! ya esta en ClassroomAPI
         return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.classroomAPI}/suggestions`,
+                         this.getHeader());
+    }
+
+    getOverlappingSubjects(page, size) {
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/OverlappingSubjects?page=${page}&elements=${size}`,
                          this.getHeader());
     }
 

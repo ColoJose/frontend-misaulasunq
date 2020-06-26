@@ -7,11 +7,12 @@ function OverlayMenu({popover}){
 
     const [showElement, setShowElement] = useState(false);
     const target = useRef(null);
+    const container = useRef(null);
     const show = () =>{ setShowElement(true);  }
     const hide = () =>{ setShowElement(false);  }
 
     return (
-        <>
+        <div ref={container}>
             <Button ref={target} 
                     onClick={show}
                     onMouseOut={hide} 
@@ -19,11 +20,12 @@ function OverlayMenu({popover}){
                 <BsList size='1em'/>
             </Button>
             <Overlay target={target.current} 
-                        show={showElement} 
-                        placement="right">
+                     show={showElement} 
+                     placement="right"
+                     container={container.current}>
                 {popover}
             </Overlay>
-        </>
+        </div>
         );
 }
 

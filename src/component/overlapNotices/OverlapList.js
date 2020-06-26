@@ -1,53 +1,57 @@
 
-import React from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { Popover, Badge, Card, ListGroup, Col, Row } from 'react-bootstrap';
-import { Label } from 'semantic-ui-react';
-// react-icons
-import { BsExclamationTriangleFill } from 'react-icons/bs';
-import OverlayMenu from './OverlayMenu';
+import OverlapItem from './OverlapItem';
+import SubjectAPI from '../../Api/SubjectAPI';
 
 function OverlapList(){
 
+    const subjectApi= new SubjectAPI();
+
+    const [state, setState] = 
+                        useReducer(
+                            (state, newState) => 
+                                    ({...state, ...newState}),
+                                    {
+                                        overlappingSubjects: [],
+                                        currentPage: 0, 
+                                        pageSize: 5,
+                                        nextSizeContent:0
+                                    }
+                            );
+
+    useEffect( () => {
+        getOverlappingSubject()
+    }, [])
+
+    const getOverlappingSubject = () => {
+        subjectApi.getOverlappingSubjects(state.currentPage,state.pageSize)
+                    .then( 
+                        (resp) => {
+                            setState(
+                                {
+                                    overlappingSubjects: resp.data.content,
+                                    currentPage: resp.data.pageable.pageNumber, 
+                                    nextSizeContent: resp.data.totalElements
+                                });
+                            })
+                    .catch( (e) => {console.log(e);});
+    }
     
-    const editPopover = (
-        <Popover id="popover-basic">
-          <Popover.Title as="h3">¿Qué va a editar?</Popover.Title>
-          <Popover.Content >Editar info general</Popover.Content>
-          <Popover.Content >Editar comisiones</Popover.Content>
-        </Popover>
-    );
-    
+    const getSubjectsList = () =>{
+        return state.overlappingSubjects.map( (subject) => {
+                    return <OverlapItem key={subject.id}
+                                        subject={subject}/>
+        });
+    }
+
     return (
         <>
-            <Card autoCapitalize className="border">
+            <Card className="border">
                 <Card.Header style={{backgroundColor: '#832d1c', fontWeight: '500', color:'#fff'}}>Materias Superpuestas</Card.Header>
                 <Card.Body className="px-0 py-0">
-                    
                     <ListGroup variant="flush">
-                        <ListGroup.Item>
-                            <Row>
-                                <Col xs={2}>
-                                    <OverlayMenu popover={editPopover}/>
-                                </Col>
-                                <Col xs={10}>
-                                    <Row>
-                                        <Col xs={10}>
-                                            Matematica II<br/>Tecnicatura en Programacion
-                                        </Col>
-                                        <Col xs={2}>
-                                        <Badge basic circular>
-                                            <BsExclamationTriangleFill color='#ffc107' size='1.5em'/>
-                                            <Label circular 
-                                                   floating 
-                                                   style={{backgroundColor:"#832d1c",color:"#fff", top: "-25%",left: "85%"}}>
-                                                22
-                                            </Label>
-                                        </Badge>                                        
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
+                        {getSubjectsList()}
                     </ListGroup>
                 </Card.Body>
             </Card>
