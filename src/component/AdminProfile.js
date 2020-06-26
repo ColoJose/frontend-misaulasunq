@@ -7,6 +7,7 @@ import SubjectInfoAdmin from './SubjectInfoAdmin';
 import Pagination from './Pagination';
 import GenericModal from './massiveLoad/GenericModal';
 import MassiveLoad from './massiveLoad/MassiveLoad';
+import OverlapList from './overlapNotices/OverlapList';
 // css
 import "./ButtonBranding.css";
 // toastify
@@ -148,7 +149,9 @@ const AdminProfile = () => {
                         </Card>
                     </Col>
 
-                    <Col xs={4}>Completar</Col>
+                    <Col xs={4}>
+                        <OverlapList/>
+                    </Col>
                 </Row>
             </Container>
         </div>
