@@ -5,8 +5,9 @@ import edit from '../resources/edit-tools.png';
 import info from '../resources/delete.png'
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
 import history from '../utils/history';
+import './SubjectInfoAdmin.css';
 
-export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
+export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditButtons}) {
     const { id } = subject;
 
     // show edit modals generalInfo and commissions
@@ -14,17 +15,24 @@ export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
 
     const hideGeneralInfoModal = () => { setShowGeneralInfoModal(false) };
 
+    const handlePopoverClick = () => {
+        document.getElementById(popoverId).style.visibility = "hidden";
+        setShowGeneralInfoModal(true);
+    }
+
+    const popoverId = `popover-${id}`;
+
     const editPopover = (
-            <Popover id="popover-basic">
-              <Popover.Title as="h3">¿Qué va a editar?</Popover.Title>
-              <Popover.Content onClick={ () => setShowGeneralInfoModal(true) }>Editar info general</Popover.Content>
-              <Popover.Content onClick={ () => goEditCommissions() }>Editar comisiones</Popover.Content>
-            </Popover>
+        <Popover id={popoverId}>
+            <Popover.Title as="h3">¿Qué va a editar?</Popover.Title>
+            <Popover.Content onClick={ () => handlePopoverClick() }>Editar info general</Popover.Content>
+            <Popover.Content onClick={ () => goEditCommissions() }>Editar comisiones</Popover.Content>
+        </Popover>
     );
 
-    const goEditCommissions = () => { 
-        history.push(`/admin/edit-commissions/${id}`); 
-    }
+    const goEditCommissions = () => { history.push(`/admin/edit-commissions/${id}`); }
+
+    const idEditButton= `id-edit-button-${id}`;
 
     return (
         <>
@@ -35,13 +43,19 @@ export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
                         <p>Carrera: {subject.degrees[0].name}</p> {/* semi hardcoeado */}
                     </Col>
                     <Col sm="2">
-                        <OverlayTrigger trigger="click" placement="right" overlay={editPopover}>
-                            <img src={edit} alt="edit icon"/>
+                        <OverlayTrigger trigger="click" 
+                                        placement="right" 
+                                        overlay={editPopover}
+                                        >
+                            <button id={idEditButton} className="button-edit"
+                                    onClick={ () => handleEditButtons(idEditButton)}>
+                                        <img src={edit} alt="edit icon"/>
+                            </button>
                         </OverlayTrigger>
                     </Col>
                     {/* <Col sm="2" onClick={ () => selectSubjectTo(id,"delete")}>
                         <img src={info} alt="info icon"/>
-                    </Col> */}{/* Deshabilitado por no funcionar*/}
+                    </Col>*/}{/* Deshabilitado por no funcioanr*/}
                 </Row>
             </ListGroup.Item>
 
@@ -49,7 +63,9 @@ export default function SubjectInfoAdmin({subject,selectSubjectTo}) {
                 subject={subject}
                 show={showGeneralInfoModal} 
                 hide={hideGeneralInfoModal}
-                selectSubjectTo={selectSubjectTo} />
+                selectSubjectTo={selectSubjectTo}
+                handleEditButtons={handleEditButtons}
+                idEditButton={idEditButton} />
         </>
     )
 
