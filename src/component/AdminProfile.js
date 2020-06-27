@@ -23,7 +23,7 @@ const AdminProfile = () => {
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
     const elems = 5; // cantidad de elemntos que trae el cada page
-
+    const subjectApi = new SubjectAPI;
     const massiveUpload = <MassiveLoad/>;
 
     useEffect( () => {

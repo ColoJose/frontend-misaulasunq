@@ -19,7 +19,18 @@ const OverlapItem = ({subject}) =>{
     }
 
     const countOverlapNotices = () =>{
-        return 22;
+        return subject.commissions.reduce(
+            function (accumulator, currentValue) {
+                return accumulator + 
+                    currentValue.schedules.reduce(
+                        function (accumulator, currentValue) {
+                            return accumulator + currentValue.notices.length;
+                        },
+                        0
+                    );
+            },
+            0
+        );
     }
 
     return (<ListGroup.Item>
@@ -37,7 +48,7 @@ const OverlapItem = ({subject}) =>{
                                 {subject.name}
                             </Col>
                             <Col xs={2}>
-                            <Badge basic circular hidden> {/* TODO: falta terminar la funcion que agrega la cantidad de solapamientos que tiene*/}
+                            <Badge basic circular>
                                 <BsExclamationTriangleFill color='#ffc107' size='1.5em'/>
                                 <Label circular 
                                         floating 

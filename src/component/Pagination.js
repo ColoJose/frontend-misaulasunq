@@ -15,21 +15,21 @@ import right from '../resources/arrowRight.png';
     }
 
     return (
-        <Row className="my-auto mx-auto">
-            <Col xs={4} className="my-auto mx-auto">
+        <Row className="w-50 my-auto mx-auto">
+            <Col xs={2} className="w-50 my-auto mx-auto">
                 <Button variant="outline-light"
                         onClick={ () => handleArrowsL() }
-                        disabled={props.firstPage} >
+                        hidden={props.firstPage} >
                     <Image src={left}/>
                 </Button> 
             </Col>
-            <Col xs={4} className="my-auto mx-auto text-center pageNumber">
+            <Col xs={2} className="w-50 my-auto mx-auto text-center pageNumber">
                 <p>{props.pageNumber + 1}</p>
             </Col>
-            <Col xs={4} className="my-auto mx-auto">
+            <Col xs={2} className="w-50 my-auto mx-auto">
                 <Button variant="outline-light"
                         onClick={ () => handleArrowsR() }
-                        disabled={props.lastPage}>
+                        hidden={props.lastPage}>
                     <Image src={right}/>
                 </Button>
             </Col>

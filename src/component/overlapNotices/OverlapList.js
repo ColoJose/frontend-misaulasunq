@@ -3,35 +3,40 @@ import React, { useReducer, useEffect } from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
 import OverlapItem from './OverlapItem';
 import SubjectAPI from '../../Api/SubjectAPI';
+import Pagination from '../Pagination';
 
 function OverlapList(){
 
+    const PAGE_SIZE = Object.freeze(5);
     const subjectApi= new SubjectAPI();
 
     const [state, setState] = 
-                        useReducer(
-                            (state, newState) => 
-                                    ({...state, ...newState}),
-                                    {
-                                        overlappingSubjects: [],
-                                        currentPage: 0, 
-                                        pageSize: 5,
-                                        nextSizeContent:0
-                                    }
-                            );
+        useReducer(
+            (state, newState) => 
+                ({...state, ...newState}),
+                {
+                    overlappingSubjects: [],
+                    pageNumber: 0, 
+                    totalPages: 0,
+                    firstPage: "true", 
+                    lastPage: "false"
+                }
+        );
 
     useEffect( () => {
-        getOverlappingSubject()
+        getOverlappingSubject(state.pageNumber)
     }, [])
 
-    const getOverlappingSubject = () => {
-        subjectApi.getOverlappingSubjects(state.currentPage,state.pageSize)
+    const getOverlappingSubject = (pageNumber) => {
+        subjectApi.getOverlappingSubjects(pageNumber,PAGE_SIZE)
                     .then( (resp) => {
                             setState(
                                 {
                                     overlappingSubjects: resp.data.content,
-                                    currentPage: resp.data.pageable.pageNumber, 
-                                    nextSizeContent: resp.data.totalElements
+                                    pageNumber: resp.data.pageable.pageNumber, 
+                                    totalPages: resp.data.totalPages,
+                                    firstPage: resp.data.first,
+                                    lastPage: resp.data.last
                                 });
                             })
                     .catch( (e) => {console.log(e);});
@@ -53,6 +58,15 @@ function OverlapList(){
                         {getSubjectsList()}
                     </ListGroup>
                 </Card.Body>
+                <Card.Footer>
+                        <ListGroup>
+                            <Pagination pageNumber={state.pageNumber}
+                                        totalPages={state.totalPages}
+                                        firstPage={state.firstPage}
+                                        lastPage={state.lastPage}
+                                        nextPageFunction={getOverlappingSubject} />
+                        </ListGroup>
+                    </Card.Footer> 
             </Card>
         </>
     )
