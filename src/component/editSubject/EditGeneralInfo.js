@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import '../ButtonBranding.css';
 
  const EditGeneralInfo = (props) => {
 
@@ -51,8 +52,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
                   
                </Modal.Body>
                <Modal.Footer>
-                  <Button type="submit">Guardar cambios</Button>
-                  <Button onClick={ () =>  handleClose() }>Cerrar</Button>
+                  <Button className="color-button" type="submit">Guardar cambios</Button>
+                  <Button className="color-button" onClick={ () =>  handleClose() }>Cerrar</Button>
                </Modal.Footer>
             </Form>
          </Modal>

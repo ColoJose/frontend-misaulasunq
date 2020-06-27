@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useReducer } from 'react';
-import { Card, ListGroup, Container, Row, Col } from 'react-bootstrap';
+import { Card, ListGroup, Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
@@ -20,7 +20,6 @@ const AdminProfile = () => {
                                                                {allSubjects: [], pageNumber: 0, nextSizeContent: null});
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
-    const subjectApi= new SubjectAPI();
     const elems = 5; // cantidad de elemntos que trae el cada page
 
     const massiveUpload = <MassiveLoad/>

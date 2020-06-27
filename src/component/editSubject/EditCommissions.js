@@ -2,6 +2,11 @@ import React,  { useEffect, useState }from 'react';
 import { Form, Container, Row, Col, Card, Nav, Button } from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import ScheduleEditAccordion from './ScheduleEditAccordion';
+import history from '../../utils/history';
+import {toast} from 'react-toastify';
+import { editConfig } from '../../utils/toast-config';
+// css
+import '../ButtonBranding.css';
 
 const EditCommissions = (props) => {
 
@@ -33,7 +38,7 @@ const EditCommissions = (props) => {
 
    const setNameAux = (name) => { selectedCommission.name = name; setName(name) }
    const setYearAux = (year) => { selectedCommission.year = year; setYear(year); console.log(selectedCommission.year) }
-   const setSemesterAux = (semester) => { selectedCommission.semester = semester; setSemester(semester); console.log(selectedCommission.semester) }
+   const setSemesterAux = (semester) => { selectedCommission.semester = semester; setSemester(semester); }
 
    const updateSchedules = (schedules) => { 
       selectedCommission.schedules = schedules;
@@ -41,17 +46,21 @@ const EditCommissions = (props) => {
 
    const updateCommission = () => {
       subjectApi.updateCommission(commissions, idSubject).then( (resp) => {
-         alert(`La comisión ${selectedCommission.name} se actualizó correctamente`);
+         toast.success(`La comisión ${selectedCommission.name} se actualizó correctamente`, editConfig);
       }).catch((e) => console.log(e));
-      // console.log(commissions);
-      // console.log(idSubject);
+      //  console.log(commissions);
+      //  console.log(idSubject);
+   }
+
+   const goBack = () => {
+      history.goBack();
    }
 
    return (
          <Container>
             <Row>
                <Col xs={12}>
-                  <h3>Editar Comisiones de "nombre materia TODO"</h3>
+                  <h3>Editar Comisiones de "materia" -> todo</h3>
                   <Card>
                      <Card.Header>
                         <Nav variant="tabs">
@@ -89,14 +98,14 @@ const EditCommissions = (props) => {
                                              <Form.Control as="select"
                                                            value={selectedCommission.semester}
                                                            onChange={ (e) => setSemesterAux(e.target.value) } >
-                                                <option>Primer cuatrimestre</option>
-                                                <option>Segundo cuatrimestre</option>
+                                                <option>Primer</option>
+                                                <option>Segundo</option>
                                                 <option>Anual</option>
                                              </Form.Control>
                                           </Form.Group>    
                                        </div>
                                     }
-                                    <Button className="btn btn-danger" onClick={ () => updateCommission() }>Modificar comisión</Button>
+                                    <Button className="color-button" onClick={ () => updateCommission() }>Modificar comisión</Button>
                               </Col>
                               <Col xs={6}>
                                  <ScheduleEditAccordion schedules={selectedCommission.schedules}
@@ -108,7 +117,8 @@ const EditCommissions = (props) => {
                   </Card> 
                </Col>
             </Row>
-            
+            <Button onClick={ () => goBack() } className="color-button">Volver al panel admin</Button>
+            <p>susi, dónde ponemos el botón de arriba? jeje </p>
          </Container>
 )
 }
