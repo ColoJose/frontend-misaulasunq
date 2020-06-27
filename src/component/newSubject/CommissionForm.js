@@ -90,8 +90,8 @@ export default function CommissionForm({addCommission}) {
                         as="select"
                         value={semester}
                         onChange={ (e) => setSemester(e.target.value)} >
-                        <option>Primer cuatrimestre</option>
-                        <option>Segundo cuatrimestre</option>
+                        <option>Primer</option>
+                        <option>Segundo</option>
                         <option>Anual</option>
                     </Form.Control>
                 </Form.Group>
