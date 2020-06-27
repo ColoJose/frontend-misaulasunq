@@ -1,72 +1,39 @@
-import React, {useState} from 'react';
-import { Container, Col, Row, Image, Button } from 'react-bootstrap';
+import React from 'react';
+import { Col, Row, Image, Button } from 'react-bootstrap';
 import './Pagination.css';
-import arrow from '../resources/arrow.png';
+import left from '../resources/arrowLeft.png';
+import right from '../resources/arrowRight.png';
 
- const Pagination = ({pageNumber, nextSizeContent, getAllSubjects}) => {
-     
-    const [leftArrowVisibility, setLeftArrowVisibility] = useState(false);
-    const [rightArrowVisibility, setRightArrowVisibility] = useState(true);
-
-    const handleArrows = () => {
-        handleLeftArrow(pageNumber+"sarasa");
-        handleRightArrow(pageNumber+"saanaan");
-    }
+ const Pagination = (props) => {
 
     const handleArrowsR = () => {
-        getAllSubjects(pageNumber + 1);
-        handleArrows();
+        props.nextPageFunction(props.pageNumber + 1);
     }
 
     const handleArrowsL = () => {
-        getAllSubjects(pageNumber - 1);
-        handleArrows();
-    }
-
-    const handleLeftArrow = (pageNumber) => {  
-        pageNumber===0 ? changeArrowVisibility("leftArrow","hidden") : changeArrowVisibility("leftArrow","visible"); 
-    }
-
-    const handleRightArrow = () => {
-        nextSizeContent === 0 ? 
-            changeArrowVisibility("rightArrow","hidden")
-            :
-            changeArrowVisibility("rightArrow","visible"); 
-    }
-
-    const changeArrowVisibility = (arrowId,visibility) => { 
-        document.getElementById(arrowId).style.visibility = visibility;
+        props.nextPageFunction(props.pageNumber - 1);
     }
 
     return (
-            <Row>
-                <Col xs={5}/>
-                <Row xs={2}>
-                <Col id="leftArrow" class xs={4}>
-                        <Button type="submit"
-                                variant="outline-light"
-                                onClick={ () => handleArrowsL() } >
-                            <Image src={arrow}/>
-                        </Button> 
-                </Col>
-                <Col className="center" xs={4}>
-                    <p>&nbsp;&nbsp;&nbsp;{pageNumber + 1}</p>
-                </Col>
-                <Col xs={4}>
-                    { rightArrowVisibility ? 
-                        <Button id="rightArrow"
-                            variant="outline-light"
-                            onClick={ () => handleArrowsR() }>
-                                <Image src={arrow}/>
-                        </Button>
-                        :
-                        null
-                    }
-                    
-                </Col>
-                </Row>
-                <Col xs={5}/>
-            </Row>
+        <Row className="my-auto mx-auto">
+            <Col xs={4} className="my-auto mx-auto">
+                <Button variant="outline-light"
+                        onClick={ () => handleArrowsL() }
+                        disabled={props.firstPage} >
+                    <Image src={left}/>
+                </Button> 
+            </Col>
+            <Col xs={4} className="my-auto mx-auto text-center pageNumber">
+                <p>{props.pageNumber + 1}</p>
+            </Col>
+            <Col xs={4} className="my-auto mx-auto">
+                <Button variant="outline-light"
+                        onClick={ () => handleArrowsR() }
+                        disabled={props.lastPage}>
+                    <Image src={right}/>
+                </Button>
+            </Col>
+        </Row>
     )
 }
 

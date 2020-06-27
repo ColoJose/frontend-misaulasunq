@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { uploadConfig } from '../../utils/toast-config';
 // css
 import "../ButtonBranding.css";
-import "./MassiveLoad.css";
 import UploaderAPI from "../../Api/UploaderAPI";
 import {parseError} from "../../utils/CodeErrorParser";
 
@@ -79,7 +78,7 @@ function MassiveLoad(){
                     <Form.File id="uploadFileInput"
                             custom={true}
                             label={state.label} 
-                            data-browse="Examinar"
+                            data-browse="Buscar"
                             accept=".xls,.xlsx"
                             onChange={setLabel}
                             />
