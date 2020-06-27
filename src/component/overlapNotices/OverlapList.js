@@ -1,6 +1,6 @@
 
 import React, { useReducer, useEffect } from 'react';
-import { Popover, Badge, Card, ListGroup, Col, Row } from 'react-bootstrap';
+import { Card, ListGroup } from 'react-bootstrap';
 import OverlapItem from './OverlapItem';
 import SubjectAPI from '../../Api/SubjectAPI';
 
@@ -26,8 +26,7 @@ function OverlapList(){
 
     const getOverlappingSubject = () => {
         subjectApi.getOverlappingSubjects(state.currentPage,state.pageSize)
-                    .then( 
-                        (resp) => {
+                    .then( (resp) => {
                             setState(
                                 {
                                     overlappingSubjects: resp.data.content,

@@ -1,5 +1,5 @@
 
-import React, { useState, useRef} from 'react';
+import React from 'react';
 //Bootstrap
 import { Popover, Button, OverlayTrigger, ListGroup, Col, Row, Badge } from 'react-bootstrap';
 import { Label } from 'semantic-ui-react';
@@ -37,7 +37,7 @@ const OverlapItem = ({subject}) =>{
                                 {subject.name}
                             </Col>
                             <Col xs={2}>
-                            <Badge basic circular>
+                            <Badge basic circular hidden> {/* TODO: falta terminar la funcion que agrega la cantidad de solapamientos que tiene*/}
                                 <BsExclamationTriangleFill color='#ffc107' size='1.5em'/>
                                 <Label circular 
                                         floating 
