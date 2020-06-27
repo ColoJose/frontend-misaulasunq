@@ -10,6 +10,17 @@ import NewSubjectForm from '../component/newSubject/NewSubjectForm';
 import PrivateRoute from '../component/PrivateRoute';
 import EditCommissions from '../component/editSubject/EditCommissions';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure({
+    autoClose: 3300,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+});
+
 class App extends React.Component {
   
   render() {

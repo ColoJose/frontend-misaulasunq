@@ -3,9 +3,9 @@ import axios from 'axios';
 
 export default class SubjectAPI {
 
-    getAllSubjects() {
+    getAllSubjects(pageNumber,elems) {
         return axios.get(
-            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/all-subjects`,
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/all-subjects?page=${pageNumber}&elems=${elems}`,
             this.getHeader()
         )
     }
@@ -86,6 +86,32 @@ export default class SubjectAPI {
                           this.getHeader()
         )
     }
+
+    getAllClassrooms() { //TODO: DUPLICADO! ya esta en ClassroomAPI
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.classroomAPI}/suggestions`,
+                         this.getHeader());
+    }
+
+    getOverlappingSubjects(page, size) {
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/OverlappingSubjects?page=${page}&elements=${size}`,
+                         this.getHeader());
+    }
+        // getJWT() {
+        //     return axios({
+        //         method: 'post',
+        //         url: 'https://dev-hlo8aufh.auth0.com/oauth/token',
+        //         headers: { "Content-Type": API_CONFIG.contentType},
+        //         data: {
+        //             client_id: "aHQN1HPqiXahHa0H7pRasGYPLVDu4Tkp",
+        //             client_secret: "eOfaTNhOLNI8-h9TSwoJyUPSSiu6EdAzlUuA8PkrTknzFVBsMFP0fK7dRFJf4ZG0",
+        //             audience:"https://api-tip",
+        //             grant_type:"client_credentials"     
+        //         }
+        //     })
+        // }
+        // .then( (resp) => {
+    // AuthorizeJWT(resp.data.access_token).getInstance();
+    // }).catch( e => console.log(e));
 
     getHeader(){
         return {

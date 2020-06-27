@@ -1,0 +1,11 @@
+.modal-dialog{
+    margin: 0.40rem auto;
+    margin-top: 0.40rem;
+    margin-right: auto;
+    margin-bottom: 0.40rem;
+    margin-left: auto;
+}
+
+.ui.inverted.dimmer {
+    background-color: rgba(255,255,255,1);
+}

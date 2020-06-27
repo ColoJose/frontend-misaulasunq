@@ -23,3 +23,7 @@
 .size-navbar { height: 8%; }
 
 .font-navbarBrand { color: var(--unq-white) !important; }
+
+#bar {
+    margin-left: 6px;
+}
