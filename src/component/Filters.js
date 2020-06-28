@@ -7,6 +7,7 @@ import { Card, Col, Button, Form, FormGroup, Image } from 'react-bootstrap';
 import next from '../resources/next.png';
 // CSS
 import "./Filters.css";
+import InputSearchForm from "./filters/InputSearchForm";
 
 const SearchType = Object.freeze({
     "bySubject":"bySubject", 
@@ -93,48 +94,18 @@ const Filters = (props) => {
             (suggestion) => <option key={suggestion}>{suggestion}</option>)
     }
 
-    const searchFormFor = (label, submitHandler, placeHolder, onInputChangeHandler, suggestions, dataListId) => {
-        return (
-        <Form onSubmit={submitHandler}>
-            <Form.Label as="h6">{label}</Form.Label>
-            <FormGroup>
-                <Form.Row>
-                    <Col xs={10}>
-                        <Form.Control list={dataListId}
-                                      type="text"
-                                      required
-                                      placeholder={placeHolder}
-                                      onChange={onInputChangeHandler}/>
-                        <datalist id={dataListId}>
-                            {makeSuggestionsOptions(suggestions)}
-                        </datalist>
-                    </Col>
-                    <Col xs={2}>
-                        <Button type="submit"
-                                variant="outline-light">
-                            <Image src={next}/>
-                        </Button>
-                    </Col>
-                </Form.Row>
-            </FormGroup>
-        </Form>);
-    }
-
     return (
         <>
             <Card>
                 <Card.Header as="h5">Filtros de Materias</Card.Header>
                 <Card.Body>
-                    {
-                        searchFormFor(
-                            "Filtrar por nombre materia",
-                            (e) => submitHandler(e, SearchType.bySubject),
-                            "Ingrese nombre materia",
-                            (e) => setSubject(e.target.value),
-                            props.subjectSuggestions,
-                            "subjectsOptions"
-                        )
-                    }
+                    <InputSearchForm label = "Filtrar por nombre materia"
+                                     submitHandler = {submitHandler}
+                                     placeHolder = "Ingrese nombre materia"
+                                     onInputChangeHandler = {setSubject}
+                                     dataListId = "subjectsOptions"
+                                     suggestions = {makeSuggestionsOptions(props.subjectSuggestions)}
+                                     searchType = {SearchType.bySubject}/>
                     <Form onSubmit={(e) => submitHandler(e, SearchType.byDay)}>
                         <Form.Label as="h6">Filtrar por Día</Form.Label>
                         <FormGroup> 
@@ -189,16 +160,13 @@ const Filters = (props) => {
                             </Form.Row>
                         </FormGroup>
                     </Form>
-                    {
-                        searchFormFor(
-                            "Filtrar por Nro de aula",
-                            (e) => submitHandler(e, SearchType.byClassroom),
-                            "Ingrese número de aula",
-                            (e) => setClassroomNumber(e.target.value),
-                            props.classroomSuggestions,
-                            "classroomOptions"
-                        )
-                    }
+                    <InputSearchForm label = "Filtrar por Nro de aula"
+                                     submitHandler = {submitHandler}
+                                     placeHolder = "Ingrese número de aula"
+                                     onInputChangeHandler = {setClassroomNumber}
+                                     dataListId = "classroomOptions"
+                                     suggestions = {makeSuggestionsOptions(props.classroomSuggestions)}
+                                     searchType = {SearchType.byClassroom}/>
                 </Card.Body>
             </Card>
         </>

@@ -1,36 +1,49 @@
 import React from 'react';
 import { Col, Row, Image, Button } from 'react-bootstrap';
 import './Pagination.css';
+// React-Icons
+import { MdNavigateBefore, MdNavigateNext, MdFirstPage, MdLastPage } from "react-icons/md";
 import left from '../resources/arrowLeft.png';
 import right from '../resources/arrowRight.png';
 
  const Pagination = (props) => {
 
-    const handleArrowsR = () => {
-        props.nextPageFunction(props.pageNumber + 1);
-    }
-
-    const handleArrowsL = () => {
-        props.nextPageFunction(props.pageNumber - 1);
+    const handleNextPage    = () => {   callParentPageFunction(props.pageNumber + 1);   }
+    const handlePreviousPage= () => {   callParentPageFunction(props.pageNumber - 1);   }
+    const handleFirstPage   = () => {   callParentPageFunction(0);  }
+    const handleLastPage    = () => {   callParentPageFunction(props.totalPages - 1);   }
+    const onlyOnePage       = () => {   return props.totalPages === 1;  }
+    const callParentPageFunction = (pageNumber) => {
+        props.pageFunction(pageNumber);
     }
 
     return (
         <Row className="w-50 my-auto mx-auto">
-            <Col xs={2} className="w-50 my-auto mx-auto">
-                <Button variant="outline-light"
-                        onClick={ () => handleArrowsL() }
+            <Col xs={4} className="w-50 my-auto mx-auto">
+                <Button variant="light"
+                        onClick={ () => handleFirstPage() }
                         hidden={props.firstPage} >
-                    <Image src={left}/>
+                    <MdFirstPage size='2em'/>
+                </Button> 
+                <Button variant="light"
+                        onClick={ () => handlePreviousPage() }
+                        hidden={props.firstPage} >
+                    <MdNavigateBefore size='2em'/>
                 </Button> 
             </Col>
             <Col xs={2} className="w-50 my-auto mx-auto text-center pageNumber">
-                <p>{props.pageNumber + 1}</p>
+                <p hidden={onlyOnePage()}>{props.pageNumber + 1}</p>
             </Col>
-            <Col xs={2} className="w-50 my-auto mx-auto">
-                <Button variant="outline-light"
-                        onClick={ () => handleArrowsR() }
+            <Col xs={4} className="w-50 my-auto mx-auto">
+                <Button variant="light"
+                        onClick={ () => handleNextPage() }
                         hidden={props.lastPage}>
-                    <Image src={right}/>
+                    <MdNavigateNext size='2em'/>
+                </Button>
+                <Button variant="light"
+                        onClick={ () => handleLastPage() }
+                        hidden={props.lastPage}>
+                    <MdLastPage size='2em'/>
                 </Button>
             </Col>
         </Row>

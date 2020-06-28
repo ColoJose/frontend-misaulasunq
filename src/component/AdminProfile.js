@@ -101,6 +101,16 @@ const AdminProfile = () => {
         })
     }
 
+    const renderSubjectsListItem = () => {
+        return state.allSubjects.map( 
+            (subject) => {
+                return <SubjectInfoAdmin key={subject.id}
+                                         subject={subject}
+                                         selectSubjectTo={selectSubjectTo}
+                                         handleEditButtons={handleEditButtons}/>
+        });
+    }
+
     return (
         <Container>
             <Row>
@@ -122,32 +132,24 @@ const AdminProfile = () => {
             <Row style={{height: "100%"}}>
                 <Col xs={8}>
                     <Card className="border" style={{height: "95%"}}>
-                    <Card.Header style={{backgroundColor: '#832d1c', fontWeight: '500', color:'#fff'}}>
-                        Todas las Materias
-                    </Card.Header>
-                    <Card.Body>
-                        <ListGroup variant="flush" style={{height: "100%"}}>
-                            {state.allSubjects.map( (subject) => {
-                                    return  <SubjectInfoAdmin 
-                                                key={subject.id}
-                                                subject={subject}
-                                                selectSubjectTo={selectSubjectTo}
-                                                handleEditButtons={handleEditButtons} />
-                            })}
-                        </ListGroup>
-                    </Card.Body>
-                    <Card.Footer>
-                        <ListGroup>
+                        <Card.Header style={{backgroundColor: '#832d1c', fontWeight: '500', color:'#fff'}}>
+                            Todas las Materias
+                        </Card.Header>
+                        <Card.Body>
+                            <ListGroup variant="flush" 
+                                       style={{height: "100%"}}>
+                                {renderSubjectsListItem()}
+                            </ListGroup>
+                        </Card.Body>
+                        <Card.Footer>
                             <Pagination pageNumber={state.pageNumber}
                                         totalPages={state.totalPages}
                                         firstPage={state.firstPage}
                                         lastPage={state.lastPage}
-                                        nextPageFunction={getAllSubjects} />
-                        </ListGroup>
-                    </Card.Footer>                    
+                                        pageFunction={getAllSubjects} />
+                        </Card.Footer>                    
                     </Card>
                 </Col>
-
                 <Col xs={4}>
                     <OverlapList/>
                 </Col>
