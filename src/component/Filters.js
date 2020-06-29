@@ -7,22 +7,11 @@ import { Card, Col, Button, Form, FormGroup, Image } from 'react-bootstrap';
 import next from '../resources/next.png';
 // CSS
 import "./Filters.css";
+// Own Components
+import DaySearchForm from "./filters/DaySearchForm";
 import InputSearchForm from "./filters/InputSearchForm";
-
-const SearchType = Object.freeze({
-    "bySubject":"bySubject", 
-    "bySchedule":"bySchedule", 
-    "byClassroom":"byClassroom",
-    "byDay": "byDay"
-});
-const hours = Object.freeze([
-    "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
-    "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
-]);
-const days = Object.freeze(["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"]);
-const makeOptions = (optionsToMake) => {return optionsToMake.map((option)=><option key={option.toString()}>{option}</option>);}
-const optionsHours = makeOptions(hours);
-const optionsDays = makeOptions(days);
+import BetweenHoursSearchForm from "./filters/BetweenHoursSearchForm";
+import { SearchType, hours, days } from "../Constants/Config";
 
 const Filters = (props) => {
 
@@ -89,9 +78,9 @@ const Filters = (props) => {
         }
     }
 
-    const makeSuggestionsOptions = (suggestionsList) => {
+    const makeSelectOptions = (suggestionsList) => {
         return suggestionsList.map(
-            (suggestion) => <option key={suggestion}>{suggestion}</option>)
+            (suggestion) => {   return {value: suggestion, label: suggestion};  })
     }
 
     return (
@@ -104,68 +93,27 @@ const Filters = (props) => {
                                      placeHolder = "Ingrese nombre materia"
                                      onInputChangeHandler = {setSubject}
                                      dataListId = "subjectsOptions"
-                                     suggestions = {makeSuggestionsOptions(props.subjectSuggestions)}
+                                     suggestions = {props.subjectSuggestions}
                                      searchType = {SearchType.bySubject}/>
-                    <Form onSubmit={(e) => submitHandler(e, SearchType.byDay)}>
-                        <Form.Label as="h6">Filtrar por Día</Form.Label>
-                        <FormGroup> 
-                            <Form.Row>
-                                <Col xs={10}>
-                                    <Form.Control as="select"
-                                                  value={selectedDay}
-                                                  custom 
-                                                  placeholder="Día"
-                                                  onChange={ (e) => setSelectedDay(e.target.value)}> 
-                                        {optionsDays} 
-                                    </Form.Control>
-                                </Col>    
-                                <Col xs={2}>
-                                    <Button type="submit"
-                                            variant="outline-light">
-                                        <Image src={next}/>
-                                    </Button>
-                                </Col>
-                            </Form.Row>
-                        </FormGroup>
-                    </Form>
-                    <Form onSubmit={(e) => submitHandler(e, SearchType.bySchedule)}>
-                        <Form.Label as="h6">Filtrar por horario</Form.Label>
-                        <FormGroup> 
-                            <Form.Row>
-                                <Col xs={4}>
-                                    <Form.Control as="select"
-                                                    value={startHour}
-                                                    custom 
-                                                    placeholder="Desde"
-                                                    onChange={ (e) => setStartHour(e.target.value)}> 
-                                        {optionsHours} 
-                                    </Form.Control>
-                                </Col>    
-                                <Col xs={2}/>
-                                <Col xs={4}>
-                                    <Form.Control as="select" 
-                                                    value={endHour}
-                                                    custom 
-                                                    placeholder="Hasta"
-                                                    onChange={ (e) => setEndHour(e.target.value)}>
-                                        {optionsHours}
-                                    </Form.Control>
-                                </Col>
-                                <Col xs={2}>
-                                    <Button type="submit"
-                                            variant="outline-light">
-                                        <Image src={next}/>
-                                    </Button>
-                                </Col>
-                            </Form.Row>
-                        </FormGroup>
-                    </Form>
+                    <DaySearchForm label = "Filtrar por Día"
+                                   submitHandler = {submitHandler}
+                                   onInputChangeHandler = {setSelectedDay}
+                                   selectOptions = {makeSelectOptions(days)}
+                                   searchType = {SearchType.byDay}/>
+                    <BetweenHoursSearchForm label = "Filtrar por horario"
+                                            submitHandler = {submitHandler}
+                                            startValue = {startHour}
+                                            setStartValue = {setStartHour}
+                                            endValue = {endHour}
+                                            setEndValue = {setEndHour}
+                                            optionsHours = {makeSelectOptions(hours)}
+                                            searchType = {SearchType.bySchedule}/>
                     <InputSearchForm label = "Filtrar por Nro de aula"
                                      submitHandler = {submitHandler}
                                      placeHolder = "Ingrese número de aula"
                                      onInputChangeHandler = {setClassroomNumber}
                                      dataListId = "classroomOptions"
-                                     suggestions = {makeSuggestionsOptions(props.classroomSuggestions)}
+                                     suggestions = {props.classroomSuggestions}
                                      searchType = {SearchType.byClassroom}/>
                 </Card.Body>
             </Card>
