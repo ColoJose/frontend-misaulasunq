@@ -4,7 +4,7 @@ import { MdSearch } from "react-icons/md";
 // Bootstrap
 import { Button } from "react-bootstrap";
 
-const SubmitButton = () => {
+const SubmitSearchButton = () => {
 
     return (
         <Button type="submit" variant="light">
@@ -13,4 +13,4 @@ const SubmitButton = () => {
     );
 }
 
-export default SubmitButton;
+export default SubmitSearchButton;
