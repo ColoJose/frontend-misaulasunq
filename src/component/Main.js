@@ -4,7 +4,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 // Semantic UI
 import { Dimmer, Loader } from 'semantic-ui-react';
 // components and internal resources imports
-import Filters from './Filters.js';
+import Filters from './filters/Filters.js';
 import SubjectsInfo from './subject information/SubjectsInfo.js';
 import SubjectAPI from "../Api/SubjectAPI";
 import ClassroomAPI from "../Api/ClassroomAPI";
@@ -70,10 +70,9 @@ function Main() {
                     <Filters handleSearchResult={handleSearchResult}
                              searching={startSearching}
                              subjectSuggestions={state.subjectSuggestions}
-                             classroomSuggestions={state.classroomSuggestions}
-                             />
+                             classroomSuggestions={state.classroomSuggestions}/>
                 </Col>
-                <Col className="justify-content-center col-Subjects"
+                <Col className="scroll-overflow justify-content-center col-Subjects"
                      xs={8}>
                     <SubjectsInfo subjects={state.subjects}
                                   notFound={state.notFound}

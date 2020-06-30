@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import NavbarApp from '../component/Navbar';
+import NavbarApp from '../component/navbar/Navbar';
 import { Route, Router, Switch } from 'react-router-dom';
 import Home from '../component/Home';
 import AdminProfile from '../component/AdminProfile';

@@ -2,11 +2,20 @@ import React from 'react';
 import {Accordion, Row, Col, ListGroup} from 'react-bootstrap';
 import MapModal from '../MapModal';
 import './CommissionInfo.css';
+import { daysForSorting } from '../../Constants/Config';
 
 function CommissionInfo({commissions}) {
 
+    const sortSchedules = (schedules) => {
+        return schedules.sort(scheduleComparatorByDayFunction);
+    }
+
+    const scheduleComparatorByDayFunction = (scheduleOne, scheduleTwo) => {
+        return daysForSorting.indexOf(scheduleOne.day.toUpperCase()) - daysForSorting.indexOf(scheduleTwo.day.toUpperCase());
+    }
+
     const commissionsList = (commission) => {
-        return commission.schedules.map( (schedule) => {
+        return sortSchedules(commission.schedules).map( (schedule) => {
             return( 
                 <Row key={schedule.id.toString()} 
                      className="subject-Row">
