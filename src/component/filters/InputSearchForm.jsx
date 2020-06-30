@@ -17,10 +17,16 @@ const InputSearchForm = ({label, submitHandler, placeHolder, onInputChangeHandle
         onInputChangeHandler(value);
     }
     
+    const renderLabel = () => {
+        if(label){
+            return <Form.Label as="h6">{label}</Form.Label>;
+        }
+    }
+
     return (
         <Form onSubmit={(e) => submitHandler(e, searchType)}>
-            <Form.Label as="h6">{label}</Form.Label>
-            <FormGroup>
+            {renderLabel()}
+            <FormGroup className="my-1">
                 <Form.Row>
                     <Col xs={10}>
                         <Typeahead id="basic-typeahead-single"
@@ -29,16 +35,8 @@ const InputSearchForm = ({label, submitHandler, placeHolder, onInputChangeHandle
                                    onChange={(e) => handleChange(e)}
                                    options={suggestions}
                                    placeholder={placeHolder}
-                                   required ={true}/>
-                        {/* <Form.Control list={dataListId}
-                                      className="height-Custom"
-                                      type="text"
-                                      required
-                                      placeholder={placeHolder}
-                                      onChange={(e) => onInputChangeHandler(e.target.value)}/> 
-                            <datalist id={dataListId}>
-                                {suggestions}
-                            </datalist>*/}
+                                   inputProps= {{required: true}}
+                                   maxResults={8}/>
                     </Col>
                     <Col xs={2}>
                         <SubmitSearchButton/>

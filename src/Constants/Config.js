@@ -11,3 +11,5 @@ export const hours = Object.freeze([
 ]);
 
 export const days = Object.freeze(["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"]);
+
+export const daysForSorting = Object.freeze(["LUNES","MARTES","MIERCOLES","MIÉRCOLES","JUEVES","VIERNES","SABADO","SÁBADO"]);

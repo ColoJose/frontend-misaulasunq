@@ -8,13 +8,19 @@ import Select from 'react-select';
 const DaySearchForm = ({label, submitHandler, onInputChangeHandler, selectOptions, searchType}) => {
     
     const options = (e) => {
-        onInputChangeHandler(e.value)
+        onInputChangeHandler(e.value);
+    }
+
+    const renderLabel = () => {
+        if(label){
+            return <Form.Label as="h6">{label}</Form.Label>;
+        }
     }
 
     return(
         <Form onSubmit={(e) => submitHandler(e, searchType)}>
-            <Form.Label as="h6">{label}</Form.Label>
-            <FormGroup> 
+            {renderLabel()}
+            <FormGroup className="my-1"> 
                 <Form.Row>
                     <Col xs={10}>
                         <Select className="basic-single"
