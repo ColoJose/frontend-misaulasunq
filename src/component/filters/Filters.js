@@ -16,9 +16,10 @@ const Filters = (props) => {
 
     const [subject, setSubject] = useState("");
     const [classroomNumber, setClassroomNumber] = useState("");
-    const [startHour, setStartHour] = useState("07:00");
-    const [endHour, setEndHour] = useState("22:00");
+    const [startHour, setStartHour] = useState({value: "07:00", label: "07:00"});
+    const [endHour, setEndHour] = useState({value: "07:00", label: "07:00"});
     const [selectedDay, setSelectedDay] = useState("Lunes");
+    const [hoursError, setHoursError] = useState(false);
 
     const fetchResolver = (promise, title) =>{
         promise.then( resp =>{
@@ -37,7 +38,7 @@ const Filters = (props) => {
     const filterBySchedule = (subjectApi) => {
         fetchResolver(
             subjectApi.getSubjectsBySchedule(
-                startHour, endHour),
+                startHour["value"], endHour["value"]),
                 "Materias Filtradas por Horario");
     }
 
@@ -53,9 +54,22 @@ const Filters = (props) => {
             "Materias Filtradas por Día");
     }
 
+    const validateHours = () => {
+        return hours.indexOf(startHour["value"]) < hours.indexOf(endHour["value"]);
+    }
+
     const submitHandler = (event, searchType) => {
-        props.searching();
         event.preventDefault();
+
+        var validate = validateHours();
+        if(SearchType.bySchedule===searchType && !validate){
+            setHoursError(true);
+            return ;
+        } else {
+            setHoursError(false);
+        }
+
+        props.searching();
 
         const subjectApi = new SubjectAPI();
 
@@ -129,7 +143,8 @@ const Filters = (props) => {
                                                     endValue = {endHour}
                                                     setEndValue = {setEndHour}
                                                     optionsHours = {makeSelectOptions(hours)}
-                                                    searchType = {SearchType.bySchedule}/>
+                                                    searchType = {SearchType.bySchedule}
+                                                    error = {hoursError}/>
                         </Accordion.Collapse>
                         <Accordion.Toggle as={Card.Header} 
                                           className="h6 font-weight-bold" 

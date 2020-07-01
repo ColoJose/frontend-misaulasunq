@@ -1,7 +1,13 @@
 import React from 'react';
 import {Accordion, Row, Col, ListGroup} from 'react-bootstrap';
-import MapModal from '../MapModal';
+// react-icons
+import { BsDot, BsGeoAlt } from 'react-icons/bs';
+// Own Components
+import MapScreen from "../map/MapScreen";
+import GenericModal from '../massiveLoad/GenericModal';
+// CSS
 import './CommissionInfo.css';
+// Constants 
 import { daysForSorting } from '../../Constants/Config';
 
 function CommissionInfo({commissions}) {
@@ -20,10 +26,15 @@ function CommissionInfo({commissions}) {
                 <Row key={schedule.id.toString()} 
                      className="subject-Row">
                     <Col xs={10}>
-                        {schedule.day} de {schedule.startTime} a {schedule.endTime} en aula {schedule.classroom.number}
+                        <BsDot/> {schedule.day} de {schedule.startTime} a {schedule.endTime} en aula {schedule.classroom.number}
                     </Col>
                     <Col xs={2}>
-                        <MapModal classRoomNumber={schedule.classroom.number}/>
+                        <GenericModal children={<MapScreen classRoomNumber={schedule.classroom.number}/>} 
+                                      title={`Ubicación del Aula ${schedule.classroom.number} en la UNQ`}
+                                      buttonLabel={<BsGeoAlt size='1em'/>}
+                                      buttonStyle="outline-branding-button"
+                                      bodyStyle="text-center"
+                                      size="xl"/>
                     </Col>
                 </Row>
             );

@@ -20,3 +20,25 @@
     background-color: #ac2f16;
     border-color: #ac2f16;
 }
+
+
+.outline-branding-button {
+    color: var(--unq-red);
+    border-color: var(--unq-red);
+}
+
+.outline-branding-button:hover {
+    color: #fff;
+    background-color: #a52f17;
+    border-color: #a52f17;
+}
+
+.outline-branding-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(197, 35, 19, 0.52) !important;
+}
+
+.outline-branding-button:active {
+    color: #fff !important;
+    background-color: #ac2f16 !important;
+    border-color: #ac2f16 !important;
+}

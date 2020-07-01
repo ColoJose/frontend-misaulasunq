@@ -1,27 +1,21 @@
 import React from 'react';
-import findShortestPath from './../utils/PathFinder';
-import NotFound from './NotFound';
 // bootstrap
 import { ButtonGroup, Button, Badge, Col, Row, Form } from 'react-bootstrap';
 // resources
-import UnqMapPB from '../resources/PlantaBajaUnq.png';
-import UnqMapP1 from '../resources/PrimerPisoUnq.png';
-import UnqMapP2 from '../resources/SegundoPisoUnq.png';
-import PinIcon from '../resources/locationIcon.png';
-import Aulas from '../resources/Coords.json';
+import UnqMapPB from '../../resources/PlantaBajaUnq.png';
+import UnqMapP1 from '../../resources/PrimerPisoUnq.png';
+import UnqMapP2 from '../../resources/SegundoPisoUnq.png';
+import PinIcon from '../../resources/locationIcon.png';
+import Aulas from '../../resources/Coords.json';
+// CONSTANT
+import { MapFloor, Route } from '../../Constants/Config';
+// OWN COMPONENTS
+import NotFound from '../NotFound';
+// UTILS
+import findShortestPath from '../../utils/PathFinder';
 // css
 import './Map.css';
-import "./ButtonBranding.css";
-
-const MapFloor = Object.freeze({
-    "BAJA":"BAJA", 
-    "PRIMER":"PRIMER", 
-    "SEGUNDO":"SEGUNDO"
-});
-const Route = Object.freeze({
-    "ESTACIONAMIENTO":"EntradaEstacionamiento", 
-    "PRINCIPAL":"EntradaPrincipal"
-});
+import "../ButtonBranding.css";
 
 class Map extends React.Component {
 
