@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, Col } from 'react-bootstrap';
 import SubjectsAccordion from './SubjectsAccordion';
 import NotFound from '../NotFound';
+//CSS
+import "../HeaderBranding.css";
 
 function SubjectsInfo({subjects, notFound, title}) {
 
@@ -27,8 +29,7 @@ function SubjectsInfo({subjects, notFound, title}) {
         return (
             <>
                 <Card>
-                    <Card.Header as="h5" 
-                                 className="text-center">
+                    <Card.Header className="text-center header-branding">
                         {title}
                     </Card.Header>
                 </Card>

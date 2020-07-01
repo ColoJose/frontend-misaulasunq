@@ -13,3 +13,14 @@ export const hours = Object.freeze([
 export const days = Object.freeze(["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"]);
 
 export const daysForSorting = Object.freeze(["LUNES","MARTES","MIERCOLES","MIÉRCOLES","JUEVES","VIERNES","SABADO","SÁBADO"]);
+
+export const MapFloor = Object.freeze({
+    "BAJA":"BAJA", 
+    "PRIMER":"PRIMER", 
+    "SEGUNDO":"SEGUNDO"
+});
+
+export const Route = Object.freeze({
+    "ESTACIONAMIENTO":"EntradaEstacionamiento", 
+    "PRINCIPAL":"EntradaPrincipal"
+});
