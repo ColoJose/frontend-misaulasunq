@@ -24,3 +24,25 @@ export const Route = Object.freeze({
     "ESTACIONAMIENTO":"EntradaEstacionamiento", 
     "PRINCIPAL":"EntradaPrincipal"
 });
+// export conts screenSizes = Object.freeze([
+    // "xs":{
+        // width:,
+        // height:
+    // },
+    // "sm":{
+        // width:,
+        // height:
+    // },
+    // "md":{
+        // width:,
+        // height:
+    // },
+    // "lg":{
+        // width: 800,
+        // height: 528
+    // },
+    // "xl":{
+        // width: 1000,
+        // height: 660
+    // }
+// ])

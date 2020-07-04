@@ -1,16 +1,16 @@
 import React from 'react';
 // Bootstrap
-import { FormGroup, Form, Col } from "react-bootstrap";
-// Own Components
-import SubmitSearchButton from "./SubmitSearchButton";
+import { Form, Col } from "react-bootstrap";
 //React-Select
 import Select from 'react-select';
+// CSS
+import "./Filters.css";
 
-const BetweenHoursSearchForm = ({ labelSelectOne, labelSelectTwo, submitHandler, startValue, setStartValue, endValue, setEndValue, optionsHours, searchType, error }) => {
+const BetweenHoursSearchForm = ({ labelSelectOne, labelSelectTwo, startValue, handleHoursSet, endValue, optionsHours, searchType, error }) => {
 
     const renderLabel = (label) => {
         if(label){
-            return <Form.Label as="h6">{label}</Form.Label>;
+            return <Form.Label className="filter-subtitle mb-0">{label}</Form.Label>;
         }
     }
 
@@ -33,63 +33,53 @@ const BetweenHoursSearchForm = ({ labelSelectOne, labelSelectTwo, submitHandler,
     };
 
     const handleStartHourChange = (selectedOption) =>{
-        setStartValue(selectedOption);
+        handleHoursSet(selectedOption, endValue, searchType);
     }
 
     const handleEndHourChange = (selectedOption) =>{
-        setEndValue(selectedOption);
+        handleHoursSet(startValue, selectedOption,searchType);
     }
 
     const renderErrorLabel = (hasError) =>{
         if(hasError){
-            return <i class="text-danger">La hora "Desde" debe ser mayor que la hora "Hasta".</i>;
+            return <i class="text-danger">La hora "Desde" debe ser mayor que la hora "Hasta" y deben estar seleccionadas.</i>;
         }
     }
 
     return (
-        <Form onSubmit={(e) => submitHandler(e, searchType)}>
-            <Form.Row className="mt-1">
-                <Col xs={4}>
-                    {renderLabel(labelSelectOne)}
-                </Col>
-                <Col xs={2}/>
-                <Col xs={4}>
-                    {renderLabel(labelSelectTwo)}
-                </Col>
-                <Col xs={2}/>
-            </Form.Row>
-            <FormGroup className="mb-1">
-                <Form.Row>
-                    <Col xs={4}>
-                        <Select className="basic-single"
-                                classNamePrefix="select"
-                                theme={selectTheme(error)}
-                                maxMenuHeight={150}
-                                defaultValue={optionsHours[0]}
-                                name="Desde"
-                                options={optionsHours}
-                                value={startValue}
-                                onChange = {handleStartHourChange}/>
-                    </Col>
-                    <Col xs={2}/>
-                    <Col xs={4}>
-                        <Select className="basic-single"
-                                classNamePrefix="select"
-                                theme={selectTheme(error)}
-                                maxMenuHeight={150}
-                                defaultValue={optionsHours[0]}
-                                name="Hasta"
-                                options={optionsHours}
-                                value={endValue}
-                                onChange = {handleEndHourChange}/>
-                    </Col>
-                    <Col xs={2}>
-                        <SubmitSearchButton/>
-                    </Col>
-                    {renderErrorLabel(error)}
-                </Form.Row>
-            </FormGroup>
-        </Form>
+        <Form.Row>
+            <Col xs={5}>
+                {renderLabel(labelSelectOne)}
+            </Col>
+            <Col xs={2}/>
+            <Col xs={5}>
+                {renderLabel(labelSelectTwo)}
+            </Col>
+            <Col xs={5}>
+                <Select className="basic-single"
+                        classNamePrefix="select"
+                        theme={selectTheme(error)}
+                        maxMenuHeight={150}
+                        defaultValue={optionsHours[0]}
+                        name="Desde"
+                        options={optionsHours}
+                        value={startValue}
+                        onChange = {handleStartHourChange}/>
+            </Col>
+            <Col xs={2}/>
+            <Col xs={5}>
+                <Select className="basic-single"
+                        classNamePrefix="select"
+                        theme={selectTheme(error)}
+                        maxMenuHeight={150}
+                        defaultValue={optionsHours[0]}
+                        name="Hasta"
+                        options={optionsHours}
+                        value={endValue}
+                        onChange = {handleEndHourChange}/>
+            </Col>
+            {renderErrorLabel(error)}
+        </Form.Row>
     );
 }
 

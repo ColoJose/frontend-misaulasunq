@@ -12,3 +12,10 @@ export function isValidCommission(commission) {
 export function isValidSubject(subject) {
     return subject.commissions.length > 0
 }
+
+export function isBlankString(str) {
+    return !str 
+        || 0 === str.length 
+        || !str.trim() 
+        || 0 === str.trim().length;
+}

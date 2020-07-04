@@ -60,20 +60,25 @@ function Main() {
     const loadingIncomplete = () => {
         return state.searching  || !state.subjectSuggestionsLoaded || !state.classroomSuggestionsLoaded;
     }
-
     return (
         <Container className="container" 
                    fluid>
             <Row className="main">
                 <Col className="justify-content-start col-Filter"
-                     xs={4}>
+                     xs={12}
+                     md={6}
+                     lg={4}
+                     xl={4}>
                     <Filters handleSearchResult={handleSearchResult}
                              searching={startSearching}
                              subjectSuggestions={state.subjectSuggestions}
                              classroomSuggestions={state.classroomSuggestions}/>
                 </Col>
                 <Col className="scroll-overflow justify-content-center col-Subjects"
-                     xs={8}>
+                     xs={12}
+                     md={6}
+                     lg={8}
+                     xl={8}>
                     <SubjectsInfo subjects={state.subjects}
                                   notFound={state.notFound}
                                   title={state.subjectResultTitle}/>

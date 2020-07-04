@@ -1,25 +1,36 @@
 import SubjectAPI from "../../Api/SubjectAPI";
 // React
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
 // Bootstrap
-import { Card, Accordion } from 'react-bootstrap';
+import { Card, Form, FormGroup } from 'react-bootstrap';
 // CSS
 import "./Filters.css";
 import "../HeaderBranding.css";
 // Own Components
+import SubmitSearchButton from "./SubmitSearchButton";
 import DaySearchForm from "./DaySearchForm";
 import InputSearchForm from "./InputSearchForm";
 import BetweenHoursSearchForm from "./BetweenHoursSearchForm";
 import { SearchType, hours, days } from "../../Constants/Config";
+import { isBlankString } from "../../utils/formValidator";
 
 const Filters = (props) => {
 
-    const [subject, setSubject] = useState("");
-    const [classroomNumber, setClassroomNumber] = useState("");
-    const [startHour, setStartHour] = useState({value: "07:00", label: "07:00"});
-    const [endHour, setEndHour] = useState({value: "07:00", label: "07:00"});
-    const [selectedDay, setSelectedDay] = useState("Lunes");
-    const [hoursError, setHoursError] = useState(false);
+    const [state, setState] = useReducer(
+        (state, newState) => 
+            ({...state, ...newState}),
+            {
+                subject: "", 
+                classroomNumber:"", 
+                startHour: {value: "", label: "Seleccionar"},
+                endHour: {value: "", label: "Seleccionar"},
+                selectedDay: "",
+                hoursError: false,
+                dayError: false,
+                inValidForm: false,
+                searchTypes: []
+            }
+    );
 
     const fetchResolver = (promise, title) =>{
         promise.then( resp =>{
@@ -29,138 +40,174 @@ const Filters = (props) => {
         })
     };
 
-    const filterBySubject = (subjectApi) =>{
+    const filterSubjects = (filters) =>{
+        const subjectApi = new SubjectAPI();
         fetchResolver(
-            subjectApi.getSubjectsByName(subject),
-            "Materias Filtradas por Nombre");
+            subjectApi.getSubjectsByFilter(filters),
+            "Materias Encontradas");
     }
-     
-    const filterBySchedule = (subjectApi) => {
-        fetchResolver(
-            subjectApi.getSubjectsBySchedule(
-                startHour["value"], endHour["value"]),
-                "Materias Filtradas por Horario");
-    }
-
-    const filterByNumberOf = (subjectApi) => {
-        fetchResolver(
-            subjectApi.getSubjectsByClassroomNumber(classroomNumber),
-            "Materias Filtradas por Número de Aula");
-    }
-
-    const filterByDay = (subjectApi) => {
-        fetchResolver(
-            subjectApi.getSubjectsDictatedOnDay(selectedDay),
-            "Materias Filtradas por Día");
-    }
-
+    
     const validateHours = () => {
-        return hours.indexOf(startHour["value"]) < hours.indexOf(endHour["value"]);
+        return !isBlankString(state.startHour["value"])
+            && !isBlankString(state.endHour["value"])
+            && hours.indexOf(state.startHour["value"]) < hours.indexOf(state.endHour["value"]);
     }
 
-    const submitHandler = (event, searchType) => {
-        event.preventDefault();
+    const validateDay = () => {
+        return !isBlankString(state.selectedDay);
+    }
 
-        var validate = validateHours();
-        if(SearchType.bySchedule===searchType && !validate){
-            setHoursError(true);
-            return ;
-        } else {
-            setHoursError(false);
+    const submitHandler = (event) => {
+        event.preventDefault();
+        
+        if(!Array.isArray(state.searchTypes) || !state.searchTypes.length){
+            setState({ inValidForm: true });
+            return;
         }
 
+        var hoursError = false;
+        var dayError = false;
+
+        if(filterSelected(SearchType.bySchedule) && !validateHours()){
+            hoursError = true;
+        } 
+
+        if(filterSelected(SearchType.byDay) && !validateDay()){
+            dayError = true;
+        }
+
+        setState({ hoursError: hoursError, dayError: dayError, inValidForm: false });
+        
+        if ( hoursError || dayError ){   
+            return ;
+        }
+        
         props.searching();
 
-        const subjectApi = new SubjectAPI();
+        var filter = {
+            "subjectName": state.subject, 
+            "classroomNumber":state.classroomNumber, 
+            "startTime": state.startHour["value"],
+            "endTime": state.endHour["value"],
+            "day": state.selectedDay,
+            "searchFilters": state.searchTypes
+        };
+        
+        filterSubjects(filter);
+    }
 
+    const handleStateChange = (value, searchType) => {
+        var arrayFilters = updateSearchFitlerArray(value, searchType);
         switch (searchType) {
             case SearchType.bySubject:
-                filterBySubject(subjectApi);
-                break;
-            case SearchType.bySchedule:
-                filterBySchedule(subjectApi);
+                setState({subject: value, searchTypes: arrayFilters});
                 break;
             case SearchType.byClassroom:
-                filterByNumberOf(subjectApi);
+                setState({classroomNumber: value, searchTypes: arrayFilters});
                 break;
             case SearchType.byDay:
-                filterByDay(subjectApi);
+                setState({selectedDay: value, searchTypes: arrayFilters});
                 break;
-            default:
-                props.searching(false);
         }
+    }
+
+    const updateSearchFitlerArray = (value, searchType) => {
+        var arrayFilters = removeFromArray(state.searchTypes, searchType);
+        if (value){            
+            arrayFilters.push(searchType);
+        }
+        return arrayFilters;
+    }
+
+    const handleHourChange = (start, end, searchType) => {
+        var arrayFilters = removeFromArray(state.searchTypes, searchType);
+        if ( start["value"] || end["value"] ){
+            arrayFilters.push(searchType);
+        }
+        
+        setState(
+            {
+                startHour: start, 
+                endHour: end,
+                searchTypes: arrayFilters
+            }
+        );
+    }
+
+    const filterSelected = (filter) => {
+        return state.searchTypes.indexOf(filter) > -1;
+    }
+
+    const removeFromArray = (array, element) => {
+        var index = array.indexOf(element);
+        if (index > -1){
+            array.splice(index, 1);
+        }
+        return array;
     }
 
     const makeSelectOptions = (suggestionsList) => {
-        return suggestionsList.map(
-            (suggestion) => {   return {value: suggestion, label: suggestion};  })
+        var options = [{value: "", label: "Seleccionar"}];
+        suggestionsList.forEach(
+            (suggestion) => {   options.push({value: suggestion, label: suggestion});  }
+        );
+        return options;
+    }
+
+    const renderErrorLabel = () =>{
+        if(state.inValidForm){
+            return <i class="text-danger">Seleccione al menos un filtro de busqueda.</i>;
+        }
     }
 
     return (
         <>
             <Card>
                 <Card.Header className = "header-branding">Filtrar Materias:</Card.Header>
-                <Card.Body className = "px-0 py-0">
-                    <Accordion defaultActiveKey = "0">
-                        <Accordion.Toggle as = {Card.Header} 
-                                          className = "h6 font-weight-bold" 
-                                          variant = "link" 
-                                          eventKey = "0">
-                            Por Nombre
-                        </Accordion.Toggle>
-                        <Accordion.Collapse className = "px-4 py-1" eventKey = "0">
-                            <InputSearchForm submitHandler = {submitHandler}
-                                             placeHolder = "Ingrese nombre materia"
-                                             onInputChangeHandler = {setSubject}
-                                             dataListId = "subjectsOptions"
-                                             suggestions = {props.subjectSuggestions}
-                                             searchType = {SearchType.bySubject}/>
-                        </Accordion.Collapse>
-                        <Accordion.Toggle as = {Card.Header} 
-                                          className = "h6 font-weight-bold" 
-                                          variant = "link" 
-                                          eventKey = "1">
-                            Por Día
-                        </Accordion.Toggle>
-                        <Accordion.Collapse className = "px-4 py-1" eventKey = "1">
-                            <DaySearchForm submitHandler = {submitHandler}
-                                           onInputChangeHandler = {setSelectedDay}
-                                           selectOptions = {makeSelectOptions(days)}
-                                           searchType = {SearchType.byDay}/>
-                        </Accordion.Collapse>
-                        <Accordion.Toggle as = {Card.Header} 
-                                          className = "h6 font-weight-bold" 
-                                          variant = "link" 
-                                          eventKey = "2">
-                            Por Horario
-                        </Accordion.Toggle>
-                        <Accordion.Collapse className = "px-4 py-1" eventKey = "2">
-                            <BetweenHoursSearchForm labelSelectOne = "Desde"
-                                                    labelSelectTwo = "Hasta"
-                                                    submitHandler = {submitHandler}
-                                                    startValue = {startHour}
-                                                    setStartValue = {setStartHour}
-                                                    endValue = {endHour}
-                                                    setEndValue = {setEndHour}
-                                                    optionsHours = {makeSelectOptions(hours)}
-                                                    searchType = {SearchType.bySchedule}
-                                                    error = {hoursError}/>
-                        </Accordion.Collapse>
-                        <Accordion.Toggle as={Card.Header} 
-                                          className="h6 font-weight-bold" 
-                                          variant="link" 
-                                          eventKey="3">
-                            Por Aula
-                        </Accordion.Toggle>
-                        <Accordion.Collapse className="px-4 py-1" eventKey="3">
-                            <InputSearchForm submitHandler = {submitHandler}
-                                             placeHolder = "Ingrese número de aula"
-                                             onInputChangeHandler = {setClassroomNumber}
-                                             dataListId = "classroomOptions"
-                                             suggestions = {props.classroomSuggestions}
-                                             searchType = {SearchType.byClassroom}/>
-                        </Accordion.Collapse>
-                    </Accordion>
+                <Card.Body className = "px-3 py-3">
+                    <Form onSubmit={(e) => submitHandler(e)}>
+                        {renderErrorLabel()}
+                        <FormGroup className="mt-1 mb-2"> 
+                            <div>
+                                <i className="filter-title">Por Nombre</i>
+                                <InputSearchForm placeHolder = "Ingrese nombre materia"
+                                                onInputChangeHandler = {handleStateChange}
+                                                dataListId = "subjectsOptions"
+                                                suggestions = {props.subjectSuggestions}
+                                                searchType = {SearchType.bySubject}/>
+                            </div>
+                            <div className="my-2">
+                                <i className="filter-title">Por Día</i>
+                                <DaySearchForm onInputChangeHandler = {handleStateChange}
+                                            selectOptions = {makeSelectOptions(days)}
+                                            searchType = {SearchType.byDay}
+                                            error = {state.dayError}/>
+                            </div>
+                            <div className="my-2">
+                                <i className="filter-title">Por Horario</i>
+                                <BetweenHoursSearchForm labelSelectOne = "Desde"
+                                                        labelSelectTwo = "Hasta"
+                                                        submitHandler = {submitHandler}
+                                                        startValue = {state.startHour}
+                                                        handleHoursSet = {handleHourChange}
+                                                        endValue = {state.endHour}
+                                                        optionsHours = {makeSelectOptions(hours)}
+                                                        searchType = {SearchType.bySchedule}
+                                                        error = {state.hoursError}/>
+                            </div>
+                            <div>
+                                <i className="filter-title">Por Aula</i>
+                                <InputSearchForm placeHolder = "Ingrese número de aula"
+                                                onInputChangeHandler = {handleStateChange}
+                                                dataListId = "classroomOptions"
+                                                suggestions = {props.classroomSuggestions}
+                                                searchType = {SearchType.byClassroom}/>
+                            </div>
+                            <SubmitSearchButton label="Buscar" 
+                                                block={true}
+                                                className="mt-3 py-1 filter-button"/>              
+                        </FormGroup>
+                    </Form>
                 </Card.Body>
             </Card>
         </>

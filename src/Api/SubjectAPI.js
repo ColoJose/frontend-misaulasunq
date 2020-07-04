@@ -3,6 +3,14 @@ import axios from 'axios';
 
 export default class SubjectAPI {
 
+    getSubjectsByFilter(filterToApply) {
+        return axios.post(
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/byCriteria`, 
+            filterToApply,
+            this.getHeader()
+        )
+    }
+
     getAllSubjects(pageNumber,elems) {
         return axios.get(
             `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/all-subjects?page=${pageNumber}&elems=${elems}`,
@@ -10,38 +18,10 @@ export default class SubjectAPI {
         )
     }
 
-    getSubjectsDictatedOnDay(aDay){
-        return axios.get(
-            `${API_CONFIG.endPoint}/subjectAPI/byDay/${aDay}`
-            , this.getHeader()
-        );
-    }
-
     getSubjectSuggestions(){
         return axios.get(
             `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/suggestions`
             , this.getHeader()
-        );
-    }
-
-    getSubjectsBySchedule(startHour, endHour){
-        return axios.get(
-            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/betweenHours/${startHour}/${endHour}`
-            , this.getHeader()
-        );
-    }
-
-    getSubjectsByClassroomNumber(classroomNumber){
-        return axios.get(
-            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/byClassroomNumber/${classroomNumber}`, 
-            this.getHeader()
-        );
-    }
-
-    getSubjectsByName(subjectName){
-        return axios.get(
-            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/byName/${subjectName}`, 
-            this.getHeader()
         );
     }
 
@@ -121,5 +101,35 @@ export default class SubjectAPI {
                 "Access-Control-Allow-Origin": API_CONFIG.allowOrigin
             }
         };
+    }
+
+
+    /////////DEPRECATED METHODS/////////
+    getSubjectsDictatedOnDay(aDay){
+        return axios.get(
+            `${API_CONFIG.endPoint}/subjectAPI/byDay/${aDay}`
+            , this.getHeader()
+        );
+    }
+
+    getSubjectsByClassroomNumber(classroomNumber){
+        return axios.get(
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/byClassroomNumber/${classroomNumber}`, 
+            this.getHeader()
+        );
+    }
+
+    getSubjectsByName(subjectName){
+        return axios.get(
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/byName/${subjectName}`, 
+            this.getHeader()
+        );
+    }
+
+    getSubjectsBySchedule(startHour, endHour){
+        return axios.get(
+            `${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/betweenHours/${startHour}/${endHour}`
+            , this.getHeader()
+        );
     }
 }
