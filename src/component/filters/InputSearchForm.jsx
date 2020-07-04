@@ -14,7 +14,7 @@ const InputSearchForm = ({label, submitHandler, placeHolder, onInputChangeHandle
         if(Array.isArray(event) && event.length){
             value = event[0];
         }
-        onInputChangeHandler(value);
+        onInputChangeHandler(value,searchType);
     }
     
     const renderLabel = () => {
@@ -24,26 +24,26 @@ const InputSearchForm = ({label, submitHandler, placeHolder, onInputChangeHandle
     }
 
     return (
-        <Form onSubmit={(e) => submitHandler(e, searchType)}>
-            {renderLabel()}
-            <FormGroup className="my-1">
+        //<Form onSubmit={(e) => submitHandler(e, searchType)}>
+            //<FormGroup className="mt-1 mb-2">
                 <Form.Row>
-                    <Col xs={10}>
+                    {renderLabel()}
+                    <Col xs={12}>
                         <Typeahead id="basic-typeahead-single"
                                    className="height-Custom"
-                                   onInputChange={(e) => onInputChangeHandler(e)}
+                                   onInputChange={(e) => onInputChangeHandler(e,searchType)}
                                    onChange={(e) => handleChange(e)}
                                    options={suggestions}
                                    placeholder={placeHolder}
-                                   inputProps= {{required: true}}
+                                   //inputProps= {{required: true}}
                                    maxResults={8}/>
                     </Col>
-                    <Col xs={2}>
+                    {/* <Col xs={2}>
                         <SubmitSearchButton/>
-                    </Col>
+                    </Col> */}
                 </Form.Row>
-            </FormGroup>
-        </Form>
+            //</FormGroup>
+        //</Form>
     );
 }
 
