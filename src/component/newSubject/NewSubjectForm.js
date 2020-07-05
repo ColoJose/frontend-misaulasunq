@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Card, Container, Col, Row} from 'react-bootstrap';
+import {Card, Container, Col, Row, Button} from 'react-bootstrap';
 import './NewSubjectForm.css';
 import GeneralInfoForm from './GeneralInfoForm';
 import CommissionForm from './CommissionForm';
@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { newSubjectConfig, commissionError, generalError } from '../../utils/toast-config';
 // validator
 import { isValidCommission, isValidSubject } from '../../utils/formValidator';
+import history from '../../utils/history';
+
 
 export default function NewSubjectForm() {
 
@@ -74,26 +76,28 @@ export default function NewSubjectForm() {
     const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
     return  (
-        
-        <Card className="wrapper">
-            <Card.Header>Formulario nueva materia</Card.Header>
-            <Card.Body>
-                <Container fluid="md">
-                    <Row>
-                        <Col xs={6}>
-                            <h2>Info general materia</h2>
-                            <GeneralInfoForm 
-                                commissions={commissions}
-                                joinDataSubject={joinDataSubject}/>
-                        </Col>
-                        <Col xs={6}>
-                            <CommissionForm
-                                addCommission={addCommission} />
-                        </Col>
-                    </Row>
-                </Container>    
-            </Card.Body>
-        </Card>
+        <>
+            {/* <Button onClick={ () => history.push("/admin")}>Volver atrás</Button> */}
+            <Card className="wrapper">
+                <Card.Header>Formulario nueva materia</Card.Header>
+                <Card.Body>
+                    <Container fluid="md">
+                        <Row>
+                            <Col xs={6}>
+                                <h2>Info general materia</h2>
+                                <GeneralInfoForm 
+                                    commissions={commissions}
+                                    joinDataSubject={joinDataSubject}/>
+                            </Col>
+                            <Col xs={6}>
+                                <CommissionForm
+                                    addCommission={addCommission} />
+                            </Col>
+                        </Row>
+                    </Container>    
+                </Card.Body>
+            </Card>
+        </>
     )
 }
 

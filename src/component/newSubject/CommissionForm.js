@@ -80,6 +80,8 @@ export default function CommissionForm({addCommission}) {
                     <Form.Label>Año</Form.Label>
                     <Form.Control 
                         type="number"
+                        min="2020"
+                        max="2021"
                         value={year}
                         onChange={(e) => setYear(e.target.value)}
                         required />

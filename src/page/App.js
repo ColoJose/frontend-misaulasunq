@@ -36,9 +36,9 @@ class App extends React.Component {
                 <Router history={history}>
                     <Switch>
                         <Route exact path="/" component={Home}  />
-                        <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
-                        <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
-                        <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
+                        <Route exact path="/admin" render={(props) => <AdminProfile {...props} />} />
+                        <Route exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
+                        <Route exact path="/admin/edit-commissions/:idSubject/:subjectName" render={(props) => <EditCommissions {...props} />} />
                     </Switch> 
                 </Router>
             </Row>

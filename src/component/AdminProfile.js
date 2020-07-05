@@ -103,20 +103,22 @@ const AdminProfile = () => {
 
     return (
         <Container>
-            <Row>
-                <h1>Panel de administrador/a</h1>
+            <Row style={{marginBottom:"15px"}}>
+                <h1>
+                    <span style={{color:"#e2e3de"}}>f</span>
+                    Panel de administrador/a
+                </h1>
             </Row>
             <Row className="my-2">
                 <Col>
-                    <ButtonGroup size="sm">
-                        <Button className="btn btn-danger color-button" 
-                                onClick={() => goNewSubjectForm()}>Nueva Materia</Button>
-                        <GenericModal children={massiveUpload} 
-                                        title="Carga de Horarios por Archivo" 
-                                        buttonLabel="Cargar Archivo"
-                                        buttonStyle="btn btn-danger color-button"
-                                        size="xs"/>
-                    </ButtonGroup>                   
+                    <Button className="btn btn-danger color-button" 
+                            onClick={() => goNewSubjectForm()}
+                            style={{marginRight:"5px"}}>Crear nueva materia</Button>
+                    <GenericModal children={massiveUpload} 
+                                    title="Carga de Horarios por Archivo" 
+                                    buttonLabel="Cargar Archivo"
+                                    buttonStyle="btn btn-danger color-button"
+                                    size="xs"/>
                 </Col>
             </Row>
             <Row style={{height: "100%"}}>
