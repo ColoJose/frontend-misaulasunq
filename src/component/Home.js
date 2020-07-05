@@ -3,6 +3,9 @@ import './Home.css';
 import { useAuth0 } from '../react-auth0-spa';
 import AdminProfile from './AdminProfile';
 import Main from './Main';
+import {Button} from 'react-bootstrap';
+import history from "../utils/history";
+import "./ButtonBranding.css";
 
 function Home() {
         

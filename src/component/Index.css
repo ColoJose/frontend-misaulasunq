@@ -1,0 +1,25 @@
+
+.container-index {
+    background-image: url("../resources/background-index.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+
+}
+
+#main {
+    margin-top: 150px;
+    background-color: #e2e3de;
+    width: 35%;
+    margin: auto;
+    margin-top: 200px;
+    padding: 30px;
+    padding-left: 30px;
+    border-radius: 3px;
+    
+}
+
+.padding {
+    padding: 4px;
+    margin-bottom:7px;
+}

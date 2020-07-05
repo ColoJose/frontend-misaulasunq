@@ -58,7 +58,7 @@ const EditCommissions = (props) => {
    const closeModalSchedule = () =>{ setShowModalSchedule(false); }
 
    const goBack = () => {
-      history.goBack();
+      history.push('/admin');
    }
 
    const handleAddCommission = () => {
