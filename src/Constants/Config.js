@@ -24,25 +24,42 @@ export const Route = Object.freeze({
     "ESTACIONAMIENTO":"EntradaEstacionamiento", 
     "PRINCIPAL":"EntradaPrincipal"
 });
-// export conts screenSizes = Object.freeze([
-    // "xs":{
-        // width:,
-        // height:
-    // },
-    // "sm":{
-        // width:,
-        // height:
-    // },
-    // "md":{
-        // width:,
-        // height:
-    // },
-    // "lg":{
-        // width: 800,
-        // height: 528
-    // },
-    // "xl":{
-        // width: 1000,
-        // height: 660
-    // }
-// ])
+
+export const MapSize = Object.freeze({
+    "xxxxs":{
+        "width":285,
+        "height":168
+    },
+    "xxxs":{
+        "width":285,
+        "height":168
+    },
+    "xxs":{
+        "width":380,
+        "height":224
+    },
+    "xs":{
+        "width":475,
+        "height":280
+    },
+    "sm":{
+        "width":665,
+        "height":391
+    },
+    "md":{
+        "width":855,
+        "height":503
+    },
+    "l":{
+        "width": 750,
+        "height": 441
+    },
+    "lg":{
+        "width": 979,
+        "height": 576
+    },
+    "xl":{
+        "width": 979,
+        "height": 576
+    }
+})

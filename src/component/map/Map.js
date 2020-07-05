@@ -1,6 +1,6 @@
 import React from 'react';
 // bootstrap
-import { ButtonGroup, Button, Badge, Col, Row, Form } from 'react-bootstrap';
+import { ButtonGroup, Button, Col, Row } from 'react-bootstrap';
 // resources
 import UnqMapPB from '../../resources/PlantaBajaUnq.png';
 import UnqMapP1 from '../../resources/PrimerPisoUnq.png';
@@ -8,11 +8,13 @@ import UnqMapP2 from '../../resources/SegundoPisoUnq.png';
 import PinIcon from '../../resources/locationIcon.png';
 import Aulas from '../../resources/Coords.json';
 // CONSTANT
-import { MapFloor, Route } from '../../Constants/Config';
+import { MapFloor, Route, MapSize } from '../../Constants/Config';
 // OWN COMPONENTS
 import NotFound from '../NotFound';
+import RouteOptions from './RouteOptions';
 // UTILS
 import findShortestPath from '../../utils/PathFinder';
+import { getViewport } from '../../utils/ScreenSizeDetector';
 // css
 import './Map.css';
 import "../ButtonBranding.css";
@@ -23,11 +25,8 @@ class Map extends React.Component {
         super(props, context);
         //Bindings
         this.shouldShowMap = this.shouldShowMap.bind(this)
-        this.draw = this.drawMaps.bind(this);
         this.drawText = this.drawText.bind(this);
         this.drawStroke = this.drawStroke.bind(this);
-        this.handleImageLoad = this.handleImageLoad.bind(this);
-        this.mapsReady = this.mapsReady.bind(this);
         this.drawPin = this.drawPin.bind(this);
         this.calculateCoord = this.calculateCoord.bind(this);
         this.drawRoute = this.drawRoute.bind(this);
@@ -38,11 +37,14 @@ class Map extends React.Component {
         this.parkingRouteAvailable = this.parkingRouteAvailable.bind(this);
         this.mainRouteAvailable = this.mainRouteAvailable.bind(this);
         this.drawPinAtPointAndFloor = this.drawPinAtPointAndFloor.bind(this);
+        this.calculateMapWidth = this.calculateMapWidth.bind(this);
+        this.calculateMapHeigth = this.calculateMapHeigth.bind(this);
+        this.isActive = this.isActive.bind(this);
+        this.mapButtons = this.mapButtons.bind(this);
+
+        this.makeMap = this.makeMap.bind(this);
 
         //Canvas Layers reference
-        this.canvasPBMap = React.createRef();
-        this.canvasP1Map = React.createRef();
-        this.canvasP2Map = React.createRef();
         this.canvasPBPath = React.createRef();
         this.canvasP1Path = React.createRef();
         this.canvasP2Path = React.createRef();
@@ -51,8 +53,8 @@ class Map extends React.Component {
         this.pathFromMainEntrance = [];
 
         //For canvas and maps images
-        this.defaultWidth = 800;
-        this.defaultHeigth = 528;
+        this.defaultWidth = this.calculateMapWidth();
+        this.defaultHeigth = this.calculateMapHeigth();
 
         this.state = {
             mapToShow: MapFloor.BAJA,
@@ -72,56 +74,20 @@ class Map extends React.Component {
         }
     };
 
+    calculateMapWidth(){
+        return MapSize[getViewport()]["width"];
+    };
+
+    calculateMapHeigth(){
+        return MapSize[getViewport()]["height"];
+    };
+
     shouldShowMap(classroomNumber){
         let classroom = Aulas[classroomNumber];
         return classroom !== null 
             && classroom !== undefined 
             && [MapFloor.BAJA, MapFloor.PRIMER, MapFloor.SEGUNDO].includes(classroom.piso.toUpperCase());
     }
-
-    drawMaps() {
-        let canvasPB = this.canvasPBMap.current;
-        let canvasP1 = this.canvasP1Map.current;
-        let canvasP2 = this.canvasP2Map.current;
-        
-        //Si canvas es distinto a undefined o null va a ser true
-        if (canvasPB && canvasP1 && canvasP2) {
-            this.createImage(UnqMapPB,canvasPB.getContext('2d'),MapFloor.BAJA);
-            this.createImage(UnqMapP1,canvasP1.getContext('2d'),MapFloor.PRIMER);
-            this.createImage(UnqMapP2,canvasP2.getContext('2d'),MapFloor.SEGUNDO);
-        };
-    };
-
-    createImage(image,canvasContext,floor){
-        let floorMap = new Image(this.defaultWidth,this.defaultHeigth);
-        floorMap.src = image;
-        floorMap.onload = () => this.handleImageLoad(canvasContext,floorMap,floor);
-    };
-
-    handleImageLoad(canvasContext,map,floor){
-        canvasContext.globalCompositeOperation = "destination-over";
-        canvasContext.width = this.defaultWidth;
-        canvasContext.height = this.defaultHeigth;
-        canvasContext.drawImage(map, 0, 0,map.width,map.height);
-        
-        switch (floor) {
-            case MapFloor.BAJA:
-                this.setState({ groundFloorMapLoaded: true  }, this.mapsReady);
-                break;
-            case MapFloor.PRIMER:
-                this.setState({ firstFloorMapLoaded: true  }, this.mapsReady);
-                break
-            default:
-                this.setState({ secondFloorMapLoaded: true  }, this.mapsReady);
-                break
-        }
-    };
-
-    mapsReady(){
-        if(this.state.groundFloorMapLoaded && this.state.firstFloorMapLoaded && this.state.secondFloorMapLoaded){
-            this.props.mapReady();
-        }
-    };
 
     drawPin(classroom){
         let floorToReturn = MapFloor.BAJA;
@@ -236,7 +202,7 @@ class Map extends React.Component {
 
     componentDidMount() {
         if(this.state.imageAvailable){
-            this.drawMaps();
+            // this.drawMaps(); //Method deprecated
             let classroom = Aulas[this.state.classroomToShow];
             let route = [];
 
@@ -252,7 +218,7 @@ class Map extends React.Component {
                 routeToDraw = Route.ESTACIONAMIENTO;
             }
 
-            //TODO tiene que deshabiitar solo los opcioens de ruta
+            //Si no hay rutas, dehabilita los botones
             if(Array.isArray(route) && route.length){
                 this.drawRoute(route);
             } else {
@@ -261,7 +227,7 @@ class Map extends React.Component {
 
             floorToshow = this.drawPin(classroom);
 
-            this.setState({ disableButtons: disableMapButtons, mapToShow: floorToshow, routeSelected: routeToDraw });
+            this.setState({ disableButtons: disableMapButtons, mapToShow: floorToshow, routeSelected: routeToDraw },this.props.mapReady());
         } else {
             this.props.mapReady();
         }
@@ -273,49 +239,6 @@ class Map extends React.Component {
 
     mainRouteAvailable(){
         return Array.isArray(this.pathFromMainEntrance) && this.pathFromMainEntrance.length;
-    };
-
-    makeDivContainer(map, overlay,hiddenLogic){
-        return <div className="map-container" 
-                    style={{height: this.defaultHeigth+'px'}} 
-                    hidden={hiddenLogic}>
-                    {map}
-                    {overlay}
-                </div>;
-    };
-
-    makeCanvas(id, reference, showLogic,index){
-        return  <canvas id={id}
-                        ref={reference}
-                        width={this.defaultWidth}
-                        height={this.defaultHeigth}
-                        hidden={showLogic}
-                        className={"canvas-Map "+index}>
-                    El navegador no soporta el método de visualización.
-                </canvas>;
-    };
-
-    renderRouteSelection(){
-        if(this.parkingRouteAvailable() || this.mainRouteAvailable()){
-            return <>
-                <Form.Check type="radio"
-                            label="Estacionamiento"
-                            name="Estacionamiento"
-                            disabled={!this.parkingRouteAvailable()}
-                            checked={this.state.routeSelected === Route.ESTACIONAMIENTO}
-                            onChange={()=>{this.reDrawRoute(Route.ESTACIONAMIENTO)}}/>
-                <Form.Check type="radio"
-                            label="Entrada Principal"
-                            name="Entrada Principal"
-                            disabled={!this.mainRouteAvailable()}
-                            checked={this.state.routeSelected === Route.PRINCIPAL}
-                            onChange={()=>{this.reDrawRoute(Route.PRINCIPAL)}}/>
-            </>;
-        } else {
-            return <>
-                <b>No hay rutas disponibles.</b>
-            </>;
-        }
     };
 
     reDrawRoute(newRouteSelected){
@@ -334,62 +257,137 @@ class Map extends React.Component {
 
         //re dibujar ruta
         this.drawRoute(route);
-        let floorToshow = this.drawPin(Aulas[this.state.classroomToShow]);
+        this.drawPin(Aulas[this.state.classroomToShow]);
 
         this.setState({routeSelected: newRouteSelected});
     }
 
+    isActive(relatedMap) {
+        return this.state.mapToShow === relatedMap;
+    }
+
+    makeDivContainer(map, overlay,hiddenLogic){
+        return <div className="map-container" 
+                    style={{height: this.defaultHeigth+'px'}} 
+                    hidden={hiddenLogic}>
+                    {map}
+                    {overlay}
+                </div>;
+    };
+
+    makeCanvas(id, reference, showLogic,index){
+        return  <canvas id={id}
+                        ref={reference}
+                        width={this.defaultWidth}
+                        height={this.defaultHeigth}
+                        hidden={showLogic}
+                        className={"canvas-Map "+index}>
+                    El navegador no soporta el método de visualización De La Ruta.
+                </canvas>;
+    };
+
+    makeMap(id, src, showLogic,index){
+        return  <img id={id}
+                     src={src}
+                     width={this.defaultWidth}
+                     height={this.defaultHeigth}
+                     hidden={showLogic}
+                     className={"canvas-Map "+index}>
+                </img>;
+    };
+
     render(){
         if(this.state.imageAvailable){
             return (
-                <>
-                    <Row className="justify-content-center">
-                        <ButtonGroup size="sm" className="button-Group">
-                            <Button className="btn btn-danger color-button"
-                                    disabled={this.state.disableButtons}
-                                    active={this.state.mapToShow !== MapFloor.BAJA}
-                                    onClick={ ()=> {this.setState({mapToShow:MapFloor.BAJA})}}>Planta Baja</Button>
-                            <Button className="btn btn-danger color-button"
-                                    disabled={this.state.disableButtons}
-                                    active={this.state.mapToShow !== MapFloor.PRIMER}
-                                    onClick={ ()=> {this.setState({mapToShow:MapFloor.PRIMER})}}>Primer Piso</Button>
-                            <Button className="btn btn-danger color-button"
-                                    disabled={this.state.disableButtons}
-                                    active={this.state.mapToShow !== MapFloor.SEGUNDO}
-                                    onClick={ ()=> {this.setState({mapToShow:MapFloor.SEGUNDO})}}>Segundo Piso</Button>
-                        </ButtonGroup>
-                    </Row>
-                    <Row>
-                    <Col xs={10}>
+                <Row>
+                    <Col id="map-column"
+                         className="mx-auto px-auto ml-xl-0 mr-xl-0 ml-lg-0 mr-lg-0"
+                         xs={{span:12,order:2}} sm={{span:12,order:2}} md={{span:12,order:2}} xl={{span:9,order:1}} lg={{span:9,order:1}}>
                         {this.makeDivContainer(
-                            this.makeCanvas("mapPB", this.canvasPBMap, this.state.mapToShow !== MapFloor.BAJA, "canvas-back"),
+                            this.makeMap("mapPB", UnqMapPB, this.state.mapToShow !== MapFloor.BAJA, "canvas-back"),
                             this.makeCanvas("routePB", this.canvasPBPath, this.state.mapToShow !== MapFloor.BAJA, "canvas-front"),
                             this.state.mapToShow !== MapFloor.BAJA
                         )}
                         {this.makeDivContainer(
-                            this.makeCanvas("mapP1", this.canvasP1Map, this.state.mapToShow !== MapFloor.PRIMER, "canvas-back"),
+                            this.makeMap("mapP1", UnqMapP1, this.state.mapToShow !== MapFloor.PRIMER, "canvas-back"),
                             this.makeCanvas("routeP1", this.canvasP1Path, this.state.mapToShow !== MapFloor.PRIMER, "canvas-front"),
                             this.state.mapToShow !== MapFloor.PRIMER
                         )}
                         {this.makeDivContainer(
-                                this.makeCanvas("mapP2", this.canvasP2Map, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-back"),
-                                this.makeCanvas("routeP2", this.canvasP2Path, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-front"),
-                                this.state.mapToShow !== MapFloor.SEGUNDO
+                            this.makeMap("mapP2", UnqMapP2, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-back"),
+                            this.makeCanvas("routeP2", this.canvasP2Path, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-front"),
+                            this.state.mapToShow !== MapFloor.SEGUNDO
                         )}
-                        </Col>
-                        <Col xs={2} className="d-flex align-items-start flex-column">
-                            <Badge variant="light">Ruta Desde:</Badge>
-                            {this.renderRouteSelection()}                 
-                        </Col>
-                    </Row>
-                </>
+                    </Col>
+                    <Col id="options-column" 
+                         className="px-0
+                                    d-sm-inline-flex flex-sm-row
+                                    d-md-inline-flex flex-md-row
+                                    d-lg-flex flex-lg-row px-lg-auto mx-lg-0
+                                    d-xl-flex flex-xl-row px-xl-auto mx-xl-0"
+                          xs={{span:12,order:1}} sm={{span:12,order:1}} md={{span:12,order:1}} xl={{span:3,order:2}} lg={{span:3,order:2}}>
+                        <div id="options" 
+                             className="my-xl-5 my-lg-5 py-xl-5 py-lg-5 mx-auto px-auto row row-cols-2 row-cols-sm-2 row-cols-md-1 row-cols-lg-1 row-cols-xl-1">
+                            {this.mapButtons()}
+                            <div className="mx-lg-0 mx-xl-0 mb-xl-5 mb-lg-5 pb-xl-5 pb-lg-5 px-lg-0 px-xl-0 mt-lg-1 mt-xl-1 col-12 col-sm-12 col-md-6 col-lg-auto col-xl-auto px-auto m-auto">
+                                <div className="row row-cols-1 px-auto px-md-0 px-xl-0 px-lg-0 mx-auto">
+                                    <div className="col-12 col-xl-12 col-lg-12 px-lg-0 mx-lg-0 mx-xl-0 px-xl-0 mx-auto d-flex justify-content-center justify-content-lg-start">
+                                        <b >Camino al aula desde:</b>
+                                    </div>
+                                    {this.renderRouteSelection()}
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
             );
         } else {
             return <NotFound label={"Ubicación No Disponible."}/>
         }
     };
+    
+    renderRouteSelection(){
+        if(this.parkingRouteAvailable() || this.mainRouteAvailable()){
+            return <RouteOptions parkingRouteUnavailable={!this.parkingRouteAvailable()}
+                          parkingChecked={this.state.routeSelected === Route.ESTACIONAMIENTO}
+                          routeStartingAtParking={()=>{this.reDrawRoute(Route.ESTACIONAMIENTO)}}
+                          mainRouteUnavailable={!this.mainRouteAvailable()}
+                          mainChecked={this.state.routeSelected === Route.PRINCIPAL}
+                          routeStartingAtMain={()=>{this.reDrawRoute(Route.PRINCIPAL)}}/>;
+        } else {
+            return <>
+                <b>No hay rutas disponibles.</b>
+            </>;
+        }
+    };
+
+    mapButtons(){
+        return (
+            <Col id="floor-options"
+                className="mt-xl-5 mt-lg-5 pt-xl-5 pt-lg-5 pl-lg-0 pr-lg-2 px-xl-0 pr-xl-2 mb-lg-1 mb-xl-1 mx-auto px-auto mb-2"
+                xs={12} sm={12} md={6} xl={12} lg={12}>
+            <Row xs={1} className="px-auto mx-auto">
+                <b className="col-3 px-lg-0 mx-lg-0 mx-xl-0 px-xl-0 mx-auto">Pisos:</b>
+            </Row>
+            <Row xs={1} className="px-auto mx-auto">
+                <ButtonGroup size="sm">
+                    <Button className="color-button responsive-font"
+                            disabled={this.state.disableButtons}
+                            active={this.isActive(MapFloor.BAJA)}
+                            onClick={ ()=> {this.setState({mapToShow:MapFloor.BAJA})}}>Planta Baja</Button>
+                    <Button className="color-button responsive-font"
+                            disabled={this.state.disableButtons}
+                            active={this.isActive(MapFloor.PRIMER)}
+                            onClick={ ()=> {this.setState({mapToShow:MapFloor.PRIMER})}}>Primer Piso</Button>
+                    <Button className="color-button responsive-font"
+                            disabled={this.state.disableButtons}
+                            active={this.isActive(MapFloor.SEGUNDO)}
+                            onClick={ ()=> {this.setState({mapToShow:MapFloor.SEGUNDO})}}>Segundo Piso</Button>
+                </ButtonGroup>
+            </Row>
+        </Col>
+        );
+    }
 }
-
-
 
 export default Map;

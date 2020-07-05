@@ -33,8 +33,10 @@ function CommissionInfo({commissions}) {
                                       title={`Ubicación del Aula ${schedule.classroom.number} en la UNQ`}
                                       buttonLabel={<BsGeoAlt size='1em'/>}
                                       buttonStyle="outline-branding-button"
-                                      bodyStyle="text-center"
-                                      size="xl"/>
+                                      //bodyStyle="text-center"
+                                      size="xl"
+                                      maxWidth
+                                      />
                     </Col>
                 </Row>
             );
