@@ -2,7 +2,7 @@ import history from '../../utils/history';
 // react
 import React, { useState } from 'react';
 // bootstrap
-import { Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
+import { Col, Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
 // resoruces
 import logoApp from '../../resources/logo-app-white.png';
 // css
@@ -27,8 +27,9 @@ function NavbarApp() {
                     Login
                 </Button>;
         } else {
-            return <div className="menu-profile-navbar">
-                    <Image className="icon-profile-navbar"
+            return(
+                <div className="menu-profile-navbar">
+                    <Image className="d-md-inline d-none d-sm-none icon-profile-navbar"
                         src={user.picture}
                         alt="Profile Image"
                         roundedCircle />
@@ -37,7 +38,7 @@ function NavbarApp() {
                             onClick={ () => logout() }>
                         Logout
                     </Button>
-                </div>;
+                </div>);
         }
     }
 
@@ -50,12 +51,12 @@ function NavbarApp() {
                     <Image className="logo-navbar" 
                            src={logoApp} 
                            rounded/>
-                    <Navbar.Brand className="font-navbarBrand logo-font-navbar">Mis Aulas UNQ</Navbar.Brand>           
+                    <Navbar.Brand className="ml-2 font-navbarBrand logo-font-navbar">Mis Aulas UNQ</Navbar.Brand>           
                 </Navbar.Brand>
 
                 <Form inline 
                       className="col-6 justify-content-center" 
-                      onSubmit={handleSubmit}>
+                      onSubmit={handleSubmit} hidden>
                     <FormControl type="text" 
                                  placeholder="Ingrese lo que busca" 
                                  className="mr-sm-2"
@@ -65,13 +66,12 @@ function NavbarApp() {
                                  hidden/>
                     <Button type="submit" 
                             variant="light" 
-                            disabled 
-                            hidden>
+                            disabled>
                         Search
                     </Button>
                 </Form>
 
-                <Nav  className="col-3 justify-content-end">
+                <Nav  className="ml-auto col-3 d-flex justify-content-end">
                     {renderLoginOptions()}
                 </Nav>
             </Navbar>
@@ -80,4 +80,3 @@ function NavbarApp() {
 }
 
 export default NavbarApp;
-

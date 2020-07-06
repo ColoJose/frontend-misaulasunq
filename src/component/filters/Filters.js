@@ -108,6 +108,8 @@ const Filters = (props) => {
             case SearchType.byDay:
                 setState({selectedDay: value, searchTypes: arrayFilters});
                 break;
+            default:
+                break;
         }
     }
 

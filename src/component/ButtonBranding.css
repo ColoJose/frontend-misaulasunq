@@ -1,36 +1,39 @@
 .color-button {
-    color: var(--unq-white);
-    background-color: var(--unq-red);
-    border-color: var(--unq-red);
+    color: var(--unq-white) !important;
+    background-color: var(--unq-red) !important;
+    border-color: var(--unq-red) !important;
 }
 
 .color-button:hover {
-    background-color: #a52f17;
-    border-color: #a52f17;
+    background-color: #a52f17 !important;
+    border-color: #a52f17 !important;
 }
 
 .color-button:focus {
-    background-color: #97301b;
-    border-color: #97301b;
-    box-shadow: 0 0 0 0.2rem rgba(197, 35, 19, 0.52);
-    outline: 0;
+    background-color: #97301b !important;
+    border-color: #97301b !important;
+    box-shadow: 0 0 0 0.2rem rgba(197, 35, 19, 0.52) !important;
+    outline: 0 !important;
+}
+.color-button.active{
+    background-color: #ac2f16 !important;
+    border-color: #ac2f16 !important;
 }
 
-.color-button:active {
-    background-color: #ac2f16;
-    border-color: #ac2f16;
+.color-button:active{
+    background-color: #ac2f16 !important;
+    border-color: #ac2f16 !important;
 }
-
 
 .outline-branding-button {
-    color: var(--unq-red);
-    border-color: var(--unq-red);
+    color: var(--unq-red) !important;
+    border-color: var(--unq-red) !important;
 }
 
 .outline-branding-button:hover {
-    color: #fff;
-    background-color: #a52f17;
-    border-color: #a52f17;
+    color: #fff !important;
+    background-color: #a52f17 !important;
+    border-color: #a52f17 !important;
 }
 
 .outline-branding-button:focus {
@@ -38,6 +41,12 @@
 }
 
 .outline-branding-button:active {
+    color: #fff !important;
+    background-color: #ac2f16 !important;
+    border-color: #ac2f16 !important;
+}
+
+.outline-branding-button.active {
     color: #fff !important;
     background-color: #ac2f16 !important;
     border-color: #ac2f16 !important;

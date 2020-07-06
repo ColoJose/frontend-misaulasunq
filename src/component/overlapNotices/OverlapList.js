@@ -24,7 +24,7 @@ function OverlapList(){
         );
 
     useEffect( () => {
-        getOverlappingSubject(state.pageNumber)
+        getOverlappingSubject(state.pageNumber);
     }, [])
 
     const getOverlappingSubject = (pageNumber) => {

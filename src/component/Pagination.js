@@ -1,10 +1,8 @@
 import React from 'react';
-import { Col, Row, Image, Button } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import './Pagination.css';
 // React-Icons
 import { MdNavigateBefore, MdNavigateNext, MdFirstPage, MdLastPage } from "react-icons/md";
-import left from '../resources/arrowLeft.png';
-import right from '../resources/arrowRight.png';
 
  const Pagination = (props) => {
 

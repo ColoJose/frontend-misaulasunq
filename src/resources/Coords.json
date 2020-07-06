@@ -744,7 +744,7 @@
             "AulasNorteBajaNodo1": 1
         },
         "piso": "baja",
-        "x": 70.5,
+        "x": 70.8,
         "y": 44.9
     },
     "AgoraBajaNodo2": {
@@ -777,7 +777,8 @@
     },
     "AgoraPrimerPisoNodo1": {
         "adyacents": {
-            "AgoraPrimerPisoNodo2": 1
+            "AgoraPrimerPisoNodo2": 0.5,
+            "AulasSurPrimerPisoNodo11": 0.5
         },
         "piso": "primer",
         "x": 61.9,
@@ -785,8 +786,9 @@
     },
     "AgoraPrimerPisoNodo2": {
         "adyacents": {
+            "AgoraPrimerPisoNodo1": 0.5,
             "AgoraPrimerPisoNodo3": 1,
-            "AgoraPrimerPisoNodo4": 1
+            "AgoraPrimerPisoNodo4": 2
         },
         "piso": "primer",
         "x": 61.9,
@@ -794,7 +796,8 @@
     },
     "AgoraPrimerPisoNodo3": {
         "adyacents": {
-            "AgoraPrimerPisoNodo6": 1,
+            "AgoraPrimerPisoNodo6": 2,
+            "AgoraPrimerPisoNodo2": 1,
             "AulasNortePrimerPisoNodo1": 1
         },
         "piso": "primer",
@@ -803,7 +806,8 @@
     },
     "AgoraPrimerPisoNodo4": {
         "adyacents": {
-            "AgoraPrimerPisoNodo7": 1
+            "AgoraPrimerPisoNodo7": 0.5,
+            "AgoraPrimerPisoNodo2": 2
         },
         "piso": "primer",
         "x": 59.7,
@@ -811,8 +815,8 @@
     },
     "AgoraPrimerPisoNodo5": {
         "adyacents": {
-            "AgoraPrimerPisoNodo4": 1,
-            "AgoraPrimerPisoNodo6": 1
+            "AgoraPrimerPisoNodo4": 0.5,
+            "AgoraPrimerPisoNodo6": 0.5
         },
         "piso": "primer",
         "x": 59.7,
@@ -820,7 +824,7 @@
     },
     "AgoraPrimerPisoNodo6": {
         "adyacents": {
-            "AgoraPrimerPisoNodo3": 1,
+            "AgoraPrimerPisoNodo3": 2,
             "AgoraPrimerPisoNodo5": 1
         },
         "piso": "primer",
@@ -907,7 +911,7 @@
             "226": 1,
             "227": 1,
             "AulasEsporaPrimerPisoNodo2": 1,
-            "AulasEsporaPrimerPisoNodo6": 1
+            "AulasEsporaPrimerPisoNodo6": 0.5
         },
         "piso": "primer",
         "x": 38.7,
@@ -925,6 +929,7 @@
     },
     "AulasEsporaPrimerPisoNodo3": {
         "adyacents": {
+            "227": 1,
             "231": 1,
             "232": 1,
             "AulasEsporaPrimerPisoNodo4": 1
@@ -961,7 +966,7 @@
     },
     "AulasEsporaPrimerPisoNodo7": {
         "adyacents": {
-            "AulasEsporaPrimerPisoNodo8": 1
+            "AulasEsporaPrimerPisoNodo8": 0.5
         },
         "piso": "primer",
         "x": 40,
@@ -978,6 +983,8 @@
     "AulasLaboratiorioPrimerPisoNodo1": {
         "adyacents": {
             "200": 1,
+            "201": 1,
+            "202": 1,
             "AulasLaboratiorioPrimerPisoNodo2": 1
         },
         "piso": "primer",
@@ -986,8 +993,6 @@
     },
     "AulasLaboratiorioPrimerPisoNodo2": {
         "adyacents": {
-            "201": 1,
-            "202": 1,
             "203": 1,
             "204": 1,
             "AulasLaboratiorioPrimerPisoNodo3": 1
@@ -1021,7 +1026,8 @@
     "AulasLaboratiorioPrimerPisoNodo5": {
         "adyacents": {
             "211": 1,
-            "212": 1
+            "212": 1,
+            "213": 1
         },
         "piso": "primer",
         "x": 57.1,
@@ -1106,7 +1112,7 @@
         "adyacents": {
             "33": 1,
             "34": 1,
-            "AulasNortePrimerPisoNodo2": 1
+            "AulasNortePrimerPisoNodo2": 0.5
         },
         "piso": "primer",
         "x": 70.8,
@@ -1133,8 +1139,9 @@
     },
     "AulasNortePrimerPisoNodo4": {
         "adyacents": {
+            "27": 1,
             "28": 1,
-            "AulasNortePrimerPisoNodo5": 1
+            "AulasNortePrimerPisoNodo5": 0.5
         },
         "piso": "primer",
         "x": 70.8,
@@ -1170,7 +1177,7 @@
             "AulasSurPrimerPisoNodo1": 1
         },
         "piso": "baja",
-        "x": 70.6,
+        "x": 70.8,
         "y": 52
     },
     "AulasSurBajaNodo10": {
@@ -1178,6 +1185,7 @@
             "61": 1,
             "63": 1,
             "AulasSurBajaNodo11": 1,
+            "AulasSurBajaNodo7": 1,
             "AulasSurBajaNodo9": 1
         },
         "piso": "baja",
@@ -1213,7 +1221,7 @@
             "AulasSurBajaNodo14": 1
         },
         "piso": "baja",
-        "x": 70.5,
+        "x": 70.8,
         "y": 79.2
     },
     "AulasSurBajaNodo14": {
@@ -1230,17 +1238,19 @@
     "AulasSurBajaNodo15": {
         "adyacents": {
             "38B": 1,
-            "AulasSurBajaNodo5": 1,
-            "AulasSurBajaNodo6": 1
+            "AulasSurBajaNodo5": 0.5,
+            "AulasSurBajaNodo6": 1,
+            "AulasSurBajaNodo8": 1
         },
         "piso": "baja",
-        "x": 71.9,
+        "x": 71.7,
         "y": 63
     },
     "AulasSurBajaNodo2": {
         "adyacents": {
             "AulasSurBajaNodo1": 1,
-            "AulasSurBajaNodo6": 1
+            "AulasSurBajaNodo3": 1,
+            "AulasSurBajaNodo6": 2
         },
         "piso": "baja",
         "x": 70,
@@ -1249,7 +1259,8 @@
     "AulasSurBajaNodo3": {
         "adyacents": {
             "AulasSurBajaNodo1": 1,
-            "AulasSurBajaNodo4": 1
+            "AulasSurBajaNodo2": 1,
+            "AulasSurBajaNodo4": 0.5
         },
         "piso": "baja",
         "x": 71.7,
@@ -1258,8 +1269,8 @@
     "AulasSurBajaNodo4": {
         "adyacents": {
             "36": 1,
-            "AulasSurBajaNodo3": 1,
-            "AulasSurBajaNodo5": 1
+            "AulasSurBajaNodo3": 0.5,
+            "AulasSurBajaNodo5": 0.5
         },
         "piso": "baja",
         "x": 71.7,
@@ -1268,7 +1279,8 @@
     "AulasSurBajaNodo5": {
         "adyacents": {
             "38": 1,
-            "AulasSurBajaNodo4": 1,
+            "AulasSurBajaNodo4": 0.5,
+            "AulasSurBajaNodo15": 0.5,
             "AulasSurBajaNodo6": 1
         },
         "piso": "baja",
@@ -1280,6 +1292,7 @@
             "37B": 1,
             "AulasSurBajaNodo15": 1,
             "AulasSurBajaNodo5": 1,
+            "AulasSurBajaNodo2": 2,
             "AulasSurBajaNodo7": 1,
             "AulasSurBajaNodo8": 1
         },
@@ -1319,13 +1332,13 @@
     },
     "AulasSurPrimerPisoNodo1": {
         "adyacents": {
-            "AulasSurPrimerPisoNodo2": 1,
-            "AulasSurPrimerPisoNodo3": 1,
+            "AulasSurPrimerPisoNodo2": 0.5,
+            "AulasSurPrimerPisoNodo3": 0.5,
             "AulasSurSegundoPisoNodo1": 1
         },
         "piso": "primer",
-        "x": 70.7,
-        "y": 61.9
+        "x": 70.8,
+        "y": 60.9
     },
     "AulasSurPrimerPisoNodo10": {
         "adyacents": {
@@ -1337,7 +1350,9 @@
     },
     "AulasSurPrimerPisoNodo11": {
         "adyacents": {
-            "AgoraPrimerPisoNodo1": 1
+            "AgoraPrimerPisoNodo1": 0.5,
+            "AulasSurPrimerPisoNodo8": 0.5,
+            "AulasSurPrimerPisoNodo7": 1
         },
         "piso": "primer",
         "x": 61.9,
@@ -1346,18 +1361,20 @@
     "AulasSurPrimerPisoNodo2": {
         "adyacents": {
             "43": 1,
-            "AulasSurPrimerPisoNodo10": 1,
-            "AulasSurPrimerPisoNodo5": 1
+            "AulasSurPrimerPisoNodo10": 0.5,
+            "AulasSurPrimerPisoNodo5": 1,
+            "AulasSurPrimerPisoNodo1": 0.5
         },
         "piso": "primer",
         "x": 69.7,
         "y": 60.9
     },
     "AulasSurPrimerPisoNodo3": {
-        "adyacents": {
+        "adyacents": {  
             "46": 1,
             "AulasSurPrimerPisoNodo4": 1,
-            "AulasSurPrimerPisoNodo9": 1
+            "AulasSurPrimerPisoNodo9": 0.5,
+            "AulasSurPrimerPisoNodo1": 1
         },
         "piso": "primer",
         "x": 71.8,
@@ -1366,7 +1383,8 @@
     "AulasSurPrimerPisoNodo4": {
         "adyacents": {
             "44": 1,
-            "AulasSurPrimerPisoNodo6": 1
+            "AulasSurPrimerPisoNodo6": 1,
+            "AulasSurPrimerPisoNodo3": 1
         },
         "piso": "primer",
         "x": 71.8,
@@ -1375,7 +1393,8 @@
     "AulasSurPrimerPisoNodo5": {
         "adyacents": {
             "41": 1,
-            "AulasSurPrimerPisoNodo7": 1
+            "AulasSurPrimerPisoNodo7": 1,
+            "AulasSurPrimerPisoNodo2": 1
         },
         "piso": "primer",
         "x": 69.7,
@@ -1384,7 +1403,8 @@
     "AulasSurPrimerPisoNodo6": {
         "adyacents": {
             "42": 1,
-            "AulasSurPrimerPisoNodo8": 1
+            "AulasSurPrimerPisoNodo8": 1,
+            "AulasSurPrimerPisoNodo4": 1
         },
         "piso": "primer",
         "x": 71.8,
@@ -1393,7 +1413,8 @@
     "AulasSurPrimerPisoNodo7": {
         "adyacents": {
             "39": 1,
-            "AulasSurPrimerPisoNodo11": 1
+            "AulasSurPrimerPisoNodo11": 1,
+            "AulasSurPrimerPisoNodo5": 1
         },
         "piso": "primer",
         "x": 69.7,
@@ -1402,7 +1423,8 @@
     "AulasSurPrimerPisoNodo8": {
         "adyacents": {
             "40": 1,
-            "AulasSurPrimerPisoNodo11": 1
+            "AulasSurPrimerPisoNodo11": 0.5,
+            "AulasSurPrimerPisoNodo6": 1
         },
         "piso": "primer",
         "x": 71.8,
@@ -1419,8 +1441,8 @@
     "AulasSurSegundoPisoNodo1": {
         "adyacents": {
             "AulasSurPrimerPisoNodo1": 1,
-            "AulasSurSegundoPisoNodo2": 1,
-            "AulasSurSegundoPisoNodo3": 1
+            "AulasSurSegundoPisoNodo2": 0.5,
+            "AulasSurSegundoPisoNodo3": 0.5
         },
         "piso": "segundo",
         "x": 70.8,
@@ -1445,7 +1467,8 @@
     },
     "AulasSurSegundoPisoNodo4": {
         "adyacents": {
-            "49": 1
+            "49": 1,
+            "51": 1
         },
         "piso": "segundo",
         "x": 69.7,
@@ -1463,7 +1486,8 @@
     },
     "AulasSurSegundoPisoNodo6": {
         "adyacents": {
-            "50": 1
+            "50": 1,
+            "52": 1
         },
         "piso": "segundo",
         "x": 72,
@@ -1471,7 +1495,7 @@
     },
     "CalleNodo1": {
         "adyacents": {
-            "CalleNodo2": 1
+            "CalleNodo2": 2
         },
         "piso": "baja",
         "x": 26.6,
@@ -1538,10 +1562,10 @@
     "CalleNodo17": {
         "adyacents": {
             "CalleNodo18": 1,
-            "CalleNodo22": 1
+            "CalleNodo22": 2
         },
         "piso": "baja",
-        "x": 87.4,
+        "x": 87.6,
         "y": 73.8
     },
     "CalleNodo18": {
@@ -1563,7 +1587,7 @@
     },
     "CalleNodo2": {
         "adyacents": {
-            "CalleNodo3": 1
+            "CalleNodo3": 2
         },
         "piso": "baja",
         "x": 36.5,
@@ -1579,7 +1603,7 @@
     },
     "CalleNodo21": {
         "adyacents": {
-            "CalleNodo12": 1
+            "CalleNodo12": 2
         },
         "piso": "baja",
         "x": 86.3,
@@ -1587,15 +1611,15 @@
     },
     "CalleNodo22": {
         "adyacents": {
-            "CalleNodo23": 1
+            "CalleNodo23": 2
         },
         "piso": "baja",
-        "x": 84.3,
+        "x": 84.0,
         "y": 60.3
     },
     "CalleNodo23": {
         "adyacents": {
-            "AgoraBajaNodo1": 1
+            "AgoraBajaNodo1": 2
         },
         "piso": "baja",
         "x": 80,
@@ -1603,7 +1627,7 @@
     },
     "CalleNodo24": {
         "adyacents": {
-            "CalleNodo25": 1
+            "CalleNodo25": 2
         },
         "piso": "baja",
         "x": 62.3,
@@ -1611,13 +1635,13 @@
     },
     "CalleNodo25": {
         "adyacents": {
-            "CalleNodo26": 1
+            "CalleNodo26": 2
         },
         "piso": "baja",
         "x": 62.3,
         "y": 63.5
     },
-    "CalleNodo26": {
+    "CalleNodo26": {    
         "adyacents": {
             "AgoraBajaNodo2": 1
         },
@@ -1643,7 +1667,7 @@
     },
     "CalleNodo3": {
         "adyacents": {
-            "CalleNodo4": 1
+            "CalleNodo4": 2
         },
         "piso": "baja",
         "x": 43,
@@ -1651,7 +1675,7 @@
     },
     "CalleNodo4": {
         "adyacents": {
-            "CalleNodo5": 1,
+            "CalleNodo5": 2,
             "TairaNodo14": 1
         },
         "piso": "baja",
@@ -1660,7 +1684,7 @@
     },
     "CalleNodo5": {
         "adyacents": {
-            "CalleNodo6": 1,
+            "CalleNodo6": 2,
             "TairaNodo11": 1
         },
         "piso": "baja",
@@ -1669,8 +1693,9 @@
     },
     "CalleNodo6": {
         "adyacents": {
-            "CalleNodo24": 1,
-            "CalleNodo7": 1,
+            "CalleNodo24": 2,
+            "CalleNodo7": 2,
+            "TairaNodo7": 1,
             "TairaNodo9": 1
         },
         "piso": "baja",
@@ -1683,7 +1708,7 @@
             "TairaNodo1": 1
         },
         "piso": "baja",
-        "x": 71.1,
+        "x": 70.8,
         "y": 85.5
     },
     "CalleNodo8": {
@@ -1691,17 +1716,17 @@
             "CalleNodo9": 1
         },
         "piso": "baja",
-        "x": 92.3,
+        "x": 92.4,
         "y": 92.1
     },
     "CalleNodo9": {
         "adyacents": {
             "CalleNodo10": 1,
-            "CalleNodo15": 1
+            "CalleNodo15": 2
         },
         "piso": "baja",
-        "x": 91.1,
-        "y": 87.3
+        "x": 91.2,
+        "y": 87.4
     },
     "CyT-1": {
         "adyacents": {},
@@ -1843,8 +1868,10 @@
     },
     "EsporaSegundoPisoNodo1": {
         "adyacents": {
-            "EsporaSegundoPisoNodo2": 1,
-            "EsporaSegundoPisoNodo3": 1
+            "EsporaSegundoPisoNodo2": 0.5,
+            "EsporaSegundoPisoNodo3": 0.5,
+            "EsporaSegundoPisoNodo4": 0.5,
+            "EsporaSegundoPisoNodo5": 1
         },
         "piso": "segundo",
         "x": 38.8,
@@ -1861,7 +1888,7 @@
     "EsporaSegundoPisoNodo3": {
         "adyacents": {
             "327": 1,
-            "EsporaSegundoPisoNodo4": 1
+            "EsporaSegundoPisoNodo5": 1
         },
         "piso": "segundo",
         "x": 37.9,
@@ -1883,7 +1910,7 @@
         },
         "piso": "segundo",
         "x": 35,
-        "y": 25.5
+        "y": 25.7
     },
     "EsporaSegundoPisoNodo6": {
         "adyacents": {
@@ -1893,7 +1920,7 @@
         },
         "piso": "segundo",
         "x": 32.9,
-        "y": 25.8
+        "y": 25.7
     },
     "EsporaSegundoPisoNodo7": {
         "adyacents": {
@@ -1903,7 +1930,7 @@
         },
         "piso": "segundo",
         "x": 30.7,
-        "y": 25.8
+        "y": 25.7
     },
     "EsporaSegundoPisoNodo8": {
         "adyacents": {
@@ -1911,7 +1938,7 @@
         },
         "piso": "segundo",
         "x": 28.4,
-        "y": 25.9
+        "y": 25.7
     },
     "RosaVientosBajaNodo1": {
         "adyacents": {
@@ -1941,8 +1968,8 @@
         "adyacents": {
             "002": 1,
             "CalleNodo7": 1,
-            "TairaNodo2": 1,
-            "TairaNodo3": 1
+            "TairaNodo2": 0.5,
+            "TairaNodo3": 0.5
         },
         "piso": "baja",
         "x": 71,
@@ -1952,8 +1979,8 @@
         "adyacents": {
             "008": 1,
             "TairaNodo11": 1,
-            "TairaNodo8": 1,
-            "TairaNodo9": 1
+            "TairaNodo8": 0.5,
+            "TairaNodo9": 0.5
         },
         "piso": "baja",
         "x": 60.2,
@@ -1964,7 +1991,7 @@
             "009": 1,
             "CalleNodo5": 1,
             "TairaNodo10": 1,
-            "TairaNodo11": 1
+            "TairaNodo12": 1
         },
         "piso": "baja",
         "x": 57.3,
@@ -1986,7 +2013,7 @@
             "010": 1,
             "011": 1,
             "TairaNodo12": 1,
-            "TairaNodo14": 1
+            "TairaNodo14": 0.5
         },
         "piso": "baja",
         "x": 50.7,
@@ -1995,7 +2022,7 @@
     "TairaNodo14": {
         "adyacents": {
             "CalleNodo4": 1,
-            "TairaNodo13": 1,
+            "TairaNodo13": 0.5,
             "TairaNodoPrimerPiso3": 1
         },
         "piso": "baja",
@@ -2054,7 +2081,7 @@
             "006": 1,
             "CalleNodo6": 1,
             "TairaNodo6": 1,
-            "TairaNodo8": 1
+            "TairaNodo8":0.5
         },
         "piso": "baja",
         "x": 63.9,
@@ -2064,8 +2091,8 @@
         "adyacents": {
             "006": 1,
             "007": 1,
-            "TairaNodo10": 1,
-            "TairaNodo7": 1
+            "TairaNodo10": 0.5,
+            "TairaNodo7": 0.5
         },
         "piso": "baja",
         "x": 62.1,
@@ -2074,7 +2101,7 @@
     "TairaNodo9": {
         "adyacents": {
             "CalleNodo6": 1,
-            "TairaNodo10": 1,
+            "TairaNodo10": 0.5,
             "TairaNodoPrimerPiso2": 1
         },
         "piso": "baja",
@@ -2083,7 +2110,7 @@
     },
     "TairaNodoPrimerPiso1": {
         "adyacents": {
-            "TairaNodoPrimerPiso4": 1
+            "TairaNodoPrimerPiso4": 0.5
         },
         "piso": "primer",
         "x": 70.3,
@@ -2113,7 +2140,7 @@
         "adyacents": {
             "112": 1,
             "TairaNodoPrimerPiso11": 1,
-            "TairaNodoPrimerPiso13": 1
+            "TairaNodoPrimerPiso13": 0.5
         },
         "piso": "primer",
         "x": 48,
@@ -2122,7 +2149,7 @@
     "TairaNodoPrimerPiso13": {
         "adyacents": {
             "113": 1,
-            "TairaNodoPrimerPiso12": 1,
+            "TairaNodoPrimerPiso12": 0.5,
             "TairaNodoPrimerPiso3": 1
         },
         "piso": "primer",
@@ -2178,6 +2205,7 @@
         "adyacents": {
             "105": 1,
             "106": 1,
+            "107": 1,
             "TairaNodoPrimerPiso6": 1,
             "TairaNodoPrimerPiso8": 1
         },
@@ -2190,7 +2218,7 @@
             "107": 1,
             "108": 1,
             "TairaNodoPrimerPiso7": 1,
-            "TairaNodoPrimerPiso9": 1
+            "TairaNodoPrimerPiso9": 2
         },
         "piso": "primer",
         "x": 48,
@@ -2201,7 +2229,7 @@
             "109": 1,
             "TairaNodoPrimerPiso10": 1,
             "TairaNodoPrimerPiso2": 1,
-            "TairaNodoPrimerPiso8": 1
+            "TairaNodoPrimerPiso8": 3
         },
         "piso": "primer",
         "x": 48,

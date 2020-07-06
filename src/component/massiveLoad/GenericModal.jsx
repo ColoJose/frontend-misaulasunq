@@ -5,7 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 import './Modal.css';
 import '../ButtonBranding.css';
 
-function GenericModal({title, children, buttonLabel, buttonStyle, bodyStyle, size}){
+function GenericModal({title, children, buttonLabel, buttonStyle, bodyStyle, size, maxWidth=false}){
 
   const [state, setState] = useReducer((state, newState) => ({...state, ...newState}),{show: false});
   const handleClose = () => setState({show: false});
@@ -29,6 +29,13 @@ function GenericModal({title, children, buttonLabel, buttonStyle, bodyStyle, siz
     return size;
   }
 
+  const applyMaxWidthWithPX1 = () => {
+    if(maxWidth){
+      return "px-1 mw-100";
+    }
+    return "";
+  }
+
     return (
         <>
           <Button variant="outline-danger"
@@ -37,7 +44,9 @@ function GenericModal({title, children, buttonLabel, buttonStyle, bodyStyle, siz
               {buttonLabel}
           </Button>
 
-          <Modal show={state.show} 
+          <Modal className={applyMaxWidthWithPX1()}
+                 dialogClassName={applyMaxWidthWithPX1()}
+                 show={state.show} 
                  onHide={handleClose}
                  size={getSize()}
                  aria-labelledby="contained-modal-title-vcenter"

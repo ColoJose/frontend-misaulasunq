@@ -33,14 +33,16 @@ class App extends React.Component {
                 </Col>
             </Row>
             <Row className="app-right-row">
-                <Router history={history}>
-                    <Switch>
-                        <Route exact path="/" component={Home}  />
-                        <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
-                        <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
-                        <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
-                    </Switch> 
-                </Router>
+                <Col xs={12}>
+                    <Router history={history}>
+                        <Switch>
+                            <Route exact path="/" component={Home}  />
+                            <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
+                            <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
+                            <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
+                        </Switch> 
+                    </Router>
+                </Col>
             </Row>
         </Container>
     )

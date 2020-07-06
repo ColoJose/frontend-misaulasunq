@@ -1,8 +1,6 @@
 import React from 'react';
 // Bootstrap
-import { FormGroup, Form, Col } from "react-bootstrap";
-// Own Components
-import SubmitSearchButton from "./SubmitSearchButton";
+import { Form, Col } from "react-bootstrap";
 import "./SelectOptions.css";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -24,26 +22,18 @@ const InputSearchForm = ({label, submitHandler, placeHolder, onInputChangeHandle
     }
 
     return (
-        //<Form onSubmit={(e) => submitHandler(e, searchType)}>
-            //<FormGroup className="mt-1 mb-2">
-                <Form.Row>
-                    {renderLabel()}
-                    <Col xs={12}>
-                        <Typeahead id="basic-typeahead-single"
-                                   className="height-Custom"
-                                   onInputChange={(e) => onInputChangeHandler(e,searchType)}
-                                   onChange={(e) => handleChange(e)}
-                                   options={suggestions}
-                                   placeholder={placeHolder}
-                                   //inputProps= {{required: true}}
-                                   maxResults={8}/>
-                    </Col>
-                    {/* <Col xs={2}>
-                        <SubmitSearchButton/>
-                    </Col> */}
-                </Form.Row>
-            //</FormGroup>
-        //</Form>
+        <Form.Row>
+            {renderLabel()}
+            <Col xs={12}>
+                <Typeahead id="basic-typeahead-single"
+                            className="height-Custom"
+                            onInputChange={(e) => onInputChangeHandler(e,searchType)}
+                            onChange={(e) => handleChange(e)}
+                            options={suggestions}
+                            placeholder={placeHolder}
+                            maxResults={8}/>
+            </Col>
+        </Form.Row>
     );
 }
 

@@ -20,9 +20,9 @@ function SubjectsInfo({subjects, notFound, title}) {
 
     if(notFound){
         return (
-            <Col xs={{span: 5,offset: 3}}>
-                <NotFound className="text-center"
-                          label={"No se ha Encontrado Ninguna Materia."}/>
+            <Col xs={10} lg={4} xl={4}
+                 className="h-50 m-auto p-auto d-flex align-items-center">
+                <NotFound label={"No se ha Encontrado Ninguna Materia."}/>
             </Col>
         );
     } else {
