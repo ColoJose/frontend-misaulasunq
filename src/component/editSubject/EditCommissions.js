@@ -22,7 +22,9 @@ const EditCommissions = (props) => {
       semester: '',
       year: 0
    }
+
    const [selectedCommission, setSelectedCommission] = useState(emptyCommission);
+   const changedCommissions = new Set();
 
    const [name, setName] = useState(selectedCommission.name);
    const [year, setYear] = useState(selectedCommission.year);
@@ -38,7 +40,7 @@ const EditCommissions = (props) => {
    }, []);
 
    const setNameAux = (name) => { selectedCommission.name = name; setName(name) }
-   const setYearAux = (year) => { selectedCommission.year = year; setYear(year); console.log(selectedCommission.year) }
+   const setYearAux = (year) => { selectedCommission.year = year; setYear(year); }
    const setSemesterAux = (semester) => { selectedCommission.semester = semester; setSemester(semester); }
 
    const updateSchedules = (schedules) => { 
@@ -47,10 +49,8 @@ const EditCommissions = (props) => {
 
    const updateCommission = () => {
       subjectApi.updateCommission(commissions, idSubject).then( (resp) => {
-         toast.success(`La comisión ${selectedCommission.name} se actualizó correctamente`, editConfig);
+         toast.success(`Se actualizaron correctamente: ${changedCommissions}`, editConfig);
       }).catch((e) => console.log(e));
-      //  console.log(commissions);
-      //  console.log(idSubject);
    }
 
    // new schedule 
@@ -61,8 +61,8 @@ const EditCommissions = (props) => {
       history.push('/admin');
    }
 
-   const handleAddCommission = () => {
-
+   const handleAddCommission = (schedule) => {
+      selectedCommission.schedules.push(schedule)
    }
 
    const handleAddNewSchedule = () => {
@@ -71,6 +71,11 @@ const EditCommissions = (props) => {
 
    const addSchedule = (schedule) => {
       selectedCommission.schedules.push(schedule);
+   }
+
+   const addChangedCommission = () => {
+      changedCommissions.add(`${selectedCommission.name}, `)
+      console.log(changedCommissions);
    }
 
    return (
@@ -102,7 +107,7 @@ const EditCommissions = (props) => {
                         </Nav>
                      </Card.Header>
                      <Card.Body>
-                        <Form>
+                        <Form onChange={ () => addChangedCommission()}>
                            <Row>
                               <Col xs={6}>
                                     {commissions === undefined ? <p>Cargando...</p> :
@@ -116,7 +121,9 @@ const EditCommissions = (props) => {
                                           </Form.Group>
                                           <Form.Group>
                                              <Form.Label>Año</Form.Label>   
-                                             <Form.Control type="number" 
+                                             <Form.Control type="number"
+                                                           min="2020"
+                                                           max="2021" 
                                                            value={selectedCommission.year}
                                                            onChange={ (e) => setYearAux(e.target.value)}
                                                            required />
@@ -144,9 +151,7 @@ const EditCommissions = (props) => {
                                                   onClick={ () => handleAddCommission()}>Agregar otra comisión</Button>
                                        </Col>
                                        <Col xs={3}></Col>
-                                    </Row>
-                                    
-                                    
+                                    </Row>                                                                     
                               </Col>
                               <Col xs={6}>
                                  <ScheduleEditAccordion schedules={selectedCommission.schedules}
@@ -162,8 +167,8 @@ const EditCommissions = (props) => {
                </Col>
             </Row>
             <ScheduleFormEdit show={showModalSchedule}
-                          onHide={closeModalSchedule}
-                          addSchedule={addSchedule}
+                              onHide={closeModalSchedule}
+                              addSchedule={addSchedule}
             />
 
          </Container>

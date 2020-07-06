@@ -22,7 +22,7 @@ const AdminProfile = () => {
                 {allSubjects: [], pageNumber: 0, totalPages: 0, firstPage: "true", lastPage: "false"});
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
-    const elems = 5; // cantidad de elemntos que trae el cada page
+    const elems = 5; // cantidad de elemntos que trae cada page
     const subjectApi = new SubjectAPI;
     const massiveUpload = <MassiveLoad/>;
 
@@ -71,7 +71,14 @@ const AdminProfile = () => {
     const editGeneralInfo = (id,objToPost) => { 
         subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
             editGeneralInfoSuccess(resp.data.name);
+            updateSubjectList(id,objToPost.name)
         }).catch( (e) => console.log(e) )
+    }
+
+    const updateSubjectList = (id,name) => {
+
+        console.log(state.allSubjects.find(subject => subject.id === id));
+
     }
 
     const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }

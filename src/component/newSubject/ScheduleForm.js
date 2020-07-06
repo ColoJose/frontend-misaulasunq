@@ -4,6 +4,7 @@ import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours } from '../../utils/formValidator';
 // css
 import '../ButtonBranding.css';
+import Select from 'react-select';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -27,7 +28,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     // validations
     const [hoursValidation, setHoursValidation] = useState(false);
 
-
     const componentIsMounted = useRef(false);
 
     useEffect(() => {
@@ -49,8 +49,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         classroom: {number:classroom},
         day
     };
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -98,7 +96,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                             className={"selectHours"}  
                             as="select"
                             value={startTime}
-                            onChange={(e) => setStartTime(e.target.value)}>
+                            onChange={(e) => setStartTime(e.target.value)}
+                            >
                                 {optionsHours}
                         </Form.Control>
                         {
@@ -111,7 +110,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                             className={"selectHours"} 
                             as="select"
                             value={endTime}
-                            onChange={(e) => setEndTime(e.target.value)}>
+                            onChange={(e) => setEndTime(e.target.value)} >
                                 {optionsHours}    
                         </Form.Control>
                         {

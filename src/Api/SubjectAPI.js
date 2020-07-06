@@ -113,6 +113,11 @@ export default class SubjectAPI {
     // AuthorizeJWT(resp.data.access_token).getInstance();
     // }).catch( e => console.log(e));
 
+    getAllSubjectCodes() {
+        return axios.get(`${API_CONFIG.endPoint}/${API_CONFIG.subjectAPI}/get-all-subject-codes`,
+                          this.getHeader())
+    }
+
     getHeader(){
         return {
             headers: {

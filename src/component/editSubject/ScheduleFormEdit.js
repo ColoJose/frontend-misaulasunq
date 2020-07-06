@@ -96,6 +96,7 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
                             className={"selectHours"}  
                             as="select"
                             value={startTime}
+                            maxMenuHeight={150}
                             onChange={(e) => setStartTime(e.target.value)}>
                                 {optionsHours}
                         </Form.Control>
@@ -109,6 +110,7 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
                             className={"selectHours"} 
                             as="select"
                             value={endTime}
+                            maxMenuHeight={150}
                             onChange={(e) => setEndTime(e.target.value)}>
                                 {optionsHours}    
                         </Form.Control>
