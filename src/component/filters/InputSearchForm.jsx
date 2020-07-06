@@ -1,8 +1,6 @@
 import React from 'react';
 // Bootstrap
-import { FormGroup, Form, Col } from "react-bootstrap";
-// Own Components
-import SubmitSearchButton from "./SubmitSearchButton";
+import { Form, Col } from "react-bootstrap";
 import "./SelectOptions.css";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';

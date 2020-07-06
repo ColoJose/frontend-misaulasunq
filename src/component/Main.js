@@ -63,8 +63,8 @@ function Main() {
     return (
         <Container className="container" 
                    fluid>
-            <Row className="main">
-                <Col className="justify-content-start col-Filter"
+            <Row className="h-100 pt-3 pt-lg-2 pt-xl-2">
+                <Col className="mb-3 mb-xs-3 mb-md-3 pt-xl-2 pt-lg-2 my-lg-0 my-xl-0 justify-content-start"
                      xs={12}
                      md={6}
                      lg={4}
@@ -74,7 +74,7 @@ function Main() {
                              subjectSuggestions={state.subjectSuggestions}
                              classroomSuggestions={state.classroomSuggestions}/>
                 </Col>
-                <Col className="scroll-overflow justify-content-center col-Subjects"
+                <Col className="mt-1 mt-xs-1 mt-md-1 pt-xl-2 pt-lg-2 my-lg-0 my-xl-0 scroll-overflow justify-content-center"
                      xs={12}
                      md={6}
                      lg={8}

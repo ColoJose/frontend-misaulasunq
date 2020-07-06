@@ -286,8 +286,9 @@ class Map extends React.Component {
                 </canvas>;
     };
 
-    makeMap(id, src, showLogic,index){
+    makeMap(id, src, showLogic, index, altName){
         return  <img id={id}
+                     alt={altName}
                      src={src}
                      width={this.defaultWidth}
                      height={this.defaultHeigth}
@@ -304,17 +305,17 @@ class Map extends React.Component {
                          className="mx-auto px-auto ml-xl-0 mr-xl-0 ml-lg-0 mr-lg-0"
                          xs={{span:12,order:2}} sm={{span:12,order:2}} md={{span:12,order:2}} xl={{span:9,order:1}} lg={{span:9,order:1}}>
                         {this.makeDivContainer(
-                            this.makeMap("mapPB", UnqMapPB, this.state.mapToShow !== MapFloor.BAJA, "canvas-back"),
+                            this.makeMap("mapPB", UnqMapPB, this.state.mapToShow !== MapFloor.BAJA, "canvas-back", "Mapa Planta Baja"),
                             this.makeCanvas("routePB", this.canvasPBPath, this.state.mapToShow !== MapFloor.BAJA, "canvas-front"),
                             this.state.mapToShow !== MapFloor.BAJA
                         )}
                         {this.makeDivContainer(
-                            this.makeMap("mapP1", UnqMapP1, this.state.mapToShow !== MapFloor.PRIMER, "canvas-back"),
+                            this.makeMap("mapP1", UnqMapP1, this.state.mapToShow !== MapFloor.PRIMER, "canvas-back", "Mapa Primer Piso"),
                             this.makeCanvas("routeP1", this.canvasP1Path, this.state.mapToShow !== MapFloor.PRIMER, "canvas-front"),
                             this.state.mapToShow !== MapFloor.PRIMER
                         )}
                         {this.makeDivContainer(
-                            this.makeMap("mapP2", UnqMapP2, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-back"),
+                            this.makeMap("mapP2", UnqMapP2, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-back", "Mapa Segundo Piso"),
                             this.makeCanvas("routeP2", this.canvasP2Path, this.state.mapToShow !== MapFloor.SEGUNDO, "canvas-front"),
                             this.state.mapToShow !== MapFloor.SEGUNDO
                         )}

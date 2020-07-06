@@ -1,7 +1,5 @@
 .Home { height: inherit; }
 
-.main { height: 100%; }
-
 .container {
     height: 100%;
     max-width: 100%;
@@ -12,7 +10,3 @@
     overflow-y: overlay;
     height: 100%;
 }
-
-/* .col-Filter { padding-right: 4%; }
-
-.col-Subjects { padding-right: 4%; } */
