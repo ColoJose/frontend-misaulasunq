@@ -80,4 +80,3 @@ function NavbarApp() {
 }
 
 export default NavbarApp;
-
