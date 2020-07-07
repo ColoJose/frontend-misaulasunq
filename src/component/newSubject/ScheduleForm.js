@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {Modal, Form} from 'react-bootstrap';
+import {Modal, Form, Container, Row, Col} from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours } from '../../utils/formValidator';
 // css
@@ -31,7 +31,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     const componentIsMounted = useRef(false);
 
     useEffect(() => {
-        return componentIsMounted.current = true;    
+        return componentIsMounted.current = true;
     }, []);
 
     useEffect(() => {
@@ -90,61 +90,75 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
             <Modal.Header>Nuevo schedule</Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit} data-toggle="validator" role="form">
-                    <Form.Group>
-                        <Form.Label>Hora comienzo</Form.Label>
-                        <Form.Control
-                            className={"selectHours"}  
-                            as="select"
-                            value={startTime}
-                            onChange={(e) => setStartTime(e.target.value)}
-                            >
-                                {optionsHours}
-                        </Form.Control>
-                        {
-                            hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
-                        }
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Hora fin</Form.Label>
-                        <Form.Control
-                            className={"selectHours"} 
-                            as="select"
-                            value={endTime}
-                            onChange={(e) => setEndTime(e.target.value)} >
-                                {optionsHours}    
-                        </Form.Control>
-                        {
-                            hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
-                        }
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Dia</Form.Label>
-                        <Form.Control 
-                            as="select"
-                            value={day}
-                            onChange={ (e) => setDay(e.target.value)}>
-                                {optionDays}
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Aula</Form.Label>
-                        <Form.Control className="form-control"
-                            as="select"
-                            value={classroom}
-                            onChange={ (e) => setClassroom(e.target.value)}
-                            required>
-                                {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
-                        </Form.Control>
-                    </Form.Group>
-
-                    <button type="button" 
-                            className="btn btn-danger color-button" 
-                            onClick={ () => onHide()}
-                            style={{marginRight: "5px"}}>
-                                Cerrar
-                    </button>
-                    <button type="submit" className="btn btn-danger color-button">Agregar schedule</button> 
-
+                    <Container style={{backgroundColor:"#fff"}}>
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Hora comienzo</Form.Label>
+                                    <Form.Control
+                                        className={"selectHours"}  
+                                        as="select"
+                                        value={startTime}
+                                        onChange={(e) => setStartTime(e.target.value)}
+                                        >
+                                            {optionsHours}
+                                    </Form.Control>
+                                    {
+                                        hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
+                                    }
+                                </Form.Group>
+                            </Col>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Hora fin</Form.Label>
+                                    <Form.Control
+                                        className={"selectHours"} 
+                                        as="select"
+                                        value={endTime}
+                                        onChange={(e) => setEndTime(e.target.value)} >
+                                            {optionsHours}    
+                                    </Form.Control>
+                                    {
+                                        hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
+                                    }
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Dia</Form.Label>
+                                    <Form.Control 
+                                        as="select"
+                                        value={day}
+                                        onChange={ (e) => setDay(e.target.value)}>
+                                            {optionDays}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Aula</Form.Label>
+                                    <Form.Control className="form-control"
+                                        as="select"
+                                        value={classroom}
+                                        onChange={ (e) => setClassroom(e.target.value)}
+                                        required>
+                                            {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
+                                    </Form.Control>
+                                </Form.Group> 
+                            </Col>
+                        </Row>
+                        <Row>
+                            <button type="button" 
+                                className="btn btn-danger color-button" 
+                                onClick={ () => onHide()}
+                                style={{marginRight: "5px"}}>
+                                    Cerrar
+                            </button>
+                            <button type="submit" className="btn btn-danger color-button">Agregar schedule</button> 
+                        </Row>
+                    </Container>
                 </Form>
             </Modal.Body>
         </Modal>

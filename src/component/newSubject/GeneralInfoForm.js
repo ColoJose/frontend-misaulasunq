@@ -5,7 +5,7 @@ import SubjectAPI from '../../Api/SubjectAPI.js';
 // css
 import '../ButtonBranding.css';
 
-export default function GeneralInfoForm({commissions, joinDataSubject}) {
+export default function GeneralInfoForm({commissions, joinDataSubject, deleteCommission}) {
 
     const subjectAPI = new SubjectAPI();
 
@@ -73,7 +73,11 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     <ListGroup>
                         { commissions.length === 0 ? <ListGroup.Item>No ha agregado comisiones aún</ListGroup.Item>
                                                    :
-                                              commissions.map( com => <CommissionItem commission={com}/>)
+                                              commissions.map( 
+                                                    com => <CommissionItem commission={com}
+                                                                           deleteCommission={deleteCommission}
+                                                           />
+                                              )
                         }
                          
                     </ListGroup>

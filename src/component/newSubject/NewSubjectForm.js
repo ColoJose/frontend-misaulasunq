@@ -33,6 +33,12 @@ export default function NewSubjectForm() {
         }
     }
 
+    const deleteCommission = (id) => {
+        var index = commissions.findIndex( com => com.id === id);
+        commissions.splice(index,1);
+        setCommissions([...commissions]);
+    }
+
     const schedulePart = () => { return document.getElementById("addedSchedulesSection") }
     
     const joinDataSubject = (generalInfoSubject) => {
@@ -87,7 +93,8 @@ export default function NewSubjectForm() {
                                 <h2>Info general materia</h2>
                                 <GeneralInfoForm 
                                     commissions={commissions}
-                                    joinDataSubject={joinDataSubject}/>
+                                    joinDataSubject={joinDataSubject}
+                                    deleteCommission={deleteCommission} />
                             </Col>
                             <Col xs={6}>
                                 <CommissionForm

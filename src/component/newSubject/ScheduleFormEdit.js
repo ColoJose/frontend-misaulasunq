@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {Modal, Form, Container, Row, Col} from 'react-bootstrap';
+import {Modal, Form, Row, Col, Container} from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours } from '../../utils/formValidator';
-// cssd
+// css
 import '../ButtonBranding.css';
+import Select from 'react-select';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -15,22 +16,22 @@ const hours = Object.freeze([
 let optionsHours = 
             hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
 
-export default function ScheduleFormEdit({show, onHide, addSchedule}) {
+export default function ScheduleFormEdit({ scheduleToEdit, showEdit, onHideEdit, modifyItemSchedule }) {
 
     const subjectApi = new SubjectAPI();
 
-    const [startTime,setStartTime] = useState(hours[0]);
-    const [endTime,setEndTime] = useState(hours[0]);
-    const [day, setDay] = useState(days[0]);
+    const [startTime,setStartTime] = useState(scheduleToEdit.startTime);
+    const [endTime,setEndTime] = useState(scheduleToEdit.endTime);
+    const [day, setDay] = useState(scheduleToEdit.day);
     const [aulasOptions, setAulasOptions] = useState([]);
-    const [classroom,setClassroom] = useState();
+    const [classroom,setClassroom] = useState(scheduleToEdit.classroom);
     // validations
     const [hoursValidation, setHoursValidation] = useState(false);
 
     const componentIsMounted = useRef(false);
 
     useEffect(() => {
-        return componentIsMounted.current = true;    
+        return componentIsMounted.current = true;
     }, []);
 
     useEffect(() => {
@@ -49,8 +50,6 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
         day
     };
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         validateFields()
@@ -58,10 +57,10 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
 
     const validateFields = () => {
         if(  areValidHours(startTime, endTime)) {
-            addSchedule(schedule);
+            modifyItemSchedule(schedule);
             setHoursValidation(false);
-            cleanUp();
-            return onHide();            
+            // cleanUp();
+            return onHideEdit();            
         }else {
             showErrorHours();
             return;
@@ -73,24 +72,27 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
         var selectHours = document.getElementsByClassName("selectHours");
         selectHours[0].style.border = "1px solid red";
         selectHours[1].style.border = "1px solid red";
-        
     }
 
-    const cleanUp = () => {
-        setStartTime(hours[0]);
-        setEndTime(hours[0]);
-        setDay(days[0]);
-        setClassroom(aulasOptions[0]);
-    }
+    // const cleanUp = () => {
+    //     setStartTime(hours[0]);
+    //     setEndTime(hours[0]);
+    //     setDay(days[0]);
+    //     setClassroom(aulasOptions[0]);
+    //     document.getElementById("addedSchedulesSection").style.border = "";
+    // }
 
     function invalidHoursErrorMessage() { return"La materia debe tener al menos dos horas de diferencia"}
 
     return (
-        <Modal show={show} >
+        <Modal show={showEdit} >
             <Modal.Header>Nuevo schedule</Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleSubmit} data-toggle="validator" role="form">
+            
+        
+            <Modal.Body>
+                <Form onSubmit={handleSubmit} data-toggle="validator" role="form">
                     <Container style={{backgroundColor:"#fff"}}>
+                        {/* hora comiento, hora  fin*/}
                         <Row>
                             <Col xs={6}>
                                 <Form.Group>
@@ -99,15 +101,15 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
                                         className={"selectHours"}  
                                         as="select"
                                         value={startTime}
-                                        maxMenuHeight={150}
-                                        onChange={(e) => setStartTime(e.target.value)}>
+                                        onChange={(e) => setStartTime(e.target.value)}
+                                        >
                                             {optionsHours}
                                     </Form.Control>
                                     {
                                         hoursValidation ? <small style={{color:"red"}}>{invalidHoursErrorMessage()}</small> : null
                                     }
                                 </Form.Group>
-                            </Col>
+                            </Col>    
                             <Col xs={6}>
                                 <Form.Group>
                                     <Form.Label>Hora fin</Form.Label>
@@ -115,8 +117,7 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
                                         className={"selectHours"} 
                                         as="select"
                                         value={endTime}
-                                        maxMenuHeight={150}
-                                        onChange={(e) => setEndTime(e.target.value)}>
+                                        onChange={(e) => setEndTime(e.target.value)} >
                                             {optionsHours}    
                                     </Form.Control>
                                     {
@@ -148,26 +149,21 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
                                             {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
                                     </Form.Control>
                                 </Form.Group>
-                            </Col>                            
+                            </Col>
                         </Row>
                         <Row>
                             <button type="button" 
-                                className="btn btn-danger color-button" 
-                                onClick={ () => onHide()}
-                                style={{marginRight: "5px"}}>
-                                    Cerrar
+                                    className="btn btn-danger color-button" 
+                                    onClick={ () => onHideEdit()}
+                                    style={{marginRight: "5px"}}>
+                                        Cerrar
                             </button>
-                            <button type="submit" className="btn btn-danger color-button">Agregar schedule</button> 
-                        </Row>
+                            <button type="submit" className="btn btn-danger color-button">Modificar schedule</button>
+                        </Row> 
                     </Container>
-
-                    
-                    
-
-                    
-
                 </Form>
             </Modal.Body>
+                            
         </Modal>
     )
 }

@@ -12,10 +12,11 @@ export default function CommissionForm({addCommission}) {
     // aux functions
     const allIds = () => { return schedules.map( (schedule) => schedule.id)};
 
-    // modal logic
+    // modal new schedule logic
     const [showModalSchedule,setShowModalSchedule] = useState(false);
     const closeModalSchedule = () =>{ setShowModalSchedule(false); }
     const openCloseModal = () => { setShowModalSchedule(true); }
+
 
     // schedule logic
     const [schedules, setSchedules] = useState([]);
@@ -25,14 +26,10 @@ export default function CommissionForm({addCommission}) {
 
     // VER
     const deleteSchedule = (id) => {
-        let indexSchDelete = allIds().indexOf(id);
-        schedules.splice(indexSchDelete,1);
-    }
-
-    // VER
-    const modifySchedule = (schedule) => {
-        // openCloseModal();
-        // deleteSchedule(schedule.id);
+        // console.log("snd");
+        // let indexSchDelete = allIds().indexOf(id);
+        // schedules.splice(indexSchDelete,1);
+        // setSchedules([...schedules]);
     }
 
     // commission logic
@@ -58,6 +55,12 @@ export default function CommissionForm({addCommission}) {
         setYear("2020");
         setSemester("Primer cuatrimestre");
         setSchedules([]);
+    }
+
+    const replaceEditedSchedule = (schedule) => { 
+        let index = schedules.findIndex(sch => sch.id === schedule.id);
+        schedules[index] = schedule;
+        console.log(schedules);
     }
 
     return (
@@ -123,25 +126,18 @@ export default function CommissionForm({addCommission}) {
                             </p>
                             
                         </ListGroup.Item>
-
                         :
                         schedules.map( function(sch){
-                            return <ScheduleItem schedule={sch} 
+                            return <ScheduleItem scheduleItem={sch} 
                                                  deleteSchedule={deleteSchedule}
-                                                 modifySchedule={modifySchedule} />;
+                                                 replaceEditedSchedule={replaceEditedSchedule} />;
                         })
                     }
-                    
                 </ListGroup>
             </Card>
-
-
             <ScheduleForm show={showModalSchedule} 
-                            onHide={closeModalSchedule}
-                            addSchedule={addSchedule}
-                            
-            />
-
+                          onHide={closeModalSchedule}
+                          addSchedule={addSchedule} />
         </>
     );
 }

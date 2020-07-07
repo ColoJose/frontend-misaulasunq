@@ -24,7 +24,6 @@ const EditCommissions = (props) => {
    }
 
    const [selectedCommission, setSelectedCommission] = useState(emptyCommission);
-   const changedCommissions = new Set();
 
    const [name, setName] = useState(selectedCommission.name);
    const [year, setYear] = useState(selectedCommission.year);
@@ -49,7 +48,7 @@ const EditCommissions = (props) => {
 
    const updateCommission = () => {
       subjectApi.updateCommission(commissions, idSubject).then( (resp) => {
-         toast.success(`Se actualizaron correctamente: ${changedCommissions}`, editConfig);
+         toast.success(`Se actualizaron correctamente las comisiones`, editConfig);
       }).catch((e) => console.log(e));
    }
 
@@ -71,11 +70,6 @@ const EditCommissions = (props) => {
 
    const addSchedule = (schedule) => {
       selectedCommission.schedules.push(schedule);
-   }
-
-   const addChangedCommission = () => {
-      changedCommissions.add(`${selectedCommission.name}, `)
-      console.log(changedCommissions);
    }
 
    return (
@@ -107,7 +101,7 @@ const EditCommissions = (props) => {
                         </Nav>
                      </Card.Header>
                      <Card.Body>
-                        <Form onChange={ () => addChangedCommission()}>
+                        <Form>
                            <Row>
                               <Col xs={6}>
                                     {commissions === undefined ? <p>Cargando...</p> :

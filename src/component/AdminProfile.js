@@ -71,14 +71,12 @@ const AdminProfile = () => {
     const editGeneralInfo = (id,objToPost) => { 
         subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
             editGeneralInfoSuccess(resp.data.name);
-            updateSubjectList(id,objToPost.name)
+            updateSubjectList()
         }).catch( (e) => console.log(e) )
     }
 
-    const updateSubjectList = (id,name) => {
-
-        console.log(state.allSubjects.find(subject => subject.id === id));
-
+    const updateSubjectList = () => {
+        getAllSubjects(state.pageNumber);
     }
 
     const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }
