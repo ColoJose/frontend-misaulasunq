@@ -5,12 +5,14 @@ import ScheduleEditAccordion from './ScheduleEditAccordion';
 import history from '../../utils/history';
 import {toast} from 'react-toastify';
 import { editConfig } from '../../utils/toast-config';
+import ScheduleFormEdit from './ScheduleFormEdit';
+import ReactDOM from 'react-dom';
 // css
 import '../ButtonBranding.css';
 
 const EditCommissions = (props) => {
 
-   const { idSubject } = props.match.params;
+   const { idSubject, subjectName } = props.match.params;
    const subjectApi = new SubjectAPI();
    const [commissions, setCommissions] = useState([]);
 
@@ -21,6 +23,7 @@ const EditCommissions = (props) => {
       semester: '',
       year: 0
    }
+
    const [selectedCommission, setSelectedCommission] = useState(emptyCommission);
 
    const [name, setName] = useState(selectedCommission.name);
@@ -37,7 +40,7 @@ const EditCommissions = (props) => {
    }, []);
 
    const setNameAux = (name) => { selectedCommission.name = name; setName(name) }
-   const setYearAux = (year) => { selectedCommission.year = year; setYear(year); console.log(selectedCommission.year) }
+   const setYearAux = (year) => { selectedCommission.year = year; setYear(year); }
    const setSemesterAux = (semester) => { selectedCommission.semester = semester; setSemester(semester); }
 
    const updateSchedules = (schedules) => { 
@@ -46,21 +49,49 @@ const EditCommissions = (props) => {
 
    const updateCommission = () => {
       subjectApi.updateCommission(commissions, idSubject).then( (resp) => {
-         toast.success(`La comisión ${selectedCommission.name} se actualizó correctamente`, editConfig);
+         toast.success(`Se actualizaron correctamente las comisiones`, editConfig);
       }).catch((e) => console.log(e));
-      //  console.log(commissions);
-      //  console.log(idSubject);
    }
 
+   // new schedule 
+   const [showModalSchedule,setShowModalSchedule] = useState(false);
+   const closeModalSchedule = () =>{ setShowModalSchedule(false); }
+
    const goBack = () => {
+      ReactDOM.unmountComponentAtNode(document.getElementById("edit-commissions-container"));
+      console.log("pass unmount")
       history.goBack();
    }
 
+   const handleAddCommission = (schedule) => {
+      selectedCommission.schedules.push(schedule)
+   }
+
+   const handleAddNewSchedule = () => {
+      setShowModalSchedule(true);
+   }
+
+   const addSchedule = (schedule) => {
+      selectedCommission.schedules.push(schedule);
+      console.log(selectedCommission.schedules);
+   }
+
    return (
-         <Container>
+         <Container id="edit-commissions-container">
+            <Row>
+               <Col xs={4}>
+                  <h3 >Editar Comisiones de materia {subjectName}</h3>
+               </Col>
+               <Col xs={5}></Col>
+               <Col xs={3}>
+                  <Button onClick={ () => goBack() } 
+                          className="color-button"
+                          style={{marginLeft:"80px", marginBottom:"5px"}}>Volver al panel admin</Button>
+               </Col>
+            </Row>
             <Row>
                <Col xs={12}>
-                  <h3>Editar Comisiones de "materia" -> todo</h3>
+                  
                   <Card>
                      <Card.Header>
                         <Nav variant="tabs">
@@ -88,7 +119,9 @@ const EditCommissions = (props) => {
                                           </Form.Group>
                                           <Form.Group>
                                              <Form.Label>Año</Form.Label>   
-                                             <Form.Control type="number" 
+                                             <Form.Control type="number"
+                                                           min="2020"
+                                                           max="2021" 
                                                            value={selectedCommission.year}
                                                            onChange={ (e) => setYearAux(e.target.value)}
                                                            required />
@@ -105,11 +138,25 @@ const EditCommissions = (props) => {
                                           </Form.Group>    
                                        </div>
                                     }
-                                    <Button className="color-button" onClick={ () => updateCommission() }>Modificar comisión</Button>
+                                    <Row>
+                                       <Col xs={4}>
+                                          <Button className="color-button" onClick={ () => updateCommission() }>Guardar cambios</Button>
+                                       </Col>
+                                       <Col xs={5}
+                                            >
+                                          <Button className="color-button"
+                                                  style={{marginLeft:"-28px"}}
+                                                  onClick={ () => handleAddCommission()}>Agregar otra comisión</Button>
+                                       </Col>
+                                       <Col xs={3}></Col>
+                                    </Row>                                                                     
                               </Col>
                               <Col xs={6}>
                                  <ScheduleEditAccordion schedules={selectedCommission.schedules}
                                                         updateSchedules={updateSchedules}/>
+                                 <Button className="color-button"
+                                         style={{textAlign:"right", marginTop:"10px"}}
+                                         onClick={ () => handleAddNewSchedule()}>Agregar otro horario a la {selectedCommission.name}</Button>                                                        
                               </Col>
                            </Row>
                         </Form>
@@ -117,8 +164,11 @@ const EditCommissions = (props) => {
                   </Card> 
                </Col>
             </Row>
-            <Button onClick={ () => goBack() } className="color-button">Volver al panel admin</Button>
-            <p>susi, dónde ponemos el botón de arriba? jeje </p>
+            <ScheduleFormEdit show={showModalSchedule}
+                              onHide={closeModalSchedule}
+                              addSchedule={addSchedule}
+            />
+
          </Container>
 )
 }

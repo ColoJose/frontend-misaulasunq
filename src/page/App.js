@@ -10,6 +10,7 @@ import NewSubjectForm from '../component/newSubject/NewSubjectForm';
 import PrivateRoute from '../component/PrivateRoute';
 import EditCommissions from '../component/editSubject/EditCommissions';
 import Callback from '../component/Callback';
+import Index from "../component/Index";
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,6 +40,7 @@ class App extends React.Component {
                     </Row>
                     <Row className="app-right-row">
                         <Col xs={12}>
+                                    <Route exact path="/" component={Index} />
                                     <Route exact path="/" component={Home}  />
                                     <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
                                     <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />

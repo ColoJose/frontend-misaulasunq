@@ -5,7 +5,7 @@ import SubjectAPI from '../../Api/SubjectAPI.js';
 // css
 import '../ButtonBranding.css';
 
-export default function GeneralInfoForm({commissions, joinDataSubject}) {
+export default function GeneralInfoForm({commissions, joinDataSubject, deleteCommission}) {
 
     const subjectAPI = new SubjectAPI();
 
@@ -38,7 +38,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
     const degreesOptions = allDegrees.map( (d) => { return <option key={d.id.toString()}>{d.name}</option> });  
 
     return (
-        <>
+        <div>
             <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Label>Carrera a la que pertenece</Form.Label>
@@ -73,7 +73,11 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     <ListGroup>
                         { commissions.length === 0 ? <ListGroup.Item>No ha agregado comisiones aún</ListGroup.Item>
                                                    :
-                                              commissions.map( com => <CommissionItem commission={com}/>)
+                                              commissions.map( 
+                                                    com => <CommissionItem commission={com}
+                                                                           deleteCommission={deleteCommission}
+                                                           />
+                                              )
                         }
                          
                     </ListGroup>
@@ -85,6 +89,6 @@ export default function GeneralInfoForm({commissions, joinDataSubject}) {
                     </Button>
                 </Form.Group>
             </form>
-        </>
+        </div>
     );
 }

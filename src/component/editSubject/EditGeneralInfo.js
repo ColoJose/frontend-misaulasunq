@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import '../ButtonBranding.css';
+import { isSubjectCodeRepeated } from '../../utils/formValidator.js';
+import SubjectAPI from "../../Api/SubjectAPI";
 
  const EditGeneralInfo = (props) => {
 
@@ -8,17 +10,44 @@ import '../ButtonBranding.css';
 
    const [name, setName] = useState(subject.name);
    const [subjectCode, setSubjectCode] = useState(subject.subjectCode);
+   const subjectCodeGiven = subject.subjectCode
+
+   const subjectApi = new SubjectAPI();
+   const [subjectCodes, setSubjectCodes] = useState();
+
+   useEffect(() => {
+      subjectApi.getAllSubjectCodes().then( (resp) => {
+         setSubjectCodes(resp.data);
+      }).catch( e => console.log(e));
+
+   }, []);
 
    const generalInfoToPost = {
       name,
       subjectCode
    }
    const handleSubmit = (e) => {
-      e.preventDefault(); 
-      selectSubjectTo(subject,"generalInfo",generalInfoToPost);
-      console.log("pass select subject2");
-      handleEditButtons(idEditButton);
-      hide();
+      e.preventDefault();
+      validateFieldsAndSendReq();
+   }
+
+   const validateFieldsAndSendReq = () => {
+      console.log(subjectCodes); 
+      if(isSubjectCodeRepeated(subjectCode, subjectCodes, subjectCodeGiven)) {
+         document.getElementById("subject-code-id").style.border = "1px solid red";
+         document.getElementById("subject-code-error").style.visibility = "visible";
+         return;
+      }else {
+         selectSubjectTo(subject,"generalInfo",generalInfoToPost);
+         handleEditButtons(idEditButton);
+         cleanForm()
+         hide();
+      }
+   }
+
+   const cleanForm = () => {
+      document.getElementById("subject-code-id").style.border = "1px solid red";
+      document.getElementById("subject-code-error").style.visibility = "hidden";
    }
 
    const handleClose = () => { 
@@ -44,10 +73,12 @@ import '../ButtonBranding.css';
                      <Form.Group>
                         <Form.Label>Código materia</Form.Label>
                         <Form.Control 
+                           id="subject-code-id"
                            type="text"
                            value={subjectCode}
                            onChange={ (e) => setSubjectCode(e.target.value)}
                            required />
+                        <small id="subject-code-error" style={{visibility:"hidden",color:"red"}}>El código ingresado está repetido</small>
                      </Form.Group>
                   
                </Modal.Body>

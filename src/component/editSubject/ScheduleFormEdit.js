@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {Modal, Form, Container, Row, Col} from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours } from '../../utils/formValidator';
-// css
+// cssd
 import '../ButtonBranding.css';
-import Select from 'react-select';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -16,7 +15,7 @@ const hours = Object.freeze([
 let optionsHours = 
             hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
 
-export default function ScheduleForm({show, onHide, addSchedule}) {
+export default function ScheduleFormEdit({show, onHide, addSchedule}) {
 
     const subjectApi = new SubjectAPI();
 
@@ -31,7 +30,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     const componentIsMounted = useRef(false);
 
     useEffect(() => {
-        return componentIsMounted.current = true;
+        return componentIsMounted.current = true;    
     }, []);
 
     useEffect(() => {
@@ -49,6 +48,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         classroom: {number:classroom},
         day
     };
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -80,7 +81,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
         setEndTime(hours[0]);
         setDay(days[0]);
         setClassroom(aulasOptions[0]);
-        document.getElementById("addedSchedulesSection").style.border = "";
     }
 
     function invalidHoursErrorMessage() { return"La materia debe tener al menos dos horas de diferencia"}
@@ -99,8 +99,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                                         className={"selectHours"}  
                                         as="select"
                                         value={startTime}
-                                        onChange={(e) => setStartTime(e.target.value)}
-                                        >
+                                        maxMenuHeight={150}
+                                        onChange={(e) => setStartTime(e.target.value)}>
                                             {optionsHours}
                                     </Form.Control>
                                     {
@@ -115,7 +115,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                                         className={"selectHours"} 
                                         as="select"
                                         value={endTime}
-                                        onChange={(e) => setEndTime(e.target.value)} >
+                                        maxMenuHeight={150}
+                                        onChange={(e) => setEndTime(e.target.value)}>
                                             {optionsHours}    
                                     </Form.Control>
                                     {
@@ -124,7 +125,6 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        <Row><hr style={{height:"0.1px", width:"380px",backgroundColor:"#d3d3d3"}}></hr></Row>
                         <Row>
                             <Col xs={6}>
                                 <Form.Group>
@@ -147,8 +147,8 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                                         required>
                                             {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
                                     </Form.Control>
-                                </Form.Group> 
-                            </Col>
+                                </Form.Group>
+                            </Col>                            
                         </Row>
                         <Row>
                             <button type="button" 
@@ -160,6 +160,12 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                             <button type="submit" className="btn btn-danger color-button">Agregar schedule</button> 
                         </Row>
                     </Container>
+
+                    
+                    
+
+                    
+
                 </Form>
             </Modal.Body>
         </Modal>

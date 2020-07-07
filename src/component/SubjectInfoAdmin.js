@@ -30,7 +30,7 @@ export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditBu
         </Popover>
     );
 
-    const goEditCommissions = () => { history.push(`/admin/edit-commissions/${id}`); }
+    const goEditCommissions = () => { history.push(`/admin/edit-commissions/${id}/${subject.name}`); }
 
     const idEditButton= `id-edit-button-${id}`;
 
