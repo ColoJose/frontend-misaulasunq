@@ -8,7 +8,7 @@ import "./NotFound.css";
 
 const NotFound = ({label}) =>(
     <>
-        <Badge pill variant="danger" className="branding align-middle text-center text-wrap flex-fill">
+        <Badge pill variant="danger" className="branding-red-white-icon align-middle text-center text-wrap flex-fill">
             <BsExclamationTriangleFill size='3rem'
                                        className="my-2"/>
             <p>{label}</p>

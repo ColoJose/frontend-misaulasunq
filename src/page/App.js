@@ -9,6 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import NewSubjectForm from '../component/newSubject/NewSubjectForm';
 import PrivateRoute from '../component/PrivateRoute';
 import EditCommissions from '../component/editSubject/EditCommissions';
+import Callback from '../component/Callback';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,25 +27,29 @@ class App extends React.Component {
   render() {
 
     return (
-        <Container className="app-Container">
-            <Row className="app-left-row">
-                <Col xs={12}>
-                    <NavbarApp />
-                </Col>
-            </Row>
-            <Row className="app-right-row">
-                <Col xs={12}>
-                    <Router history={history}>
-                        <Switch>
-                            <Route exact path="/" component={Home}  />
-                            <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
-                            <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
-                            <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
-                        </Switch> 
-                    </Router>
-                </Col>
-            </Row>
-        </Container>
+        <Router history={history}>
+            <Switch>
+                <Route exact path="/callback" render={(props) => <Callback {...props} />} />
+                
+                <Container className="app-Container">
+                    <Row className="app-left-row">
+                        <Col xs={12}>
+                            <NavbarApp />
+                        </Col>
+                    </Row>
+                    <Row className="app-right-row">
+                        <Col xs={12}>
+                                    <Route exact path="/" component={Home}  />
+                                    <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
+                                    <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
+                                    <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
+                                
+                        </Col>
+                    </Row>
+                </Container>
+                
+            </Switch> 
+        </Router>
     )
   }
 }
