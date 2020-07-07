@@ -13,6 +13,9 @@ export function isValidSubject(subject) {
     return subject.commissions.length > 0
 }
 
+export function isSubjectCodeRepeated(subjectCode, subjectCodes, subjectCodeGiven) {
+    return subjectCodes.includes(subjectCode) && subjectCode != subjectCodeGiven;
+
 export function isBlankString(str) {
     return !str 
         || 0 === str.length 

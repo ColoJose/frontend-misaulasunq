@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import {Button, Form, ListGroup, Card, Row, Col} from 'react-bootstrap';
 import './CommissionForm.css';
 import ScheduleForm from './ScheduleForm';
@@ -12,10 +13,11 @@ export default function CommissionForm({addCommission}) {
     // aux functions
     const allIds = () => { return schedules.map( (schedule) => schedule.id)};
 
-    // modal logic
+    // modal new schedule logic
     const [showModalSchedule,setShowModalSchedule] = useState(false);
     const closeModalSchedule = () =>{ setShowModalSchedule(false); }
     const openCloseModal = () => { setShowModalSchedule(true); }
+
 
     // schedule logic
     const [schedules, setSchedules] = useState([]);
@@ -27,12 +29,7 @@ export default function CommissionForm({addCommission}) {
     const deleteSchedule = (id) => {
         let indexSchDelete = allIds().indexOf(id);
         schedules.splice(indexSchDelete,1);
-    }
-
-    // VER
-    const modifySchedule = (schedule) => {
-        // openCloseModal();
-        // deleteSchedule(schedule.id);
+        setSchedules([...schedules]);
     }
 
     // commission logic
@@ -49,6 +46,7 @@ export default function CommissionForm({addCommission}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // unmoundNodes();
         addCommission(commission,cleanUpCommission);
         return;
     }
@@ -57,7 +55,17 @@ export default function CommissionForm({addCommission}) {
         setName(" ");
         setYear("2020");
         setSemester("Primer cuatrimestre");
-        setSchedules([]);
+        // setSchedules([]);
+    }
+
+    const unmoundNodes = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById("schedule-items"));
+    };
+
+    const replaceEditedSchedule = (schedule) => { 
+        let index = schedules.findIndex(sch => sch.id === schedule.id);
+        schedules[index] = schedule;
+        console.log(schedules);
     }
 
     return (
@@ -80,6 +88,8 @@ export default function CommissionForm({addCommission}) {
                     <Form.Label>Año</Form.Label>
                     <Form.Control 
                         type="number"
+                        min="2020"
+                        max="2021"
                         value={year}
                         onChange={(e) => setYear(e.target.value)}
                         required />
@@ -113,7 +123,7 @@ export default function CommissionForm({addCommission}) {
                     </Col>
                 </Row>
                 
-                <ListGroup>
+                <ListGroup id="schedule-items">
                     { schedules.length === 0 ?
                         <ListGroup.Item>
                             <p>
@@ -121,25 +131,18 @@ export default function CommissionForm({addCommission}) {
                             </p>
                             
                         </ListGroup.Item>
-
                         :
                         schedules.map( function(sch){
-                            return <ScheduleItem schedule={sch} 
+                            return <ScheduleItem scheduleItem={sch} 
                                                  deleteSchedule={deleteSchedule}
-                                                 modifySchedule={modifySchedule} />;
+                                                 replaceEditedSchedule={replaceEditedSchedule} />;
                         })
                     }
-                    
                 </ListGroup>
             </Card>
-
-
             <ScheduleForm show={showModalSchedule} 
-                            onHide={closeModalSchedule}
-                            addSchedule={addSchedule}
-                            
-            />
-
+                          onHide={closeModalSchedule}
+                          addSchedule={addSchedule} />
         </>
     );
 }

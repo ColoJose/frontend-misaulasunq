@@ -9,6 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import NewSubjectForm from '../component/newSubject/NewSubjectForm';
 import PrivateRoute from '../component/PrivateRoute';
 import EditCommissions from '../component/editSubject/EditCommissions';
+import Index from "../component/Index";
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,6 +37,7 @@ class App extends React.Component {
                 <Col xs={12}>
                     <Router history={history}>
                         <Switch>
+                            <Route exact path="/" component={Index} />
                             <Route exact path="/" component={Home}  />
                             <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
                             <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />

@@ -5,16 +5,14 @@ import editIcon from '../../resources/edit-tools.png';
 import deleteIcon from '../../resources/delete.png';
 
 
-export default function CommissionItem({commission}) {
+export default function CommissionItem({commission, deleteCommission}) {
 
     return (
         <ListGroup.Item>
             <Row>
-                <Col xs={9}>Nombre: {commission.name}</Col>
-                <Col xs={1}><img alt="info" src={infoIcon}/></Col>
-                <Col xs={1}><img alt="edit" src={editIcon}/></Col>
-                <Col xs={1}><img alt="delete"src={deleteIcon}/></Col>
-                
+                <Col xs={8}>Nombre: {commission.name}</Col>
+                <Col xs={2}><img alt="edit" src={editIcon}/></Col>
+                <Col onClick={ () => deleteCommission(commission.id)} xs={2}><img alt="delete"src={deleteIcon}/></Col>
             </Row>
         </ListGroup.Item>
     );

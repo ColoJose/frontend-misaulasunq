@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React,  { useState, useEffect, useReducer } from 'react';
+import ReactDOM from 'react-dom';
 import { Card, ListGroup, Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
@@ -22,7 +23,7 @@ const AdminProfile = () => {
                 {allSubjects: [], pageNumber: 0, totalPages: 0, firstPage: "true", lastPage: "false"});
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
-    const elems = 5; // cantidad de elemntos que trae el cada page
+    const elems = 5; // cantidad de elemntos que trae cada page
     const subjectApi = new SubjectAPI;
     const massiveUpload = <MassiveLoad/>;
 
@@ -71,7 +72,12 @@ const AdminProfile = () => {
     const editGeneralInfo = (id,objToPost) => { 
         subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
             editGeneralInfoSuccess(resp.data.name);
+            updateSubjectList()
         }).catch( (e) => console.log(e) )
+    }
+
+    const updateSubjectList = () => {
+        getAllSubjects(state.pageNumber);
     }
 
     const editGeneralInfoSuccess = (name) => { toast.success(`Actualizó correctamente la materia ${name}`, editConfig) }
@@ -101,6 +107,12 @@ const AdminProfile = () => {
         })
     }
 
+
+    const goHome = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById("admin-container"));
+        history.push('/home');
+    }
+    
     const renderSubjectsListItem = () => {
         return state.allSubjects.map( 
             (subject) => {
@@ -112,21 +124,27 @@ const AdminProfile = () => {
     }
 
     return (
-        <Container>
-            <Row>
-                <h1>Panel de administrador/a</h1>
+        <Container id="admin-container">
+            <Row style={{marginBottom:"15px"}}>
+                    <h1>
+                        <span style={{color:"#e2e3de"}}>f</span>
+                        Panel de administrador/a
+                    </h1>
             </Row>
             <Row className="my-2">
                 <Col>
-                    <ButtonGroup size="sm">
-                        <Button className="btn btn-danger color-button" 
-                                onClick={() => goNewSubjectForm()}>Nueva Materia</Button>
-                        <GenericModal children={massiveUpload} 
-                                        title="Carga de Horarios por Archivo" 
-                                        buttonLabel="Cargar Archivo"
-                                        buttonStyle="btn btn-danger color-button"
-                                        size="xs"/>
-                    </ButtonGroup>                   
+                    <Button className="btn btn-danger color-button" 
+                            onClick={() => goNewSubjectForm()}
+                            style={{marginRight:"5px"}}>Crear nueva materia</Button>
+                    <GenericModal children={massiveUpload} 
+                                    title="Carga de Horarios por Archivo" 
+                                    buttonLabel="Cargar Archivo"
+                                    buttonStyle="btn btn-danger color-button"
+                                    size="xs"
+                                    />
+                    <Button className="color-button"
+                            onClick={ () => goHome()}
+                            style={{marginLeft:"5px"}}>Volver al home</Button>
                 </Col>
             </Row>
             <Row style={{height: "100%"}}>
