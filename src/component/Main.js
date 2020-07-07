@@ -4,7 +4,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 // Semantic UI
 import { Dimmer, Loader } from 'semantic-ui-react';
 // components and internal resources imports
-import Filters from './Filters.js';
+import Filters from './filters/Filters.js';
 import SubjectsInfo from './subject information/SubjectsInfo.js';
 import SubjectAPI from "../Api/SubjectAPI";
 import ClassroomAPI from "../Api/ClassroomAPI";
@@ -60,21 +60,25 @@ function Main() {
     const loadingIncomplete = () => {
         return state.searching  || !state.subjectSuggestionsLoaded || !state.classroomSuggestionsLoaded;
     }
-
     return (
         <Container className="container" 
                    fluid>
-            <Row className="main">
-                <Col className="justify-content-start col-Filter"
-                     xs={4}>
+            <Row className="h-100 pt-3 pt-lg-2 pt-xl-2">
+                <Col className="mb-3 mb-xs-3 mb-md-3 pt-xl-2 pt-lg-2 my-lg-0 my-xl-0 justify-content-start"
+                     xs={12}
+                     md={6}
+                     lg={4}
+                     xl={4}>
                     <Filters handleSearchResult={handleSearchResult}
                              searching={startSearching}
                              subjectSuggestions={state.subjectSuggestions}
-                             classroomSuggestions={state.classroomSuggestions}
-                             />
+                             classroomSuggestions={state.classroomSuggestions}/>
                 </Col>
-                <Col className="justify-content-center col-Subjects"
-                     xs={8}>
+                <Col className="mt-1 mt-xs-1 mt-md-1 pt-xl-2 pt-lg-2 my-lg-0 my-xl-0 scroll-overflow justify-content-center"
+                     xs={12}
+                     md={6}
+                     lg={8}
+                     xl={8}>
                     <SubjectsInfo subjects={state.subjects}
                                   notFound={state.notFound}
                                   title={state.subjectResultTitle}/>

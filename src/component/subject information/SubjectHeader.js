@@ -6,11 +6,11 @@ import './SubjectHeader.css';
 function SubjectsHeader({subject}) {
     return (
         <>
-            <Card.Header className="subject-Header-Card">
+            <Card.Header className="p-0">
                 <Accordion.Toggle as={Button} 
                                   variant="light" 
                                   block
-                                  className="subject-Header-Button">
+                                  className="subject-Header-Button p-1">
                     {subject.name}
                 </Accordion.Toggle>    
             </Card.Header>

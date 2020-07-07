@@ -1,15 +1,12 @@
 .Home { height: inherit; }
 
-.main { height: 85%; }
-
 .container {
-    height: inherit;
+    height: 100%;
     max-width: 100%;
     background-color: #e2e3de;
-    margin-left: 1%;
-    margin-right: 1%;
 }
 
-.col-Filter { padding-right: 4%; }
-
-.col-Subjects { padding-right: 8%; }
+.scroll-overflow{
+    overflow-y: overlay;
+    height: 100%;
+}

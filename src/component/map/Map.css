@@ -16,3 +16,7 @@
 .canvas-back{
     z-index: 1;
 }
+
+.responsive-font{
+    font-size: 90%;
+}

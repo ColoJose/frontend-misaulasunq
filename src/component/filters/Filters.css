@@ -1,0 +1,15 @@
+h5 { font-style: bold; }
+
+.filter-title{
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.filter-subtitle{
+    font-size:0.80rem;
+}
+
+.filter-button{
+    font-size: 1.0rem;
+    font-weight: bolder;
+}

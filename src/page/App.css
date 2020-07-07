@@ -2,15 +2,13 @@
 
 .app-Container {
     height: inherit;
-    max-width: 98%;
+    max-width: 100%;
 }
 
-.app-left-row { 
-    width: 100%;
-    height: 13%; 
+.app-left-row {
+    height: 8%; 
 }
 
-.app-right-row { 
-    width: 100%;
-    height: 87%; 
+.app-right-row {
+    height: 92%;
 }

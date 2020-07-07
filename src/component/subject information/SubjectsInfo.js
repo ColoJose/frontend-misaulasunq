@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, Col } from 'react-bootstrap';
 import SubjectsAccordion from './SubjectsAccordion';
 import NotFound from '../NotFound';
+//CSS
+import "../HeaderBranding.css";
 
 function SubjectsInfo({subjects, notFound, title}) {
 
@@ -18,17 +20,16 @@ function SubjectsInfo({subjects, notFound, title}) {
 
     if(notFound){
         return (
-            <Col xs={{span: 5,offset: 3}}>
-                <NotFound className="text-center"
-                          label={"No se ha Encontrado Ninguna Materia."}/>
+            <Col xs={10} lg={4} xl={4}
+                 className="h-50 m-auto p-auto d-flex align-items-center">
+                <NotFound label={"No se ha Encontrado Ninguna Materia."}/>
             </Col>
         );
     } else {
         return (
             <>
                 <Card>
-                    <Card.Header as="h5" 
-                                 className="text-center">
+                    <Card.Header className="text-center header-branding">
                         {title}
                     </Card.Header>
                 </Card>

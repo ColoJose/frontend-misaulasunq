@@ -15,4 +15,10 @@ export function isValidSubject(subject) {
 
 export function isSubjectCodeRepeated(subjectCode, subjectCodes, subjectCodeGiven) {
     return subjectCodes.includes(subjectCode) && subjectCode != subjectCodeGiven;
+
+export function isBlankString(str) {
+    return !str 
+        || 0 === str.length 
+        || !str.trim() 
+        || 0 === str.trim().length;
 }

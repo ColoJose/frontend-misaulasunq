@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import NavbarApp from '../component/Navbar';
+import NavbarApp from '../component/navbar/Navbar';
 import { Route, Router, Switch } from 'react-router-dom';
 import Home from '../component/Home';
 import AdminProfile from '../component/AdminProfile';
@@ -34,15 +34,17 @@ class App extends React.Component {
                 </Col>
             </Row>
             <Row className="app-right-row">
-                <Router history={history}>
-                    <Switch>
-                        <Route exact path="/" component={Index} />
-                        <Route exact path="/home" component={Home}  />
-                        <Route exact path="/admin" render={(props) => <AdminProfile {...props} />} />
-                        <Route exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
-                        <Route exact path="/admin/edit-commissions/:idSubject/:subjectName" render={(props) => <EditCommissions {...props} />} />
-                    </Switch> 
-                </Router>
+                <Col xs={12}>
+                    <Router history={history}>
+                        <Switch>
+                            <Route exact path="/" component={Index} />
+                            <Route exact path="/" component={Home}  />
+                            <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
+                            <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
+                            <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
+                        </Switch> 
+                    </Router>
+                </Col>
             </Row>
         </Container>
     )

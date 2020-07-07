@@ -19,7 +19,7 @@ function MapModal({classRoomNumber}){
 
     return (
         <>
-          <Button variant="outline-danger"
+          <Button variant="outline-danger outline-branding-button"
                   onClick={handleShow}>
               <BsGeoAlt size='1em'/>
           </Button>
