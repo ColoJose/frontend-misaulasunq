@@ -6,6 +6,7 @@ import history from '../../utils/history';
 import {toast} from 'react-toastify';
 import { editConfig } from '../../utils/toast-config';
 import ScheduleFormEdit from './ScheduleFormEdit';
+import ReactDOM from 'react-dom';
 // css
 import '../ButtonBranding.css';
 
@@ -57,7 +58,9 @@ const EditCommissions = (props) => {
    const closeModalSchedule = () =>{ setShowModalSchedule(false); }
 
    const goBack = () => {
-      history.push('/admin');
+      ReactDOM.unmountComponentAtNode(document.getElementById("edit-commissions-container"));
+      console.log("pass unmount")
+      history.goBack();
    }
 
    const handleAddCommission = (schedule) => {
@@ -70,10 +73,11 @@ const EditCommissions = (props) => {
 
    const addSchedule = (schedule) => {
       selectedCommission.schedules.push(schedule);
+      console.log(selectedCommission.schedules);
    }
 
    return (
-         <Container>
+         <Container id="edit-commissions-container">
             <Row>
                <Col xs={4}>
                   <h3 >Editar Comisiones de materia {subjectName}</h3>

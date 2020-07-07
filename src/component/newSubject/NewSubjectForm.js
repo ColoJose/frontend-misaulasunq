@@ -82,29 +82,36 @@ export default function NewSubjectForm() {
     const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
     return  (
-        <>
-            {/* <Button onClick={ () => history.push("/admin")}>Volver atrás</Button> */}
-            <Card className="wrapper">
-                <Card.Header>Formulario nueva materia</Card.Header>
-                <Card.Body>
-                    <Container fluid="md">
-                        <Row>
-                            <Col xs={6}>
-                                <h2>Info general materia</h2>
-                                <GeneralInfoForm 
-                                    commissions={commissions}
-                                    joinDataSubject={joinDataSubject}
-                                    deleteCommission={deleteCommission} />
-                            </Col>
-                            <Col xs={6}>
-                                <CommissionForm
-                                    addCommission={addCommission} />
-                            </Col>
-                        </Row>
-                    </Container>    
-                </Card.Body>
-            </Card>
-        </>
+        <Container>
+            <Row>
+                <Button onClick={ () => history.push("/admin")}
+                        className="color-button"
+                        style={{marginBottom:"5px"}}>Volver atrás</Button>
+            </Row>
+
+            <Row>
+                <Card className="wrapper">
+                    <Card.Header>Formulario nueva materia</Card.Header>
+                    <Card.Body>
+                        <Container fluid="md">
+                            <Row>
+                                <Col xs={6}>
+                                    <h2>Info general materia</h2>
+                                    <GeneralInfoForm 
+                                        commissions={commissions}
+                                        joinDataSubject={joinDataSubject}
+                                        deleteCommission={deleteCommission} />
+                                </Col>
+                                <Col xs={6}>
+                                    <CommissionForm
+                                        addCommission={addCommission} />
+                                </Col>
+                            </Row>
+                        </Container>    
+                    </Card.Body>
+                </Card>
+            </Row>
+        </Container>
     )
 }
 

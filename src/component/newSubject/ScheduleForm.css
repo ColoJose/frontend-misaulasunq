@@ -3,3 +3,9 @@
 .selectHours {
     font-size: 200px;
 }
+
+#line {
+    height: 1px;
+    width: 380px;
+    background-color: #d6d6d6;
+}

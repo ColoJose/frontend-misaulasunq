@@ -38,7 +38,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject, deleteCom
     const degreesOptions = allDegrees.map( (d) => { return <option key={d.id.toString()}>{d.name}</option> });  
 
     return (
-        <>
+        <div>
             <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Label>Carrera a la que pertenece</Form.Label>
@@ -89,6 +89,6 @@ export default function GeneralInfoForm({commissions, joinDataSubject, deleteCom
                     </Button>
                 </Form.Group>
             </form>
-        </>
+        </div>
     );
 }

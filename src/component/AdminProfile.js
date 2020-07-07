@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React,  { useState, useEffect, useReducer } from 'react';
+import ReactDOM from 'react-dom';
 import { Card, ListGroup, Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
@@ -106,13 +107,18 @@ const AdminProfile = () => {
         })
     }
 
+    const goHome = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById("admin-container"));
+        history.push('/home');
+    }
+
     return (
-        <Container>
+        <Container id="admin-container">
             <Row style={{marginBottom:"15px"}}>
-                <h1>
-                    <span style={{color:"#e2e3de"}}>f</span>
-                    Panel de administrador/a
-                </h1>
+                    <h1>
+                        <span style={{color:"#e2e3de"}}>f</span>
+                        Panel de administrador/a
+                    </h1>
             </Row>
             <Row className="my-2">
                 <Col>
@@ -123,7 +129,11 @@ const AdminProfile = () => {
                                     title="Carga de Horarios por Archivo" 
                                     buttonLabel="Cargar Archivo"
                                     buttonStyle="btn btn-danger color-button"
-                                    size="xs"/>
+                                    size="xs"
+                                    />
+                    <Button className="color-button"
+                            onClick={ () => goHome()}
+                            style={{marginLeft:"5px"}}>Volver al home</Button>
                 </Col>
             </Row>
             <Row style={{height: "100%"}}>

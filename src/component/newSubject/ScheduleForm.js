@@ -124,6 +124,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
                                 </Form.Group>
                             </Col>
                         </Row>
+                        <Row><hr style={{height:"0.1px", width:"380px",backgroundColor:"#d3d3d3"}}></hr></Row>
                         <Row>
                             <Col xs={6}>
                                 <Form.Group>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import {Button, Form, ListGroup, Card, Row, Col} from 'react-bootstrap';
 import './CommissionForm.css';
 import ScheduleForm from './ScheduleForm';
@@ -26,10 +27,9 @@ export default function CommissionForm({addCommission}) {
 
     // VER
     const deleteSchedule = (id) => {
-        // console.log("snd");
-        // let indexSchDelete = allIds().indexOf(id);
-        // schedules.splice(indexSchDelete,1);
-        // setSchedules([...schedules]);
+        let indexSchDelete = allIds().indexOf(id);
+        schedules.splice(indexSchDelete,1);
+        setSchedules([...schedules]);
     }
 
     // commission logic
@@ -46,6 +46,7 @@ export default function CommissionForm({addCommission}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // unmoundNodes();
         addCommission(commission,cleanUpCommission);
         return;
     }
@@ -54,8 +55,12 @@ export default function CommissionForm({addCommission}) {
         setName(" ");
         setYear("2020");
         setSemester("Primer cuatrimestre");
-        setSchedules([]);
+        // setSchedules([]);
     }
+
+    const unmoundNodes = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById("schedule-items"));
+    };
 
     const replaceEditedSchedule = (schedule) => { 
         let index = schedules.findIndex(sch => sch.id === schedule.id);
@@ -118,7 +123,7 @@ export default function CommissionForm({addCommission}) {
                     </Col>
                 </Row>
                 
-                <ListGroup>
+                <ListGroup id="schedule-items">
                     { schedules.length === 0 ?
                         <ListGroup.Item>
                             <p>
