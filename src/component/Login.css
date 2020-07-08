@@ -1,0 +1,28 @@
+
+.container-index {
+    background-image: url("../resources/background-index.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card-size{
+    height: 28rem;
+    width: 15rem;
+}
+
+.logo{
+    width: 10rem;
+    height: 10rem;
+}
+
+.font-family{
+
+}
+
+.text{
+    color: #000;
+    font-family: "Times New Roman", Times, serif;
+    text-shadow: 0.5px 0 0 #ffffff29, -0.5px 0 0 #ffffff29, 0 0.5px 0 #ffffff29, 0 -0.5px 0 #ffffff29, 0.5px 0.5px #ffffff29, -0.5px -0.5px 0 #ffffff29, 0.5px -0.5px 0 #ffffff29, -0.5px 0.5px 0 #ffffff29;
+}
+
+
