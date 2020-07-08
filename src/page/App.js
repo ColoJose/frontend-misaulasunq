@@ -11,7 +11,6 @@ import EditCommissions from '../component/editSubject/EditCommissions';
 import Callback from '../component/Callback';
 import Login from "../component/Login";
 import Main from '../component/Main';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -41,10 +40,12 @@ class App extends React.Component {
                     </Row>
                     <Row className="app-right-row">
                         <Col xs={12}>
-                            <Route exact path="/home" render={(props) => <Main {...props} />}/>
-                            <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />}/>
-                            <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
-                            <PrivateRoute exact path="/admin/edit-commissions/:idSubject/:subjectName" render={(props) => <EditCommissions {...props} />} />
+                            <Switch>
+                                <Route exact path="/home" render={(props) => <Main {...props} />}/>
+                                <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />}/>
+                                <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
+                                <PrivateRoute exact path="/admin/edit-commissions/:idSubject/:subjectName" render={(props) => <EditCommissions {...props} />} />
+                            </Switch> 
                         </Col>
                     </Row>
                 </Container>

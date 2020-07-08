@@ -9,10 +9,11 @@ import { MdError } from "react-icons/md";
 import "./Branding.css";
 import "./ButtonBranding.css";
 
-const Error = ({errorOccurred, errorDescription, ...props}) =>{ 
+const Error = ({errorOccurred, errorDescription, returnToHome=false, waitTimeBeforeReturn=0, ...props}) =>{ 
     
     const goToHome = () => {
-        history.push("/");
+        // history.push("/");
+        history.goBack();
     }
 
     const renderMessage = (errorOcurred, errorDescription) =>{
@@ -41,6 +42,10 @@ const Error = ({errorOccurred, errorDescription, ...props}) =>{
                 </>);
         }
     }
+    
+    if(returnToHome){
+        setTimeout(goToHome, waitTimeBeforeReturn);
+    }
 
     return (
         <Container fluid
@@ -53,7 +58,8 @@ const Error = ({errorOccurred, errorDescription, ...props}) =>{
                 {renderMessage(errorOccurred, errorDescription)}
                 <Col className="my-3" xs={12}>
                     <Button className="color-button"
-                            onClick={goToHome}>
+                            onClick={goToHome}
+                            hidden={returnToHome}>
                         Volver
                     </Button>
                 </Col>

@@ -4,8 +4,8 @@ import React from 'react';
 //Auth0
 import { useAuth0 } from '../react-auth0-spa';
 //Own Components
-import Error from '../component/Error';
-import Loading from '../component/Loading';
+import Error from './Error';
+import Loading from './Loading';
 
 const Callback = (...props) =>{ 
 
