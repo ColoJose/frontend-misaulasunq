@@ -5,6 +5,7 @@ import React from 'react';
 import { useAuth0 } from '../react-auth0-spa';
 //Own Components
 import Error from '../component/Error';
+import Loading from '../component/Loading';
 
 const Callback = (...props) =>{ 
 
@@ -25,9 +26,7 @@ const Callback = (...props) =>{
             return <>{history.push("/")}</>;
         }
     } else {
-        return <>
-            Cargando
-        </>;
+        return <Loading inverted={true} className="text-muted font-weight-bold"/>;
     }
 }
 

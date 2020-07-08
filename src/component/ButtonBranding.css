@@ -20,10 +20,6 @@
     border-color: #ac2f16 !important;
 }
 
-.color-button:active{
-    background-color: #ac2f16 !important;
-    border-color: #ac2f16 !important;
-}
 
 .outline-branding-button {
     color: var(--unq-red) !important;
@@ -50,4 +46,24 @@
     color: #fff !important;
     background-color: #ac2f16 !important;
     border-color: #ac2f16 !important;
+}
+
+.branding-semantic-dropdown{
+    background: var(--unq-red) none !important;
+    color: var(--unq-white) !important;
+}
+
+.branding-semantic-dropdown:hover{
+    background: #a52f17 none !important;
+    color: #ffffffcc !important;
+}
+
+.branding-semantic-dropdown:focus{
+    background: #a52f17 none !important;
+    color: #ffffffcc !important;
+}
+
+.branding-semantic-dropdown:active{
+    background: #97301b none !important;
+    color: #ffffffe6 !important;
 }
