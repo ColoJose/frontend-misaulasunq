@@ -7,7 +7,7 @@ import deleteIcon from '../../resources/delete.png';
 
 export default function ScheduleItem(props) {
 
-    const {scheduleItem, deleteSchedule, replaceEditedSchedule} = props;
+    const {classroomOptions,scheduleItem, deleteSchedule, replaceEditedSchedule} = props;
 
     // modal edit schedule logic
     const [showModalScheduleEdit,setShowModalScheduleEdit] = useState(false);
@@ -18,14 +18,17 @@ export default function ScheduleItem(props) {
         scheduleItem.startTime = schedule.startTime;
         scheduleItem.endTime   = schedule.endTime;
         scheduleItem.day = schedule.day;
-        scheduleItem.classroom.number = scheduleItem.classroom.number;
-        replaceEditedSchedule(schedule);
+        scheduleItem.classroom.number = schedule.classroom.number;
+        
+        // Metodo del padre para reemplazar el schedule editado en la lista de schedule de la comision
+        replaceEditedSchedule(schedule); 
+        
         setShowModalScheduleEdit(false);
     }
 
     const deleteScheduleAux = () => { 
         // setRenderModalSchEdit(false); // VER de borrar si es necesario
-        deleteSchedule(scheduleItem.id, componentId);
+        deleteSchedule(scheduleItem.id);
     }
 
     const editSchedule = () => {
@@ -47,11 +50,11 @@ export default function ScheduleItem(props) {
                 <Col xs={1} onClick={ () => deleteScheduleAux()}><img alt="delete" src={deleteIcon}/></Col>
 
                 {renderModalSchEdit ?
-                    <ScheduleFormEdit scheduleToEdit={scheduleItem}
+                    <ScheduleFormEdit classroomOptions={classroomOptions}
+                                      scheduleToEdit={scheduleItem}
                                       showEdit={showModalScheduleEdit}
                                       onHideEdit={closeModalScheduleEdit}
-                                      modifyItemSchedule={modifyItemSchedule}
-                                      />
+                                      modifyItemSchedule={modifyItemSchedule}/>
                     :
                     null
                 }
