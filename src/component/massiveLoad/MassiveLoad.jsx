@@ -18,7 +18,7 @@ function MassiveLoad(){
     const [state, setState] = useReducer(
         (state, newState) => (
             {...state, ...newState}),
-            {loading: true, label:defaultLabel, valid: false,errorMessage:"Seleccione"});
+            {loading: true, label:defaultLabel, noFileSelected: false, valid: false,errorMessage:"Seleccione"});
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -37,28 +37,55 @@ function MassiveLoad(){
 
     const setLabel = (event) => {
         if(event.currentTarget.files[0]){
-            setState({label:event.currentTarget.files[0].name});
+            applyBorderStyle(false);
+            setState({label:event.currentTarget.files[0].name,noFileSelected:false});
         } else {
-            setState({label:defaultLabel});
+            setState({label:defaultLabel,noFileSelected:false});
         }
     }
 
     const isValidExtension = (files) => {
         if(!files || files.length === 0){
-            toast.error("Debe Seleccionar Un Archivo", uploadConfig);
+            applyBorderStyle(true);
+            setState({
+                noFileSelected:true,
+                errorMessage: "Debe Seleccionar Un Archivo"
+            });
+            // toast.error("Debe Seleccionar Un Archivo", uploadConfig);
             return false;
         }
 
         let isValid = false;
         for (let index = 0; index < validExtensions.length; index++) {
-            isValid |= state.label.toLowerCase().includes(validExtensions[index]) !== 1;
+            isValid = isValid || state.label.toLowerCase().includes(validExtensions[index]);// !== 1;
         }
 
         if(!isValid){
-            toast.error("Debe Seleccionar Un Archivo", uploadConfig);
+            applyBorderStyle(true);
+            setState({
+                noFileSelected:true,
+                errorMessage: "La Extension del archivo no es valida."
+            });
+            // toast.error("La Extension del archivo no es valida.", uploadConfig);
             return false;
         } 
         return true;        
+    }
+
+    const applyBorderStyle = (error) => {
+        var inputFileLabel = document.getElementsByClassName("custom-file-label");
+        if(error){
+            inputFileLabel[0].style.border = "1px solid red";
+        } else {
+            inputFileLabel[0].style.border = "1px solid #ced4da";
+        }
+    }
+
+    const noFileError = () =>{
+        if(state.noFileSelected){
+            return <small style={{color:"red"}}>{state.errorMessage}</small>;
+        } 
+        return <></>;
     }
 
     return (
@@ -74,7 +101,7 @@ function MassiveLoad(){
                 </p>
             </Alert>
             <Form onSubmit={submitHandler}>
-                <Form.Group>
+                <Form.Group className="mb-1">
                     <Form.File id="uploadFileInput"
                             custom={true}
                             label={state.label} 
@@ -83,6 +110,7 @@ function MassiveLoad(){
                             onChange={setLabel}
                             />
                 </Form.Group>
+                {noFileError()}
                 <Button type="submit"
                         className="color-button mt-2 text-center"
                         variant="danger"
