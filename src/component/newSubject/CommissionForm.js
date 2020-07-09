@@ -93,7 +93,6 @@ export default function CommissionForm({addCommission}) {
                     <Col xs={4}><Button className="btn btn-danger color-button"  type="submit">Agregar commisión</Button></Col>    
                 </Row>
                 
-                
                 <Form.Group>
                     <Form.Label>Nombre comisión</Form.Label>
                     <Form.Control 

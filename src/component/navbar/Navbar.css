@@ -27,3 +27,7 @@
 #bar {
     margin-left: 6px;
 }
+
+.text {
+    font-family: Arial, Helvetica !important;
+}

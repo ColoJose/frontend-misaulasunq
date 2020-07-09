@@ -73,21 +73,15 @@ const EditCommissions = (props) => {
 
    const addSchedule = (schedule) => {
       selectedCommission.schedules.push(schedule);
-      console.log(selectedCommission.schedules);
    }
 
    return (
          <Container id="edit-commissions-container">
             <Row>
                <Col xs={4}>
-                  <h3 >Editar Comisiones de materia {subjectName}</h3>
+                  <h3 style={{marginTop:"25px", marginBottom:"15px"}}>Editar Comisiones de materia {subjectName}</h3>
                </Col>
-               <Col xs={5}></Col>
-               <Col xs={3}>
-                  <Button onClick={ () => goBack() } 
-                          className="color-button"
-                          style={{marginLeft:"80px", marginBottom:"5px"}}>Volver al panel admin</Button>
-               </Col>
+               <Col xs={8}></Col>
             </Row>
             <Row>
                <Col xs={12}>
@@ -146,7 +140,7 @@ const EditCommissions = (props) => {
                                             >
                                           <Button className="color-button"
                                                   style={{marginLeft:"-28px"}}
-                                                  onClick={ () => handleAddCommission()}>Agregar otra comisión</Button>
+                                                  onClick={ () => goBack()}>Cancelar</Button>
                                        </Col>
                                        <Col xs={3}></Col>
                                     </Row>                                                                     

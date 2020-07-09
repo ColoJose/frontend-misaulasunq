@@ -38,11 +38,11 @@ export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditBu
         <>
             <ListGroup.Item>
                 <Row>
-                    <Col sm="8">
+                    <Col sm="9">
                         <p>Nombre: {subject.name}</p>
                         <p>Carrera: {subject.degrees[0].name}</p> {/* semi hardcoeado */}
                     </Col>
-                    <Col sm="2">
+                    <Col sm="3">
                         <OverlayTrigger trigger="click" 
                                         placement="right" 
                                         overlay={editPopover}

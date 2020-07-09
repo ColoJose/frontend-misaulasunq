@@ -1,7 +1,7 @@
 
 
 import React, {useState} from 'react';
-import { Accordion, Card, Form, Button } from 'react-bootstrap';
+import { Accordion, Card, Form, Button, Row, Col } from 'react-bootstrap';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
 const optionDays = days.map( (day) => <option>{day}</option>)
@@ -46,13 +46,12 @@ let optionsHours =
         <Card>
         <Card.Header>
             <Accordion.Toggle as={Button} variant="link">
-                Horarios
+                    Horarios: {schedule.startTime} a {schedule.endTime}, día {schedule.day}
             </Accordion.Toggle>
         </Card.Header>
         <Card.Body>
             <Accordion.Collapse>
                 <Form data-toggle="validator" role="form">  
-                {/* onChange={ () => updateSchedule(updatedSchedule, schedule.id) } */}
                 <Form.Group >
                     <Form.Label>Hora comienzo</Form.Label>
                     <Form.Control

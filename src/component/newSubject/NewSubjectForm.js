@@ -86,7 +86,7 @@ export default function NewSubjectForm() {
             <Row>
                 <Button onClick={ () => history.push("/admin")}
                         className="color-button"
-                        style={{marginBottom:"5px"}}>Volver atrás</Button>
+                        style={{marginBottom:"5px", marginTop:"5px"}}>Volver atrás</Button>
             </Row>
 
             <Row>

@@ -8,6 +8,7 @@ import Pagination from './Pagination';
 import GenericModal from './massiveLoad/GenericModal';
 import MassiveLoad from './massiveLoad/MassiveLoad';
 import OverlapList from './overlapNotices/OverlapList';
+import TodoList from './TodoList';
 // css
 import "./ButtonBranding.css";
 // toastify
@@ -125,7 +126,7 @@ const AdminProfile = () => {
 
     return (
         <Container id="admin-container">
-            <Row style={{marginBottom:"15px"}}>
+            <Row style={{marginBottom:"15px", marginTop:"15px"}}>
                     <h1>
                         <span style={{color:"#e2e3de"}}>f</span>
                         Panel de administrador/a
@@ -142,9 +143,6 @@ const AdminProfile = () => {
                                     buttonStyle="btn btn-danger color-button"
                                     size="xs"
                                     />
-                    <Button className="color-button"
-                            onClick={ () => goHome()}
-                            style={{marginLeft:"5px"}}>Volver al home</Button>
                 </Col>
             </Row>
             <Row style={{height: "100%"}}>
@@ -169,7 +167,8 @@ const AdminProfile = () => {
                     </Card>
                 </Col>
                 <Col xs={4}>
-                    <OverlapList/>
+                    {/* <OverlapList/> */}
+                    <TodoList />
                 </Col>
             </Row>
         </Container>
