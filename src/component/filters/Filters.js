@@ -1,11 +1,12 @@
 import SubjectAPI from "../../Api/SubjectAPI";
 // React
-import React, {useReducer} from 'react';
+import React, {useReducer} from "react";
 // Bootstrap
-import { Card, Form, FormGroup } from 'react-bootstrap';
+import { Card, Form, FormGroup } from "react-bootstrap";
 // CSS
 import "./Filters.css";
 import "../HeaderBranding.css";
+import "../ButtonBranding.css";
 // Own Components
 import SubmitSearchButton from "./SubmitSearchButton";
 import DaySearchForm from "./DaySearchForm";
@@ -207,7 +208,7 @@ const Filters = (props) => {
                             </div>
                             <SubmitSearchButton label="Buscar" 
                                                 block={true}
-                                                className="mt-3 py-1 filter-button"/>              
+                                                className="mt-3 py-1 filter-button color-button"/>              
                         </FormGroup>
                     </Form>
                 </Card.Body>

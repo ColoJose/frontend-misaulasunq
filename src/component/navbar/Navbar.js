@@ -17,7 +17,10 @@ function NavbarApp() {
     const [renderHomeButton,setRenderHomeButton] = useState(false);
 
     const isInAdminPages = () =>{
-        return window.location.search.includes("admin") || window.location.href.includes("/admin");
+        return (window.location.href.includes("/admin") 
+                && window.location.href.endsWith("/admin"))  
+            || (window.location.search.includes("admin") 
+                && window.location.search.endsWith("/admin"));
     }
 
     useEffect (() => { 

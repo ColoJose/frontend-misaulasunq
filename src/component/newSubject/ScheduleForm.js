@@ -41,30 +41,7 @@ export default function ScheduleForm({classroomOptions, show, onHide, addSchedul
                 errorMessage: defaultInvalidHourMessage
             }
     );
-    // validations
-    // const [hoursValidation, setHoursValidation] = useState(false);
-
-    // const componentIsMounted = useRef(false);
-
-    // Este seteo y return rompe en el unmount!
-    // useEffect(() => { 
-    //     return componentIsMounted.current = true;
-    // }, []);
-
-    // useEffect(() => {
-    //     subjectApi.getAllClassrooms()
-    //         .then( (resp) => {
-    //             setAulasOptions(resp.data);
-    //             setClassroom(resp.data[0]);
-    //         }).catch( (e) => console.log(e) );
-    //     // subjectApi.getAllClassrooms().then( (resp) => {
-    //     //     if(componentIsMounted.current){
-    //     //         setAulasOptions(resp.data);
-    //     //         setClassroom(resp.data[0]);
-    //     //     }
-    //     // }).catch( (e) => console.log(e) );
-    // }, []);
-
+    
     const schedule = {
         id: scheduleIdTentative,
         startTime,
