@@ -22,6 +22,8 @@ toast.configure({
     draggable: true,
 });
 
+var scheduleIdTentative = 0;
+
 class App extends React.Component {
   
   render() {
@@ -41,7 +43,7 @@ class App extends React.Component {
                             <Route exact path="/" component={Home}  />
                             <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />} />
                             <PrivateRoute exact path="/admin/newsubjectform" render={(props) => <NewSubjectForm {...props} />} />
-                            <PrivateRoute exact path="/admin/edit-commissions/:idSubject" render={(props) => <EditCommissions {...props} />} />
+                            <PrivateRoute exact path="/admin/edit-commissions/:idSubject/:subjectName" render={(props) => <EditCommissions {...props} />} />
                         </Switch> 
                     </Router>
                 </Col>

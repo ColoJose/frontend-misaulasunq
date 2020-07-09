@@ -6,6 +6,7 @@ import ScheduleForm from './ScheduleForm';
 import ScheduleItem from './ScheduleItem';
 // css
 import '../ButtonBranding.css';
+import { List } from 'semantic-ui-react';
 
 // note: sch as schedule
 
@@ -16,20 +17,35 @@ export default function CommissionForm({addCommission}) {
     // modal new schedule logic
     const [showModalSchedule,setShowModalSchedule] = useState(false);
     const closeModalSchedule = () =>{ setShowModalSchedule(false); }
-    const openCloseModal = () => { setShowModalSchedule(true); }
-
+    const [scheduleIdTentative, setscheduleIdTentative] = useState(0);
+    function openCloseModal(){
+        setscheduleIdTentative(Math.floor(Math.random() * 1000)); // genero un id random para cada schedule
+        setShowModalSchedule(true); 
+    }
 
     // schedule logic
     const [schedules, setSchedules] = useState([]);
+    const [schedulesShowList, setSchedulesShowList] = useState([]);
     const addSchedule = (newSchedule) => {
         setSchedules([...schedules,newSchedule]);
+        setSchedulesShowList([...schedulesShowList,newSchedule]);
+        // displayNoSchedulesAdded();
     };
 
     // VER
-    const deleteSchedule = (id) => {
+    const deleteSchedule = (id,componentId) => {
         let indexSchDelete = allIds().indexOf(id);
         schedules.splice(indexSchDelete,1);
-        setSchedules([...schedules]);
+        document.getElementById(componentId).style.display = "none";
+        // displayNoSchedulesAdded();
+    }
+
+    const displayNoSchedulesAdded = () => {
+        // if(schedules.length === 0) {
+        //     document.getElementById("no-added-schedule-message").style.display = "block"
+        // }else {
+        //     document.getElementById("no-added-schedule-message").style.display = "none"
+        // }
     }
 
     // commission logic
@@ -46,7 +62,6 @@ export default function CommissionForm({addCommission}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // unmoundNodes();
         addCommission(commission,cleanUpCommission);
         return;
     }
@@ -55,17 +70,19 @@ export default function CommissionForm({addCommission}) {
         setName(" ");
         setYear("2020");
         setSemester("Primer cuatrimestre");
-        // setSchedules([]);
+        setSchedules([]);
+        hiddenlAllSchedulesList();
     }
 
-    const unmoundNodes = () => {
-        ReactDOM.unmountComponentAtNode(document.getElementById("schedule-items"));
-    };
+    const hiddenlAllSchedulesList = () => {
+        schedulesShowList.map( sch => {
+            document.getElementById(`schedule-item-${sch.id}`).style.display = "none";
+        });
+    }
 
     const replaceEditedSchedule = (schedule) => { 
         let index = schedules.findIndex(sch => sch.id === schedule.id);
         schedules[index] = schedule;
-        console.log(schedules);
     }
 
     return (
@@ -124,25 +141,28 @@ export default function CommissionForm({addCommission}) {
                 </Row>
                 
                 <ListGroup id="schedule-items">
-                    { schedules.length === 0 ?
+                    { schedulesShowList.length === 0 ?
                         <ListGroup.Item>
                             <p>
                                 No ha agregado schedules aún
                             </p>
-                            
                         </ListGroup.Item>
                         :
-                        schedules.map( function(sch){
+                        schedulesShowList.map( function(sch){
                             return <ScheduleItem scheduleItem={sch} 
                                                  deleteSchedule={deleteSchedule}
                                                  replaceEditedSchedule={replaceEditedSchedule} />;
                         })
                     }
+                    { <ListGroup.Item id="no-added-schedule-message" style={{display:"none"}}>
+                        <p>No ha agregado schedules aún</p>
+                    </ListGroup.Item> }
                 </ListGroup>
             </Card>
             <ScheduleForm show={showModalSchedule} 
                           onHide={closeModalSchedule}
-                          addSchedule={addSchedule} />
+                          addSchedule={addSchedule} 
+                          scheduleIdTentative={scheduleIdTentative}/>
         </>
     );
 }
