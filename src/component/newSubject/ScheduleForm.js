@@ -16,7 +16,9 @@ const hours = Object.freeze([
 let optionsHours = 
             hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
 
-export default function ScheduleForm({show, onHide, addSchedule}) {
+export default function ScheduleForm({show, onHide, addSchedule, scheduleIdTentative}) {
+
+    let tentativeId = 50;
 
     const subjectApi = new SubjectAPI();
 
@@ -50,6 +52,7 @@ export default function ScheduleForm({show, onHide, addSchedule}) {
     }, []);
 
     const schedule = {
+        id: scheduleIdTentative,
         startTime,
         endTime,
         classroom: {number:classroom},

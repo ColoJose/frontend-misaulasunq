@@ -24,19 +24,20 @@ export default function ScheduleItem(props) {
     }
 
     const deleteScheduleAux = () => { 
-        setRenderModalSchEdit(false); 
-        deleteSchedule(scheduleItem.id)
-        console.log("fst");
+        // setRenderModalSchEdit(false); // VER de borrar si es necesario
+        deleteSchedule(scheduleItem.id, componentId);
     }
 
     const editSchedule = () => {
-        setRenderModalSchEdit(true);
-        setShowModalScheduleEdit(true);
-        console.log(renderModalSchEdit);
+        setRenderModalSchEdit(true); // VER de borrar si es necesario
+        setShowModalScheduleEdit(true); // VER de borrar si es necesario
     }
+
+    const componentId = `schedule-item-${scheduleItem.id}`
     
     return (
-        <ListGroup key={scheduleItem.id}>
+        <ListGroup key={scheduleItem.id}
+                   id={componentId}>
             <Row>
                 <Col xs={3}>Desde {scheduleItem.startTime} hasta 
                                   {scheduleItem.endTime} </Col>

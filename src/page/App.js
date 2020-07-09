@@ -22,6 +22,8 @@ toast.configure({
     draggable: true,
 });
 
+var scheduleIdTentative = 0;
+
 class App extends React.Component {
   
   render() {
