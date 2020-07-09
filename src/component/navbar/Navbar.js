@@ -38,9 +38,14 @@ function NavbarApp() {
 
     const renderHomeAdminOption = () => {
         if(renderHomeButton){
-            return <Dropdown.Item text='Ir al Home' onClick={ () => goToHome() }/>;
+            return <Dropdown.Item text='Ir al Home'
+                                  style={{fontFamily:"Arial"}}
+                                  onClick={ () => goToHome() }/>;
         } else{
-            return <Dropdown.Item text='Panel de Administración' onClick={ () => goToAdmin() }/>;
+            return <Dropdown.Item text='Panel de Administración'
+                                  style={{}}
+                                  className="fonts-navbar"
+                                  onClick={ () => goToAdmin() }/>;
         };
     }
 
@@ -60,7 +65,9 @@ function NavbarApp() {
                         <Dropdown.Menu>                            
                             {renderHomeAdminOption()}
                             <Dropdown.Divider />
-                            <Dropdown.Item text='Salir' onClick={ () => logout() }/>
+                            <Dropdown.Item text='Salir' 
+                                           className="fonts-navbar"
+                                           onClick={ () => logout() }/>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>);
