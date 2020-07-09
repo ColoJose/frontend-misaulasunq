@@ -1,43 +1,68 @@
 import history from '../../utils/history';
 // react
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // bootstrap
-import { Col, Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
-// resoruces
+import { Nav, Navbar, Form, FormControl, Button, Row, Image } from 'react-bootstrap';
+// resources
 import logoApp from '../../resources/logo-app-white.png';
 // css
 import './Navbar.css';
 import { useAuth0 } from '../../react-auth0-spa';
+// Semantic UI
+import { Dropdown } from 'semantic-ui-react';
 
 function NavbarApp() {
 
-    const [subject,setSubject] = useState('');
-    const { isAuthenticated, loginWithRedirect, logout, user, loading } = useAuth0();
+    const { isAuthenticated, logout, user, loading } = useAuth0();
+    const [renderHomeButton,setRenderHomeButton] = useState(false);
 
-    const handleSubmit = (e) => {
-        history.push("/search");
+    const isInAdminPages = () =>{
+        return window.location.search.includes("admin") || window.location.href.includes("/admin");
+    }
+
+    useEffect (() => { 
+        if(isInAdminPages()){
+            setRenderHomeButton(true);
+        }
+      });
+
+    const goToAdmin = () => {
+        setRenderHomeButton(true);
+        history.push("/admin");
+    }
+
+    const goToHome = () => {
+        setRenderHomeButton(false);
+        history.push("/home");
+    }
+
+    const renderHomeAdminOption = () => {
+        if(renderHomeButton){
+            return <Dropdown.Item text='Ir al Home' onClick={ () => goToHome() }/>;
+        } else{
+            return <Dropdown.Item text='Panel de Administración' onClick={ () => goToAdmin() }/>;
+        };
     }
 
     const renderLoginOptions = () =>{
-        if(loading || !user){
-            return <Button variant="link"
-                        alt="Login"
-                        className="text-white font-navbarBrand separation"
-                        onClick={ () => loginWithRedirect({}) }>
-                    Login
-                </Button>;
-        } else {
+        if(!loading && user && isAuthenticated){
             return(
-                <div className="menu-profile-navbar">
+                <div >
                     <Image className="d-md-inline d-none d-sm-none icon-profile-navbar"
-                        src={user.picture}
-                        alt="Profile Image"
-                        roundedCircle />
-                    <Button variant="link"
-                            className="text-white font-navbarBrand separation"
-                            onClick={ () => logout() }>
-                        Logout
-                    </Button>
+                           src={user.picture}
+                           alt="Profile Image"
+                           roundedCircle />
+                    <Dropdown icon='cog'
+                              floating
+                              button
+                              className='icon branding-semantic-dropdown ml-2'
+                              direction='left'>
+                        <Dropdown.Menu>                            
+                            {renderHomeAdminOption()}
+                            <Dropdown.Divider />
+                            <Dropdown.Item text='Salir' onClick={ () => logout() }/>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>);
         }
     }
@@ -45,9 +70,9 @@ function NavbarApp() {
     return (
         <Row>
             <Navbar fixed="top" 
-                    className="size-navbar color-navbar"
+                    className="size-navbar color-navbar pr-1 pr-xl-1"
                     variant="light">
-                <Navbar.Brand href="/" className="col-3 justify-content-start">
+                <Navbar.Brand href="/home" className="col-3 justify-content-start">
                     <Image className="logo-navbar" 
                            src={logoApp} 
                            rounded/>
@@ -55,13 +80,11 @@ function NavbarApp() {
                 </Navbar.Brand>
 
                 <Form inline 
-                      className="col-6 justify-content-center" 
-                      onSubmit={handleSubmit} hidden>
+                      className="col-6 justify-content-center"
+                      hidden>
                     <FormControl type="text" 
                                  placeholder="Ingrese lo que busca" 
                                  className="mr-sm-2"
-                                 value={subject}
-                                 onChange={ (e) =>  setSubject(e.target.value)}
                                  disabled 
                                  hidden/>
                     <Button type="submit" 
@@ -71,7 +94,7 @@ function NavbarApp() {
                     </Button>
                 </Form>
 
-                <Nav  className="ml-auto col-3 d-flex justify-content-end">
+                <Nav  className="pr-1 pr-xl-1 ml-auto col-3 d-flex justify-content-end">
                     {renderLoginOptions()}
                 </Nav>
             </Navbar>

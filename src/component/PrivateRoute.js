@@ -1,25 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import { useAuth0 } from '../react-auth0-spa';
+//Own Components
+import Error from './Error';
+import Loading from './Loading';
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
-  // const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
+  
+  const { loading, isAuthenticated } = useAuth0();
 
-  // useEffect(() => {
-  //   if ( true ) {
-  //     return;
-  //   }
-  //   const fn = async () => {
-  //     await loginWithRedirect({
-  //       appState: { targetUrl: path },
-  //     });
-  //   };
-  //   fn();
-  // }, [loading, isAuthenticated, loginWithRedirect, path]);
-
-  const render = (props) => ( true ? <Component {...props} /> : null);
-
-  return <Route path={path} render={render} {...rest} />;
+    if(!loading){
+        if(isAuthenticated){
+            return <Route path={path} render={<Component {...rest} />} {...rest} />;
+        } else {
+            return <Error {...rest}
+                          errorOccurred="¡No estas autorizado!"
+                          errorDescription="Estas intentando acceder a una pagina sin autorizacion, seras redirigido en breve."
+                          returnToHome={true}
+                          waitTimeBeforeReturn={5000}/>;
+        }
+    } else {
+        return <Loading inverted={true} className="text-muted font-weight-bold"/>;
+    }
 };
 
 export default PrivateRoute;

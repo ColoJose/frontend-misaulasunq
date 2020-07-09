@@ -25,10 +25,18 @@ export default function GeneralInfoForm({commissions, joinDataSubject, deleteCom
         joinDataSubject(generalInfo);
     }
  
-    useEffect( async() => {
-        const degrees = await subjectAPI.getAllDegrees();
-        setAllDegrees(degrees.data);
+    useEffect( () => {
+        subjectAPI.getAllDegrees()
+                .then( (resp) => {
+                    setAllDegrees(resp.data);
+            })
+.       catch( (e) => {console.log(e);});
     },[]);
+    // Este seteo con el async y return rompe en el unmount!
+    // useEffect( async() => {
+    //     const degrees = await subjectAPI.getAllDegrees();
+    //     setAllDegrees(degrees.data);
+    // },[]);
 
     const setDegreeAux = (e) =>{
         const selectedIndex = e.target.options.selectedIndex;

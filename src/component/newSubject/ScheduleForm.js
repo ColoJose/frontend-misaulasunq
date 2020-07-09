@@ -7,7 +7,7 @@ import '../ButtonBranding.css';
 import Select from 'react-select';
 
 const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-const optionDays = days.map( (day) => <option>{day}</option>)
+const optionDays = days.map( (day) => <option key={day}>{day}</option>)
 const hours = Object.freeze([
     "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
     "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
@@ -30,19 +30,25 @@ export default function ScheduleForm({show, onHide, addSchedule, scheduleIdTenta
     // validations
     const [hoursValidation, setHoursValidation] = useState(false);
 
-    const componentIsMounted = useRef(false);
+    // const componentIsMounted = useRef(false);
+
+    // Este seteo y return rompe en el unmount!
+    // useEffect(() => { 
+    //     return componentIsMounted.current = true;
+    // }, []);
 
     useEffect(() => {
-        return componentIsMounted.current = true;
-    }, []);
-
-    useEffect(() => {
-        subjectApi.getAllClassrooms().then( (resp) => {
-            if(componentIsMounted.current){
+        subjectApi.getAllClassrooms()
+            .then( (resp) => {
                 setAulasOptions(resp.data);
                 setClassroom(resp.data[0]);
-            }
-        }).catch( (e) => console.log(e) );
+            }).catch( (e) => console.log(e) );
+        // subjectApi.getAllClassrooms().then( (resp) => {
+        //     if(componentIsMounted.current){
+        //         setAulasOptions(resp.data);
+        //         setClassroom(resp.data[0]);
+        //     }
+        // }).catch( (e) => console.log(e) );
     }, []);
 
     const schedule = {
@@ -148,7 +154,7 @@ export default function ScheduleForm({show, onHide, addSchedule, scheduleIdTenta
                                         value={classroom}
                                         onChange={ (e) => setClassroom(e.target.value)}
                                         required>
-                                            {aulasOptions.map( (aula) => <option key={aula.id}>{aula}</option>)}
+                                            {aulasOptions.map( (aula) => <option key={aula}>{aula}</option>)}
                                     </Form.Control>
                                 </Form.Group> 
                             </Col>
