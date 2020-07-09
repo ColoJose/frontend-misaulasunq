@@ -5,6 +5,10 @@ export function areValidHours(startTime, endTime) {
     return Number(endTime.slice(0,2)) - Number(startTime.slice(0,2)) >= 2 
 }
 
+export function isFirstHourGreaterThanSecond (firstHour, endHour) {
+    return Number(firstHour.slice(0,2)) > Number(endHour.slice(0,2));
+}
+
 export function isValidCommission(commission) {
     return commission.schedules.length > 0;
 }

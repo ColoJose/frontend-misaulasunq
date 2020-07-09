@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Card, Container, Col, Row, Button} from 'react-bootstrap';
 import './NewSubjectForm.css';
 import GeneralInfoForm from './GeneralInfoForm';
@@ -14,12 +14,47 @@ import history from '../../utils/history';
 
 
 export default function NewSubjectForm() {
+    const emptyOptionsList = [<option key={"Seleccionar"} value={"Seleccionar"} label={"Seleccionar"}>Seleccionar</option>];
+
 
     const subject = {};
     const subjectApi = new SubjectAPI();
 
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
+
+    const [degreeOptions,setDegreeOptions] = useState([]);
+    const [classroomsOptions, setClassroomsOptions] = useState(emptyOptionsList);
+
+    useEffect( () => {
+        subjectApi.getAllDegrees()
+            .then( 
+                (resp) => {
+                    setDegreeOptions(resp.data);
+            }).catch( 
+                (e) => {
+                    console.log(e); 
+            });
+
+        subjectApi.getAllClassrooms()
+            .then( 
+                (resp) => {
+                    setClassroomsOptions(makeOptions(resp.data));
+            }).catch( 
+                (e) => console.log(e) 
+            );
+
+    },[]);
+
+    const makeOptions = (options) =>{
+        var optionsToReturn = emptyOptionsList;
+        options.forEach(
+            (option) => optionsToReturn.push(<option key={option} value={option} label={option}>{option}</option>)
+        );
+        return optionsToReturn;
+    }
+            
+
 
     const addCommission = (commission,cleanUpCommission) => {
         
@@ -82,13 +117,7 @@ export default function NewSubjectForm() {
     const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
     return  (
-        <Container>
-            <Row>
-                <Button onClick={ () => history.push("/admin")}
-                        className="color-button"
-                        style={{marginBottom:"5px"}}>Volver atrás</Button>
-            </Row>
-
+        <Container className="pt-2">
             <Row>
                 <Card className="wrapper">
                     <Card.Header>Formulario nueva materia</Card.Header>
@@ -104,11 +133,17 @@ export default function NewSubjectForm() {
                                 </Col>
                                 <Col xs={6}>
                                     <CommissionForm
+                                        classroomOptions={classroomsOptions}
                                         addCommission={addCommission} />
                                 </Col>
                             </Row>
                         </Container>    
                     </Card.Body>
+                    <Card.Footer>
+                        <Button onClick={ () => history.push("/admin")}
+                                className="color-button"
+                                style={{marginBottom:"5px"}}>Cancelar</Button>
+                    </Card.Footer>
                 </Card>
             </Row>
         </Container>

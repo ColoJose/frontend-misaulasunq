@@ -10,90 +10,98 @@ import { List } from 'semantic-ui-react';
 
 // note: sch as schedule
 
-export default function CommissionForm({addCommission}) {
-    // aux functions
-    const allIds = () => { return schedules.map( (schedule) => schedule.id)};
+export default function CommissionForm({ classroomOptions, addCommission }) {
 
-    // modal new schedule logic
+    // modal new schedule state
     const [showModalSchedule,setShowModalSchedule] = useState(false);
-    const closeModalSchedule = () =>{ setShowModalSchedule(false); }
     const [scheduleIdTentative, setscheduleIdTentative] = useState(0);
+
+    // schedule state
+    const [schedules, setSchedules] = useState([]);
+
+    // commission state
+    const [name,setName] = useState('');
+    const [year,setYear] = useState('2020');
+    const [semester, setSemester] = useState('Primer cuatrimestre');
+
+    const commission = {name,semester,year,schedules};
+    
+    // aux functions
+    const allIds = () => { 
+        return schedules.map( (schedule) => schedule.id)
+    };
+
+    // modal New schedule methods
     function openCloseModal(){
         setscheduleIdTentative(Math.floor(Math.random() * 1000)); // genero un id random para cada schedule
         setShowModalSchedule(true); 
     }
+    const closeModalSchedule = () =>{ setShowModalSchedule(false); };
 
-    // schedule logic
-    const [schedules, setSchedules] = useState([]);
-    const [schedulesShowList, setSchedulesShowList] = useState([]);
+    // schedule methods
     const addSchedule = (newSchedule) => {
         setSchedules([...schedules,newSchedule]);
-        setSchedulesShowList([...schedulesShowList,newSchedule]);
-        // displayNoSchedulesAdded();
     };
 
-    // VER
-    const deleteSchedule = (id,componentId) => {
+    const deleteSchedule = (id) => {
         let indexSchDelete = allIds().indexOf(id);
-        schedules.splice(indexSchDelete,1);
-        document.getElementById(componentId).style.display = "none";
-        // displayNoSchedulesAdded();
+        var schedulesAfterDelete = schedules;
+        schedulesAfterDelete.splice(indexSchDelete,1);
+        
+        if(schedulesAfterDelete.length === 0){
+            setSchedules([]);
+        } else {
+            var newArray = Object.assign([],schedulesAfterDelete)
+            setSchedules(newArray);
+        }
     }
 
-    const displayNoSchedulesAdded = () => {
-        // if(schedules.length === 0) {
-        //     document.getElementById("no-added-schedule-message").style.display = "block"
-        // }else {
-        //     document.getElementById("no-added-schedule-message").style.display = "none"
-        // }
-    }
-
-    // commission logic
-    const [name,setName] = useState('');
-    const [year,setYear] = useState('2020');
-    const [semester, setSemester] = useState('Primer cuatrimestre');
-    
-    const commission = {
-        name,
-        semester,
-        year,
-        schedules
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        addCommission(commission,cleanUpCommission);
-        return;
-    }
-
+    // comission methods
     const cleanUpCommission = () => { 
         setName(" ");
         setYear("2020");
         setSemester("Primer cuatrimestre");
         setSchedules([]);
-        hiddenlAllSchedulesList();
     }
 
-    const hiddenlAllSchedulesList = () => {
-        schedulesShowList.map( sch => {
-            document.getElementById(`schedule-item-${sch.id}`).style.display = "none";
-        });
-    }
-
+    //Parece estar bien
     const replaceEditedSchedule = (schedule) => { 
         let index = schedules.findIndex(sch => sch.id === schedule.id);
         schedules[index] = schedule;
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        addCommission(commission,cleanUpCommission);
+        // return;
+    }
+
+    const renderScheduleList = () =>{
+        if(schedules.length === 0){
+            return ( 
+                <ListGroup.Item>
+                    <p>No ha agregado schedules aún</p>
+                </ListGroup.Item>
+            );
+        } else {
+            return (
+                schedules.map( function(sch){
+                    return <ScheduleItem key={sch.id}
+                                         classroomOptions={classroomOptions}
+                                         scheduleItem={sch} 
+                                         deleteSchedule={deleteSchedule}
+                                         replaceEditedSchedule={replaceEditedSchedule}/>;
+                })
+            );
+        }
+    }
+
     return (
         <>
-            <form data-toggle="validator" role="form" onSubmit={handleSubmit}>
+            <form id="commission-form" data-toggle="validator" role="form" onSubmit={handleSubmit}>
                 <Row>
-                    <Col xs={8}><h2>Comisiones</h2></Col>    
-                    <Col xs={4}><Button className="btn btn-danger color-button"  type="submit">Agregar commisión</Button></Col>    
+                    <Col xs={12}><h2>Comisiones</h2></Col>    
                 </Row>
-                
-                
                 <Form.Group>
                     <Form.Label>Nombre comisión</Form.Label>
                     <Form.Control 
@@ -129,40 +137,37 @@ export default function CommissionForm({addCommission}) {
             <h3>Schedules</h3>
 
             <Card id="addedSchedulesSection">
-                <Row>
-                    <Col xs={8}>
-                        <Card.Header>Schedules agregados</Card.Header>
-                    </Col>
-                    <Col xs={4}>
-                        <div className="add-schedule-button">
-                            <Button className="btn btn-danger color-button" onClick={ () => openCloseModal()}>Agregar schedule</Button>
-                        </div>
-                    </Col>
-                </Row>
+                <Card.Header>
+                    <Row>
+                        <Col xs={8}>
+                            Schedules agregados
+                        </Col>
+                        <Col xs={4}>
+                            <div className="add-schedule-button">
+                                <Button className="btn btn-danger color-button" onClick={ () => openCloseModal()}>Agregar schedule</Button>
+                            </div>
+                        </Col>
+                    </Row>
+                </Card.Header>
                 
                 <ListGroup id="schedule-items">
-                    { schedulesShowList.length === 0 ?
-                        <ListGroup.Item>
-                            <p>
-                                No ha agregado schedules aún
-                            </p>
-                        </ListGroup.Item>
-                        :
-                        schedulesShowList.map( function(sch){
-                            return <ScheduleItem scheduleItem={sch} 
-                                                 deleteSchedule={deleteSchedule}
-                                                 replaceEditedSchedule={replaceEditedSchedule} />;
-                        })
-                    }
-                    { <ListGroup.Item id="no-added-schedule-message" style={{display:"none"}}>
-                        <p>No ha agregado schedules aún</p>
-                    </ListGroup.Item> }
+                    {renderScheduleList()}
                 </ListGroup>
             </Card>
-            <ScheduleForm show={showModalSchedule} 
+            <ScheduleForm classroomOptions={classroomOptions}
+                          show={showModalSchedule} 
                           onHide={closeModalSchedule}
                           addSchedule={addSchedule} 
                           scheduleIdTentative={scheduleIdTentative}/>
+            <Row>
+                <Col xs={12}>
+                    <Button type="submit"
+                            form="commission-form" 
+                            className="btn btn-danger color-button">
+                    Agregar Comisión
+                    </Button>
+                </Col>    
+            </Row>
         </>
     );
 }

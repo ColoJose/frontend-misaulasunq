@@ -20,7 +20,7 @@ const AdminProfile = () => {
     const [state, setState] = useReducer(
         (state, newState) => 
                 ({...state, ...newState}),
-                {allSubjects: [], pageNumber: 0, totalPages: 0, firstPage: "true", lastPage: "false"});
+                {allSubjects: [], pageNumber: 0, totalPages: 0, firstPage: true, lastPage: false});
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
     const elems = 5; // cantidad de elemntos que trae cada page

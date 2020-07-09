@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => {
 
     if(!loading){
         if(isAuthenticated){
-            return <Route path={path} render={<Component {...rest} />} {...rest} />;
+            return <Route path={path} component={Component} {...rest} />;
         } else {
             return <Error {...rest}
                           errorOccurred="¡No estas autorizado!"
