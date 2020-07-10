@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, ListGroup, Card, Button, Row, Col } from 'react-bootstrap';
 import CommissionItem from './CommissionItem';
-import SubjectAPI from '../../Api/SubjectAPI.js';
 // css
 import '../ButtonBranding.css';
 
-export default function GeneralInfoForm({commissions, joinDataSubject, deleteCommission}) {
+export default function GeneralInfoForm({ degreeOptions, commissions, joinDataSubject, deleteCommission}) {
 
-    const subjectAPI = new SubjectAPI();
-
-    const [allDegrees,setAllDegrees] = useState([]);
     const [name,setName] = useState('');
     const [degreeId, setDegreeId] = useState(1);
     const [subjectCode, setSubjectCode] = useState('');
@@ -20,24 +16,11 @@ export default function GeneralInfoForm({commissions, joinDataSubject, deleteCom
         degreeId
     }
  
-    useEffect( () => {
-        subjectAPI.getAllDegrees()
-                .then( (resp) => {
-                    setAllDegrees(resp.data);
-            })
-.       catch( (e) => {console.log(e);});
-    },[]);
-
-    const setDegreeAux = (e) =>{
-        const selectedIndex = e.target.options.selectedIndex;
-        setDegreeId(selectedIndex);
+    const setDegreeAux = (event) =>{
+        //const selectedIndex = e.target.options.selectedIndex; <- da el index de la opcion NO el
+        // setDegreeId(selectedIndex);
+        setDegreeId(parseInt(event.target.value));
     }
-
-    const degreesOptions = allDegrees.map( 
-        (degree) => { 
-            return <option key={degree.id.toString()}>{degree.name}</option> 
-        }    
-    );
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -64,7 +47,7 @@ export default function GeneralInfoForm({commissions, joinDataSubject, deleteCom
                         <Form.Control as="select"
                                         onChange={ (e) => setDegreeAux(e)}
                                         required>
-                            {degreesOptions}
+                            {degreeOptions}
                         </Form.Control>
                     </Form.Group>
                 </Form.Row>
@@ -97,8 +80,9 @@ export default function GeneralInfoForm({commissions, joinDataSubject, deleteCom
                                     </ListGroup.Item>
                                 :
                                     commissions.map( 
-                                        com => <CommissionItem commission={com}
-                                                            deleteCommission={deleteCommission}/>
+                                        com => <CommissionItem key={com.name+com.semester+com.year}
+                                                               commission={com}
+                                                               deleteCommission={deleteCommission}/>
                                     )
                             }
                         </ListGroup>

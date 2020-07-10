@@ -17,21 +17,19 @@ import history from '../../utils/history';
 export default function NewSubjectForm() {
     const emptyOptionsList = [<option key={"Seleccionar"} value={"Seleccionar"} label={"Seleccionar"}>Seleccionar</option>];
 
-
     const subject = {};
-    const subjectApi = new SubjectAPI();
-
+    
     const [generalInfoSubject, setGeneralInfoSubject ] = useState(null);
     const [commissions, setCommissions] = useState([]);
-
     const [degreeOptions,setDegreeOptions] = useState([]);
     const [classroomsOptions, setClassroomsOptions] = useState(emptyOptionsList);
 
     useEffect( () => {
+        const subjectApi = new SubjectAPI();
         subjectApi.getAllDegrees()
             .then( 
                 (resp) => {
-                    setDegreeOptions(resp.data);
+                    setDegreeOptions(makeDegreeOptions(resp.data));
             }).catch( 
                 (e) => {
                     console.log(e); 
@@ -54,8 +52,14 @@ export default function NewSubjectForm() {
         );
         return optionsToReturn;
     }
-            
 
+    const makeDegreeOptions = (options) =>{
+        var optionsToReturn = [];
+        options.forEach(
+            (option) => optionsToReturn.push(<option key={option.id} value={option.id} label={option.name}>{option.name}</option>)
+        );
+        return optionsToReturn;
+    }
 
     const addCommission = (commission,cleanUpCommission) => {
         
@@ -97,6 +101,7 @@ export default function NewSubjectForm() {
     }
 
     const createNewSubjectRequest = () => {
+        const subjectApi = new SubjectAPI();
         subjectApi.createNewSubject(subject).then( res => {
             newSubjectCreatedSuccess(res.data);
             document.getElementById("subjectCodeNewForm").style.border = "";
@@ -106,8 +111,12 @@ export default function NewSubjectForm() {
     }
 
     const handleErrorPostReq = (e) => { 
-        document.getElementById("subjectCodeNewForm").style.border = "1px solid red"
-        toast.error("El código materia está repetido", generalError);
+        let errorMessage = "Ocurrió un error inesperado. Por favor intente nuevamente o comuníquese con un administrador.";
+        if(e.response.status === 400 && e.response.data === "Clave Duplicada"){
+            errorMessage = "El código materia está repetido.";
+            document.getElementById("subjectCodeNewForm").style.border = "1px solid red";
+        }
+        toast.error(errorMessage, generalError);
     }
 
     const handleErrors = () => { 
@@ -134,15 +143,14 @@ export default function NewSubjectForm() {
                             <Row>
                                 <Col xs={6}>
                                     <h3>Información General</h3>
-                                    <GeneralInfoForm 
-                                        commissions={commissions}
-                                        joinDataSubject={joinDataSubject}
-                                        deleteCommission={deleteCommission} />
+                                    <GeneralInfoForm degreeOptions={degreeOptions}
+                                                     commissions={commissions}
+                                                     joinDataSubject={joinDataSubject}
+                                                     deleteCommission={deleteCommission} />
                                 </Col>
                                 <Col xs={6}>
-                                    <CommissionForm
-                                        classroomOptions={classroomsOptions}
-                                        addCommission={addCommission} />
+                                    <CommissionForm classroomOptions={classroomsOptions}
+                                                    addCommission={addCommission} />
                                 </Col>
                             </Row>
                         </Container>    

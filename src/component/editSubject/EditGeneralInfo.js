@@ -12,10 +12,10 @@ import SubjectAPI from "../../Api/SubjectAPI";
    const [subjectCode, setSubjectCode] = useState(subject.subjectCode);
    const subjectCodeGiven = subject.subjectCode
 
-   const subjectApi = new SubjectAPI();
    const [subjectCodes, setSubjectCodes] = useState();
 
    useEffect(() => {
+      const subjectApi = new SubjectAPI();
       subjectApi.getAllSubjectCodes().then( (resp) => {
          setSubjectCodes(resp.data);
       }).catch( e => console.log(e));

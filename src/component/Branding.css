@@ -1,3 +1,24 @@
 .branding-red-icon {
-    color: var(--unq-red);;
+    color: var(--unq-red);
+}
+
+.branding-nav-size{
+    height: 2.45rem;
+}
+
+.branding-nav{
+    background-color: var(--unq-red);
+    color: var(--unq-white);
+}
+
+.branding-nav:hover {
+    color: var(--unq-white);
+    background-color: #a52f17;
+    border-color: #5a190c #5a190c #fff0 #5a190c !important;
+}
+
+.branding-nav:active {
+    color: var(--unq-white);
+    background-color: #701f0f;
+    border-color: #5a190c #5a190c #fff #5a190c !important;
 }

@@ -17,23 +17,26 @@ import ScheduleEditItem from './ScheduleEditItem';
         }
     }
 
+    const renderScheduleList = () =>{
+        if(schedules===undefined){
+            return <p>cargando...</p>;
+        } else {
+            return schedules.map (schedule => {
+                    return (
+                        <Accordion defaultActiveKey>
+                            <ScheduleEditItem key={schedule.id}
+                                                    schedule={schedule} 
+                                                    updateSchedule={updateSchedule}/>
+                        </Accordion>);
+                })
+        }
+    }
 
     return (
-            <div>
-                { schedules===undefined ? <p>cargando...</p> 
-                                        :
-                                        <Accordion defaultActiveKey="0">
-                                            {schedules.map (schedule => {
-                                                return <ScheduleEditItem key={schedule.id}
-                                                                         schedule={schedule} 
-                                                                         updateSchedule={updateSchedule} />
-                                            })} 
-                                        </Accordion>
-                }
-
-            </div>
-            
-        )
+        <div>
+           {renderScheduleList()}
+        </div>   
+    )
 }
 
 export default ScheduleEditAccordion;

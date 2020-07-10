@@ -24,7 +24,6 @@ const AdminProfile = () => {
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
     const elems = 6; // cantidad de elemntos que trae cada page
-    const subjectApi = new SubjectAPI;
     const massiveUpload = <MassiveLoad/>;
 
     useEffect( () => {
@@ -32,6 +31,7 @@ const AdminProfile = () => {
     }, [])
 
     const getAllSubjects = (pageN) => {
+        const subjectApi = new SubjectAPI();
         subjectApi.getAllSubjects(pageN,elems)
                 .then( (resp) => {
                         setState(
@@ -70,6 +70,7 @@ const AdminProfile = () => {
     const editCommissions = (id, objToPost) => { console.log("edit commissions") }
 
     const editGeneralInfo = (id,objToPost) => { 
+        const subjectApi = new SubjectAPI();
         subjectApi.editGeneralInfoSubject(id,objToPost).then( (resp) => {
             editGeneralInfoSuccess(resp.data.name);
             updateSubjectList()
@@ -87,7 +88,7 @@ const AdminProfile = () => {
         var editButtons = document.getElementsByClassName("button-edit");
 
         var filterButtons = Array.prototype.filter.call(editButtons, function(btn){
-            return btn.id != idEditButton;
+            return btn.id !== idEditButton;
         })
 
         if ( isPopoverEditOpen ) {
