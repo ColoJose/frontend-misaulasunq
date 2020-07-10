@@ -1,16 +1,15 @@
 import React,  { useState, useEffect, useReducer } from 'react';
-import ReactDOM from 'react-dom';
-import { Card, ListGroup, Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Card, ListGroup, Container, Row, Col, Button } from 'react-bootstrap';
 import history from '../utils/history';
 import SubjectAPI from '../Api/SubjectAPI';
 import SubjectInfoAdmin from './SubjectInfoAdmin';
 import Pagination from './Pagination';
 import GenericModal from './massiveLoad/GenericModal';
 import MassiveLoad from './massiveLoad/MassiveLoad';
-import OverlapList from './overlapNotices/OverlapList';
 import TodoList from './TodoList';
 // css
 import "./ButtonBranding.css";
+import "./HeaderBranding.css";
 // toastify
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +23,7 @@ const AdminProfile = () => {
                 {allSubjects: [], pageNumber: 0, totalPages: 0, firstPage: true, lastPage: false});
 
     const [isPopoverEditOpen, setIsPopoverEditOpen] = useState(false);                                                               
-    const elems = 5; // cantidad de elemntos que trae cada page
+    const elems = 6; // cantidad de elemntos que trae cada page
     const subjectApi = new SubjectAPI;
     const massiveUpload = <MassiveLoad/>;
 
@@ -85,8 +84,7 @@ const AdminProfile = () => {
 
     const handleEditButtons = (idEditButton) => {
         setIsPopoverEditOpen(!isPopoverEditOpen);
-        var editButtons = document
-                            .getElementsByClassName("button-edit");
+        var editButtons = document.getElementsByClassName("button-edit");
 
         var filterButtons = Array.prototype.filter.call(editButtons, function(btn){
             return btn.id != idEditButton;
@@ -107,12 +105,6 @@ const AdminProfile = () => {
             return btn.disabled = bool;
         })
     }
-
-
-    const goHome = () => {
-        ReactDOM.unmountComponentAtNode(document.getElementById("admin-container"));
-        history.push('/home');
-    }
     
     const renderSubjectsListItem = () => {
         return state.allSubjects.map( 
@@ -125,33 +117,31 @@ const AdminProfile = () => {
     }
 
     return (
-        <Container id="admin-container">
-            <Row style={{marginBottom:"15px", marginTop:"15px"}}>
-                    <h1>
-                        <span style={{color:"#e2e3de"}}>f</span>
-                        Panel de administrador/a
-                    </h1>
+        <Container id="admin-container" className="py-1">
+            <Row className="pl-3 my-2">
+                <b className="h4">
+                    Panel de administrador/a
+                </b>
             </Row>
             <Row className="my-2">
                 <Col>
                     <Button className="btn btn-danger color-button" 
                             onClick={() => goNewSubjectForm()}
-                            style={{marginRight:"5px"}}>Crear nueva materia</Button>
+                            style={{marginRight:"5px"}}>Crear Nueva Materia</Button>
                     <GenericModal children={massiveUpload} 
-                                    title="Carga de Horarios por Archivo" 
-                                    buttonLabel="Cargar Archivo"
-                                    buttonStyle="btn btn-danger color-button"
-                                    size="xs"
-                                    />
+                                  title="Carga de Horarios por Archivo" 
+                                  buttonLabel="Cargar Archivo"
+                                  buttonStyle="btn btn-danger color-button"
+                                  size="xs"/>
                 </Col>
             </Row>
-            <Row style={{height: "100%"}}>
-                <Col xs={8}>
+            <Row style={{height: "85%"}}>
+                <Col xs={7}>
                     <Card className="border" style={{height: "95%"}}>
-                        <Card.Header style={{backgroundColor: '#832d1c', fontWeight: '500', color:'#fff'}}>
+                        <Card.Header className="header-branding">
                             Todas las Materias
                         </Card.Header>
-                        <Card.Body>
+                        <Card.Body className="p-0">
                             <ListGroup variant="flush" 
                                        style={{height: "100%"}}>
                                 {renderSubjectsListItem()}
@@ -166,6 +156,7 @@ const AdminProfile = () => {
                         </Card.Footer>                    
                     </Card>
                 </Col>
+                <Col xs={1}/>
                 <Col xs={4}>
                     {/* <OverlapList/> */}
                     <TodoList />

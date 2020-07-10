@@ -4,6 +4,12 @@
     border-color: var(--unq-red) !important;
 }
 
+.color-button:disabled{
+    background-color: #61180a !important;
+    border-color: unset !important;
+    pointer-events: none !important;
+}
+
 .color-button:hover {
     background-color: #a52f17 !important;
     border-color: #a52f17 !important;

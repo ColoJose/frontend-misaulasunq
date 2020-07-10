@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
-import { ListGroup, Row, Col, Popover, OverlayTrigger } from 'react-bootstrap';
-import edit from '../resources/edit-tools.png';
-import info from '../resources/delete.png'
+import { Button, ListGroup, Row, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import EditGeneralInfo from '../component/editSubject/EditGeneralInfo';
 import history from '../utils/history';
+//react icons
+import { MdModeEdit } from 'react-icons/md';
+//Css
 import './SubjectInfoAdmin.css';
 
 export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditButtons}) {
@@ -24,8 +24,8 @@ export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditBu
 
     const editPopover = (
         <Popover id={popoverId}>
-            <Popover.Title as="h3">¿Qué va a editar?</Popover.Title>
-            <Popover.Content onClick={ () => handlePopoverClick() }>Editar info general</Popover.Content>
+            <Popover.Title className="h3 font-weight-bold">¿Qué va a editar?</Popover.Title>
+            <Popover.Content onClick={ () => handlePopoverClick() }>Editar información general</Popover.Content>
             <Popover.Content onClick={ () => goEditCommissions() }>Editar comisiones</Popover.Content>
         </Popover>
     );
@@ -36,21 +36,22 @@ export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditBu
 
     return (
         <>
-            <ListGroup.Item>
-                <Row>
-                    <Col sm="9">
-                        <p>Nombre: {subject.name}</p>
-                        <p>Carrera: {subject.degrees[0].name}</p> {/* semi hardcoeado */}
+            <ListGroup.Item className="px-3 py-2">
+                <Row className="d-flex align-items-center">
+                    <Col xs={11}>
+                        <p><b>Nombre:</b> {subject.name}</p>
+                        <p><b>Carrera:</b> {subject.degrees[0].name}</p> {/* semi hardcoeado */}
                     </Col>
-                    <Col sm="3">
+                    <Col xs={1}>
                         <OverlayTrigger trigger="click" 
                                         placement="right" 
-                                        overlay={editPopover}
-                                        >
-                            <button id={idEditButton} className="button-edit"
+                                        overlay={editPopover}>
+                            <Button id={idEditButton}
+                                    variant="light"
+                                    className="p-1"
                                     onClick={ () => handleEditButtons(idEditButton)}>
-                                        <img src={edit} alt="edit icon"/>
-                            </button>
+                                <MdModeEdit className="branding-red-icon" size='1.75em'/>
+                            </Button>
                         </OverlayTrigger>
                     </Col>
                     {/* <Col sm="2" onClick={ () => selectSubjectTo(id,"delete")}>
@@ -59,14 +60,12 @@ export default function SubjectInfoAdmin({subject, selectSubjectTo, handleEditBu
                 </Row>
             </ListGroup.Item>
 
-            <EditGeneralInfo 
-                subject={subject}
-                show={showGeneralInfoModal} 
-                hide={hideGeneralInfoModal}
-                selectSubjectTo={selectSubjectTo}
-                handleEditButtons={handleEditButtons}
-                idEditButton={idEditButton} />
+            <EditGeneralInfo subject={subject}
+                             show={showGeneralInfoModal} 
+                             hide={hideGeneralInfoModal}
+                             selectSubjectTo={selectSubjectTo}
+                             handleEditButtons={handleEditButtons}
+                             idEditButton={idEditButton}/>
         </>
     )
-
 }

@@ -1,18 +1,21 @@
 
 import React from 'react';
-import { Card, ListGroup, Form } from 'react-bootstrap';
+import { Button, Card, ListGroup, Form } from 'react-bootstrap';
+// css
+import "./ButtonBranding.css";
+import "./HeaderBranding.css";
 
 function TodoList(){
 
     return (
         <>
             <Card className="border">
-                <Card.Header style={{backgroundColor: '#832d1c', fontWeight: '500', color:'#fff'}}>To-do list</Card.Header>
+                <Card.Header className="header-branding">To-do list</Card.Header>
                 <Card.Body className="px-0 py-0">
                     <ListGroup variant="flush">
                         <ListGroup.Item>
                             <Form.Group>
-                                <Form.Check type="checkbox" label="Corregir solapado entre Matematica II e Historia General" />
+                                <Form.Check type="checkbox" label="Corregir solapado entre Matemática  II e Historia General" />
                             </Form.Group>
                         </ListGroup.Item>
 
@@ -24,25 +27,28 @@ function TodoList(){
 
                         <ListGroup.Item>
                             <Form.Group>
-                                <Form.Check type="checkbox" label="Corregir solapdo entre Matematica II e Historia General" />
+                                <Form.Check type="checkbox" label="Corregir solapado entre Matemática  II e Historia General" />
                             </Form.Group>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
                             <Form.Group>
-                                <Form.Check type="checkbox" label="Corregir solapdo entre Análisis I y Programación concurrente" />
+                                <Form.Check type="checkbox" label="Corregir solapado entre Análisis I y Programación concurrente" />
                             </Form.Group>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
                             <Form.Group>
-                                <Form.Check type="checkbox" label="Agendar reunión con Zinni (cyt)" />
+                                <Form.Check type="checkbox" label="Agendar reunión con Zinni (CyT)" />
                             </Form.Group>
                         </ListGroup.Item>
                     </ListGroup>
                 </Card.Body>
                 <Card.Footer>
-                    <p>Agregar nueva tarea</p>
+                    <Button className="color-button"
+                            disabled>
+                        Agregar Nueva Tarea
+                    </Button>
                 </Card.Footer> 
             </Card>
         </>

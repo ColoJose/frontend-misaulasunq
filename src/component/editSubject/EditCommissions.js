@@ -9,6 +9,7 @@ import ScheduleFormEdit from './ScheduleFormEdit';
 import ReactDOM from 'react-dom';
 // css
 import '../ButtonBranding.css';
+import "../HeaderBranding.css";
 
 const EditCommissions = (props) => {
 
@@ -75,17 +76,23 @@ const EditCommissions = (props) => {
       selectedCommission.schedules.push(schedule);
    }
 
+   const getMinYear = () => {
+      return (new Date()).getFullYear().toString();
+  }
+
+  const getMaxYear = () => {
+      return ((new Date()).getFullYear() + 1).toString();
+  }
+
    return (
-         <Container id="edit-commissions-container">
-            <Row>
-               <Col xs={4}>
-                  <h3 style={{marginTop:"25px", marginBottom:"15px"}}>Editar Comisiones de materia {subjectName}</h3>
-               </Col>
-               <Col xs={8}></Col>
+         <Container id="edit-commissions-container" className="py-1">
+            <Row className="pl-3 my-2">
+               <b className="h4">
+                  Edición de Comisiones de la materia {subjectName}
+               </b>
             </Row>
             <Row>
                <Col xs={12}>
-                  
                   <Card>
                      <Card.Header>
                         <Nav variant="tabs">
@@ -114,8 +121,8 @@ const EditCommissions = (props) => {
                                           <Form.Group>
                                              <Form.Label>Año</Form.Label>   
                                              <Form.Control type="number"
-                                                           min="2020"
-                                                           max="2021" 
+                                                           min={getMinYear()}
+                                                           max={getMaxYear()}
                                                            value={selectedCommission.year}
                                                            onChange={ (e) => setYearAux(e.target.value)}
                                                            required />
