@@ -1,9 +1,10 @@
-import React,  {useState} from 'react';
-import { Row, Col, ListGroup} from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Button, Row, Col, ListGroup} from 'react-bootstrap';
 import ScheduleFormEdit from './ScheduleFormEdit';
-// icons
-import editIcon from '../../resources/edit-tools.png';
-import deleteIcon from '../../resources/delete.png';
+//react icons
+import { MdModeEdit, MdDeleteForever } from 'react-icons/md';
+// CSS
+import "../Branding.css";
 
 export default function ScheduleItem(props) {
 
@@ -41,22 +42,44 @@ export default function ScheduleItem(props) {
     return (
         <ListGroup key={scheduleItem.id}
                    id={componentId}>
-            <Row>
-                <Col xs={3}>Desde {scheduleItem.startTime} hasta 
-                                  {scheduleItem.endTime} </Col>
-                <Col xs={3}>Día: {scheduleItem.day}</Col>
-                <Col xs={3}>Aula: {scheduleItem.classroom.number}</Col>
-                <Col xs={1} onClick={ () => editSchedule()}><img alt="edit" src={editIcon}/></Col>
-                <Col xs={1} onClick={ () => deleteScheduleAux()}><img alt="delete" src={deleteIcon}/></Col>
-
-                {renderModalSchEdit ?
-                    <ScheduleFormEdit classroomOptions={classroomOptions}
-                                      scheduleToEdit={scheduleItem}
-                                      showEdit={showModalScheduleEdit}
-                                      onHideEdit={closeModalScheduleEdit}
-                                      modifyItemSchedule={modifyItemSchedule}/>
+            <Row className="px-3 d-flex align-items-center">
+                <Col xs={4}>
+                    <b>Desde:</b> {scheduleItem.startTime} 
+                    <br/>
+                    <b>Hasta:</b> {scheduleItem.endTime} 
+                </Col>
+                <Col xs={3}>
+                    <b>Día:</b> {scheduleItem.day}
+                </Col>
+                
+                <Col xs={3}>
+                    <b>Aula:</b> {scheduleItem.classroom.number}
+                </Col>
+                
+                <Col xs={1} className="p-1">
+                    <Button variant="light"
+                            className="p-1"
+                            onClick={ () => editSchedule()}>
+                        <MdModeEdit className="branding-red-icon" size='1.75em'/>
+                    </Button>
+                </Col>
+                
+                <Col xs={1} className="p-1">
+                    <Button variant="light"
+                            className="p-1"
+                            onClick={ () => deleteScheduleAux()}>
+                        <MdDeleteForever className="branding-red-icon" size='1.75em'/>
+                    </Button>
+                </Col>
+                {
+                    renderModalSchEdit ?
+                        <ScheduleFormEdit classroomOptions={classroomOptions}
+                                        scheduleToEdit={scheduleItem}
+                                        showEdit={showModalScheduleEdit}
+                                        onHideEdit={closeModalScheduleEdit}
+                                        modifyItemSchedule={modifyItemSchedule}/>
                     :
-                    null
+                        null
                 }
                 
             </Row>

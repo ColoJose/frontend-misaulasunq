@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import '../ButtonBranding.css';
 import { isSubjectCodeRepeated } from '../../utils/formValidator.js';
 import SubjectAPI from "../../Api/SubjectAPI";
@@ -58,33 +58,41 @@ import SubjectAPI from "../../Api/SubjectAPI";
    return (
          <Modal show={show}>
             <Modal.Header>
-               <Modal.Title>Editar información general</Modal.Title>
+               <Modal.Title>Editar Información General</Modal.Title>
             </Modal.Header>   
             <Form onSubmit={handleSubmit}>
-               <Modal.Body>
-                     <Form.Group>
-                        <Form.Label>Nombre materia</Form.Label>
-                        <Form.Control
-                           type="text"
-                           value={name}
-                           onChange={ (e) => setName(e.target.value)}
-                           required />
+               <Modal.Body className="pb-0">
+                     <Form.Group className="mb-2">
+                        <Form.Label>Nombre de Materia</Form.Label>
+                        <Form.Control type="text"
+                                      value={name}
+                                      onChange={ (e) => setName(e.target.value)}
+                                      required />
                      </Form.Group>
-                     <Form.Group>
-                        <Form.Label>Código materia</Form.Label>
-                        <Form.Control 
-                           id="subject-code-id"
-                           type="text"
-                           value={subjectCode}
-                           onChange={ (e) => setSubjectCode(e.target.value)}
-                           required />
+                     <Form.Group className="mb-2">
+                        <Form.Label>Código de Materia</Form.Label>
+                        <Form.Control id="subject-code-id"
+                                      type="text"
+                                      value={subjectCode}
+                                      onChange={ (e) => setSubjectCode(e.target.value)}
+                                      required />
                         <small id="subject-code-error" style={{visibility:"hidden",color:"red"}}>El código ingresado está repetido</small>
                      </Form.Group>
                   
                </Modal.Body>
-               <Modal.Footer>
-                  <Button className="color-button" type="submit">Guardar cambios</Button>
-                  <Button className="color-button" onClick={ () =>  handleClose() }>Cerrar</Button>
+               <Modal.Footer className="p-2">
+                  <Row xs={2} className="w-100">
+                     <Col xs={6} className="d-flex justify-content-start pl-1">
+                        <Button className="color-button w-75" onClick={ () =>  handleClose() }>
+                           Cancelar
+                        </Button>
+                     </Col>
+                     <Col xs={6} className="d-flex justify-content-end pr-1">
+                        <Button className="color-button w-75" type="submit">
+                           Guardar cambios
+                        </Button>
+                     </Col>
+                  </Row>
                </Modal.Footer>
             </Form>
          </Modal>

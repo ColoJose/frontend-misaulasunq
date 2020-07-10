@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import {Button, Form, ListGroup, Card, Row, Col} from 'react-bootstrap';
 import './CommissionForm.css';
 import ScheduleForm from './ScheduleForm';
 import ScheduleItem from './ScheduleItem';
 // css
 import '../ButtonBranding.css';
-import { List } from 'semantic-ui-react';
 
 // note: sch as schedule
 
@@ -73,14 +71,21 @@ export default function CommissionForm({ classroomOptions, addCommission }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         addCommission(commission,cleanUpCommission);
-        // return;
+    }
+
+    const getMinYear = () => {
+        return (new Date()).getFullYear().toString();
+    }
+
+    const getMaxYear = () => {
+        return ((new Date()).getFullYear() + 1).toString();
     }
 
     const renderScheduleList = () =>{
         if(schedules.length === 0){
             return ( 
-                <ListGroup.Item>
-                    <p>No ha agregado schedules aún</p>
+                <ListGroup.Item className="text-muted">
+                    No ha agregado schedules aún
                 </ListGroup.Item>
             );
         } else {
@@ -98,73 +103,78 @@ export default function CommissionForm({ classroomOptions, addCommission }) {
 
     return (
         <>
-            <form id="commission-form" data-toggle="validator" role="form" onSubmit={handleSubmit}>
-                <Row>
-                    <Col xs={12}><h2>Comisiones</h2></Col>    
-                </Row>
-                <Form.Group>
-                    <Form.Label>Nombre comisión</Form.Label>
-                    <Form.Control 
-                        value={name}
-                        onChange={(e) => setName(e.target.value)} 
-                        required/>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Año</Form.Label>
-                    <Form.Control 
-                        type="number"
-                        min="2020"
-                        max="2021"
-                        value={year}
-                        onChange={(e) => setYear(e.target.value)}
-                        required />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Semestre</Form.Label>
-                    <Form.Control 
-                        as="select"
-                        value={semester}
-                        onChange={ (e) => setSemester(e.target.value)} >
-                        <option>Primer</option>
-                        <option>Segundo</option>
-                        <option>Anual</option>
-                    </Form.Control>
-                </Form.Group>
+            <h3>Comisiones</h3>
+            <form id="commission-form"
+                  className="col-11"
+                  data-toggle="validator" 
+                  onSubmit={handleSubmit}>
+                <Form.Row>
+                    <Form.Group className="col-12">
+                        <Form.Label>Nombre comisión</Form.Label>
+                        <Form.Control value={name}
+                                      onChange={(e) => setName(e.target.value)} 
+                                      required/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group className="col-12">
+                        <Form.Label>Año</Form.Label>
+                        <Form.Control type="number"
+                                      min={getMinYear()}
+                                      max={getMaxYear()}
+                                      value={year}
+                                      onChange={(e) => setYear(e.target.value)}
+                                      required/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group className="col-12">
+                        <Form.Label>Semestre</Form.Label>
+                        <Form.Control as="select"
+                                      value={semester}
+                                      onChange={ (e) => setSemester(e.target.value)} >
+                            <option>Primer</option>
+                            <option>Segundo</option>
+                            <option>Anual</option>
+                        </Form.Control>
+                    </Form.Group>
+                </Form.Row>
             </form>
 
-            {/* schedule section */}
-
-            <h3>Schedules</h3>
-
-            <Card id="addedSchedulesSection">
-                <Card.Header>
-                    <Row>
-                        <Col xs={8}>
-                            Schedules agregados
-                        </Col>
-                        <Col xs={4}>
-                            <div className="add-schedule-button">
-                                <Button className="btn btn-danger color-button" onClick={ () => openCloseModal()}>Agregar schedule</Button>
-                            </div>
-                        </Col>
-                    </Row>
-                </Card.Header>
-                
-                <ListGroup id="schedule-items">
-                    {renderScheduleList()}
-                </ListGroup>
-            </Card>
+            <h4 className="mt-1 mb-2">Schedules</h4>
+            <div className="col-11">
+                <Card id="addedSchedulesSection" >
+                    <Card.Header className="py-2">
+                        <Row className="d-flex align-items-center">
+                            <Col xs={8} className="font-weight-bolder">
+                                Schedules agregados
+                            </Col>
+                            <Col xs={4} className="pr-3 d-flex justify-content-end">
+                                <Button className="btn btn-danger color-button" 
+                                        onClick={ () => openCloseModal()} 
+                                        size="sm">
+                                    Agregar schedule
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Card.Header>
+                    
+                    <ListGroup id="schedule-items">
+                        {renderScheduleList()}
+                    </ListGroup>
+                </Card>
+            </div>
             <ScheduleForm classroomOptions={classroomOptions}
                           show={showModalSchedule} 
                           onHide={closeModalSchedule}
                           addSchedule={addSchedule} 
                           scheduleIdTentative={scheduleIdTentative}/>
-            <Row>
-                <Col xs={12}>
+            <Row className="mt-3">
+                <Col xs={12} className="d-flex justify-content-center">
                     <Button type="submit"
-                            form="commission-form" 
+                            form="commission-form"
                             className="btn btn-danger color-button">
-                    Agregar Comisión
+                        Agregar Comisión
                     </Button>
                 </Col>    
             </Row>

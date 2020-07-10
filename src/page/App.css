@@ -12,3 +12,9 @@
 .app-right-row {
     height: 92%;
 }
+
+@media (min-width: 768px) {
+    .full-height-xs {
+        height: 100% !important;
+    }
+}

@@ -16,8 +16,8 @@ import { MdNavigateBefore, MdNavigateNext, MdFirstPage, MdLastPage } from "react
     }
 
     return (
-        <Row className="w-50 my-auto mx-auto">
-            <Col xs={4} className="w-50 my-auto mx-auto">
+        <Row className="w-75 my-auto mx-auto">
+            <Col xs={4} className="w-50 my-auto mx-auto d-flex justify-content-end">
                 <Button variant="light"
                         onClick={ () => handleFirstPage() }
                         hidden={props.firstPage} >
@@ -32,7 +32,7 @@ import { MdNavigateBefore, MdNavigateNext, MdFirstPage, MdLastPage } from "react
             <Col xs={2} className="w-50 my-auto mx-auto text-center pageNumber">
                 <p hidden={onlyOnePage()}>{props.pageNumber + 1}</p>
             </Col>
-            <Col xs={4} className="w-50 my-auto mx-auto">
+            <Col xs={4} className="w-50 my-auto mx-auto d-flex justify-content-start">
                 <Button variant="light"
                         onClick={ () => handleNextPage() }
                         hidden={props.lastPage}>

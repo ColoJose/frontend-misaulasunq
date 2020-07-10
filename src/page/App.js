@@ -22,8 +22,6 @@ toast.configure({
     draggable: true,
 });
 
-var scheduleIdTentative = 0;
-
 class App extends React.Component {
   
   render() {
@@ -41,7 +39,7 @@ class App extends React.Component {
                         </Col>
                     </Row>
                     <Row className="app-right-row">
-                        <Col xs={12}>
+                        <Col xs={12} className="full-height-xs">
                             <Switch>
                                 <Route exact path="/home" render={(props) => <Main {...props} />}/>
                                 <PrivateRoute exact path="/admin" render={(props) => <AdminProfile {...props} />}/>

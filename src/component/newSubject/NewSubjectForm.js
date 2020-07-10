@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Card, Container, Col, Row, Button} from 'react-bootstrap';
 import './NewSubjectForm.css';
+import "../HeaderBranding.css";
 import GeneralInfoForm from './GeneralInfoForm';
 import CommissionForm from './CommissionForm';
 import SubjectAPI from '../../Api/SubjectAPI';
@@ -117,15 +118,22 @@ export default function NewSubjectForm() {
     const newSubjectCreatedSuccess = (message) => { toast.success(message, newSubjectConfig) }
 
     return  (
-        <Container className="pt-2">
-            <Row>
+        <Container className="pt-1">
+            <Row className="pl-3 my-2">
+               <b className="h4">
+                  Carga de Materia
+               </b>
+            </Row>
+            <Row className="mt-2 px-3">
                 <Card className="wrapper">
-                    <Card.Header>Formulario nueva materia</Card.Header>
+                    <Card.Header className="h6 header-branding">
+                        Formulario de Alta
+                    </Card.Header>
                     <Card.Body>
-                        <Container fluid="md">
+                        <Container fluid>
                             <Row>
                                 <Col xs={6}>
-                                    <h2>Info general materia</h2>
+                                    <h3>Información General</h3>
                                     <GeneralInfoForm 
                                         commissions={commissions}
                                         joinDataSubject={joinDataSubject}
@@ -139,7 +147,7 @@ export default function NewSubjectForm() {
                             </Row>
                         </Container>    
                     </Card.Body>
-                    <Card.Footer>
+                    <Card.Footer className="pt-2 pb-1">
                         <Button onClick={ () => history.push("/admin")}
                                 className="color-button"
                                 style={{marginBottom:"5px"}}>Cancelar</Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Modal, Form, Container, Row, Col} from 'react-bootstrap';
 import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours } from '../../utils/formValidator';
@@ -27,24 +27,12 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
     // validations
     const [hoursValidation, setHoursValidation] = useState(false);
 
-    // const componentIsMounted = useRef(false);
-    // Este seteo y return rompe en el unmount!
-    // useEffect(() => {
-    //     return componentIsMounted.current = true;    
-    // }, []);
-
     useEffect(() => {
         subjectApi.getAllClassrooms()
             .then( (resp) => {
                 setAulasOptions(resp.data);
                 setClassroom(resp.data[0]);
             }).catch( (e) => console.log(e) );
-        // subjectApi.getAllClassrooms().then( (resp) => {
-        //     if(componentIsMounted.current){
-        //         setAulasOptions(resp.data);
-        //         setClassroom(resp.data[0]);
-        //     }
-        // }).catch( (e) => console.log(e) );
     }, []);
 
     const schedule = {
@@ -53,8 +41,6 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
         classroom: {number:classroom},
         day
     };
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -78,7 +64,6 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
         var selectHours = document.getElementsByClassName("selectHours");
         selectHours[0].style.border = "1px solid red";
         selectHours[1].style.border = "1px solid red";
-        
     }
 
     const cleanUp = () => {
@@ -165,12 +150,6 @@ export default function ScheduleFormEdit({show, onHide, addSchedule}) {
                             <button type="submit" className="btn btn-danger color-button">Agregar schedule</button> 
                         </Row>
                     </Container>
-
-                    
-                    
-
-                    
-
                 </Form>
             </Modal.Body>
         </Modal>

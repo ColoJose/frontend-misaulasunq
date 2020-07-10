@@ -1,18 +1,34 @@
 import React from 'react';
-import {ListGroup, Row, Col} from 'react-bootstrap';
-import infoIcon from '../../resources/signaling.png';
-import editIcon from '../../resources/edit-tools.png';
-import deleteIcon from '../../resources/delete.png';
-
+import { Button, ListGroup, Row, Col } from 'react-bootstrap';
+//react icons
+import { MdModeEdit, MdDeleteForever } from 'react-icons/md';
+// CSS
+import "../Branding.css";
 
 export default function CommissionItem({commission, deleteCommission}) {
 
+    // TODO: Estaria bueno un info button que despliegue un modal o tooltip con la info
     return (
-        <ListGroup.Item>
-            <Row>
-                <Col xs={8}>Nombre: {commission.name}</Col>
-                <Col xs={2}><img alt="edit" src={editIcon}/></Col>
-                <Col onClick={ () => deleteCommission(commission.id)} xs={2}><img alt="delete"src={deleteIcon}/></Col>
+        <ListGroup.Item className="p-1">
+            <Row className="px-3 d-flex align-items-center">
+                <Col xs={8}>
+                    <b>Nombre:</b> {commission.name}
+                </Col>
+                
+                <Col xs={2} className="p-1">
+                    <Button variant="light"
+                            className="p-1"
+                            hidden>
+                        <MdModeEdit className="branding-red-icon" size='1.75em'/>
+                    </Button>
+                </Col>
+                <Col xs={2}>
+                    <Button variant="light"
+                            className="p-1"
+                            onClick={ () => deleteCommission(commission.id)}>
+                        <MdDeleteForever className="branding-red-icon" size='1.75em'/>
+                    </Button>
+                </Col>
             </Row>
         </ListGroup.Item>
     );

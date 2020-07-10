@@ -1,34 +1,22 @@
-import React, { useState, useReducer, useEffect, useRef } from 'react';
+import React, { useState, useReducer } from 'react';
 import {Modal, Form, Container, Row, Col} from 'react-bootstrap';
-import SubjectAPI from '../../Api/SubjectAPI';
 import { areValidHours, isFirstHourGreaterThanSecond } from '../../utils/formValidator';
+import { hours, days } from "../../Constants/Config";
 // css
 import '../ButtonBranding.css';
-import Select from 'react-select';
 
-const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-const optionDays = days.map( (day) => <option key={day}>{day}</option>)
-const hours = Object.freeze([
-    "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
-    "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
-]);
+const optionDays = days.map( (day) => <option key={day} value={day} label={day}>{day}</option>);
 
-let optionsHours = 
-            hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
+let optionsHours = hours.map( (hs) => <option key={hs} value={hs} label={hs}>{hs}</option>);
 
 export default function ScheduleForm({classroomOptions, show, onHide, addSchedule, scheduleIdTentative}) {
 
     const defaultInvalidHourMessage = "La materia debe tener al menos dos horas de diferencia.";
     const startHourGreaterMessage = "La hora de inicio tiene que ser menor que la de fin.";
 
-    // let tentativeId = 50;
-
-    const subjectApi = new SubjectAPI();
-
     const [startTime,setStartTime] = useState(hours[0]);
     const [endTime,setEndTime] = useState(hours[0]);
     const [day, setDay] = useState(days[0]);
-    // const [aulasOptions, setAulasOptions] = useState([]);
     const [classroom,setClassroom] = useState(classroomOptions[0].props.value);
 
     // validations
@@ -116,22 +104,7 @@ export default function ScheduleForm({classroomOptions, show, onHide, addSchedul
         setStartTime(hours[0]);
         setEndTime(hours[0]);
         setDay(days[0]);
-        setClassroom({number:classroomOptions[0].value});
-        document.getElementById("addedSchedulesSection").style.border = "";
-    }
-
-    const hourValidationError = () =>{
-        if(validationState.hoursValidation){
-            return <small style={{color:"red"}}>{validationState.errorMessage}</small>;
-        } 
-        return <></>;
-    }
-
-    const classroomValidationError = () =>{
-        if(validationState.classroomValidation){
-            return <small style={{color:"red"}}>Debe seleccionar un aula</small>;
-        } 
-        return <></>;
+        setClassroom(classroomOptions[0].props.value);
     }
 
     const handleClassroomSelect = (event) => {
@@ -149,35 +122,49 @@ export default function ScheduleForm({classroomOptions, show, onHide, addSchedul
         setEndTime(event.target.value);
     }
 
+    const hourValidationError = () =>{
+        if(validationState.hoursValidation){
+            return <small style={{color:"red"}}>{validationState.errorMessage}</small>;
+        } 
+        return <></>;
+    }
+
+    const classroomValidationError = () =>{
+        if(validationState.classroomValidation){
+            return <small style={{color:"red"}}>Debe seleccionar un aula.</small>;
+        } 
+        return <></>;
+    }
+
     return (
         <Modal show={show} >
-            <Modal.Header>Nuevo schedule</Modal.Header>
+            <Modal.Header className="font-weight-bolder">Nuevo Schedule</Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit} data-toggle="validator" role="form">
+                    <Form id="schedule-form"
+                          onSubmit={handleSubmit} 
+                          data-toggle="validator" 
+                          role="form">
                     <Container style={{backgroundColor:"#fff"}}>
                         <Row>
                             <Col xs={6}>
                                 <Form.Group>
-                                    <Form.Label>Hora comienzo</Form.Label>
-                                    <Form.Control
-                                        className={"selectHours"}  
-                                        as="select"
-                                        value={startTime}
-                                        onChange={(e) => handleStartHourSelect(e)}
-                                        >
-                                            {optionsHours}
+                                    <Form.Label>Hora de comienzo</Form.Label>
+                                    <Form.Control className={"selectHours"}  
+                                                  as="select"
+                                                  value={startTime}
+                                                  onChange={(e) => handleStartHourSelect(e)}>
+                                        {optionsHours}
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
                             <Col xs={6}>
                                 <Form.Group>
-                                    <Form.Label>Hora fin</Form.Label>
-                                    <Form.Control
-                                        className={"selectHours"} 
-                                        as="select"
-                                        value={endTime}
-                                        onChange={(e) => handleEndHourSelect(e)} >
-                                            {optionsHours}    
+                                    <Form.Label>Hora de fin</Form.Label>
+                                    <Form.Control className={"selectHours"} 
+                                                  as="select"
+                                                  value={endTime}
+                                                  onChange={(e) => handleEndHourSelect(e)} >
+                                        {optionsHours}    
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
@@ -185,11 +172,13 @@ export default function ScheduleForm({classroomOptions, show, onHide, addSchedul
                                 {hourValidationError()}
                             </Col>
                         </Row>
-                        <Row><hr style={{height:"0.1px", width:"380px",backgroundColor:"#d3d3d3"}}></hr></Row>
+                        <Row>
+                            <hr className="w-100 text-muted"/>
+                        </Row>
                         <Row>
                             <Col xs={6}>
                                 <Form.Group>
-                                    <Form.Label>Dia</Form.Label>
+                                    <Form.Label>Día</Form.Label>
                                     <Form.Control as="select"
                                                   value={day}
                                                   onChange={ (e) => setDay(e.target.value)}>
@@ -211,20 +200,27 @@ export default function ScheduleForm({classroomOptions, show, onHide, addSchedul
                                 </Form.Group> 
                             </Col>
                         </Row>
-                        <Row>
-                            <button type="button" 
-                                    className="btn btn-danger color-button" 
-                                    onClick={ () => onHide()}
-                                    style={{marginRight: "5px"}}>
-                                Cerrar
-                            </button>
-                            <button type="submit" className="btn btn-danger color-button">
-                                Agregar schedule
-                            </button> 
-                        </Row>
                     </Container>
                 </Form>
             </Modal.Body>
+            <Modal.Footer className="p-2">
+                <Row xs={2} className="w-100">
+                    <Col xs={6} className="d-flex justify-content-start pl-1">
+                        <button type="button" 
+                                className="btn btn-danger color-button w-50" 
+                                onClick={ () => onHide()}>
+                            Cancelar
+                        </button>
+                    </Col>
+                    <Col xs={6} className="d-flex justify-content-end pr-1">
+                        <button type="submit"
+                                form="schedule-form"
+                                className="btn btn-danger color-button w-50">
+                            Agregar
+                        </button> 
+                    </Col>
+                </Row>
+            </Modal.Footer>
         </Modal>
     )
 }
