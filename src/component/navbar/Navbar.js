@@ -27,7 +27,7 @@ function NavbarApp() {
         if(isInAdminPages()){
             setRenderHomeButton(true);
         }
-      });
+      },[]);
 
     const goToAdmin = () => {
         setRenderHomeButton(true);

@@ -32,7 +32,7 @@ class App extends React.Component {
                 <Route exact path="/" component={Login} />
                 <Route exact path="/callback" render={(props) => <Callback {...props} />} />
                 
-                <Container className="app-Container">
+                <Container className="app-container">
                     <Row className="app-left-row">
                         <Col xs={12}>
                             <NavbarApp />

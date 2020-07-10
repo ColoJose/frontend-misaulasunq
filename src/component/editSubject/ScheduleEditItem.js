@@ -1,23 +1,15 @@
-
-
 import React, {useState} from 'react';
 import { Accordion, Card, Form, Button, Row, Col } from 'react-bootstrap';
+import { hours, days } from "../../Constants/Config";
 
-const days = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-const optionDays = days.map( (day) => <option>{day}</option>)
-const hours = Object.freeze([
-    "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
-    "15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"
-]);
-
-let optionsHours = 
-            hours.map( (hs) => <option key={hs.toString()}>{hs}</option>);
+const optionDays = days.map( (day) => <option key={day} value={day} label={day}>{day}</option>);
+let optionsHours = hours.map( (hs) => <option key={hs} value={hs} label={hs}>{hs}</option>);
 
  const ScheduleEditItem = ({schedule, updateSchedule}) => {
      
-
-    const [startTime, setStartTime] = useState(schedule.startTime);
-    const [endTime, setEndTime] = useState(schedule.endTime);
+    //El Slice es para evitar el excedente de segundos
+    const [startTime, setStartTime] = useState(schedule.startTime.slice(0, 5));
+    const [endTime, setEndTime] = useState(schedule.endTime.slice(0, 5));
     const [day, setDay] = useState(schedule.day);
     const [classroom, setClassroom] = useState(schedule.classroom.number);
 
@@ -31,7 +23,6 @@ let optionsHours =
         updateSchedule(schedule.id,"endTime",endTime);
     }
 
-
     const setDayAux = (day) => { 
         setDay(day);
         updateSchedule(schedule.id,"day",day);
@@ -44,57 +35,65 @@ let optionsHours =
 
     return (
         <Card>
-        <Card.Header>
-            <Accordion.Toggle as={Button} variant="link">
-                    Horarios: {schedule.startTime} a {schedule.endTime}, día {schedule.day}
-            </Accordion.Toggle>
-        </Card.Header>
-        <Card.Body>
+            <Card.Header className="p-0">
+                <Accordion.Toggle as={Button} 
+                                  variant="light"
+                                  block
+                                  className="subject-Header-Button p-1">
+                    Horario: {startTime} a {endTime}, día {schedule.day}
+                </Accordion.Toggle>
+            </Card.Header>
             <Accordion.Collapse>
-                <Form data-toggle="validator" role="form">  
-                <Form.Group >
-                    <Form.Label>Hora comienzo</Form.Label>
-                    <Form.Control
-                        as="select"
-                        value={startTime}
-                        onChange={(e) => setStartTimeAux(e.target.value) }>
-                            <option>{startTime}</option>
-                            {optionsHours}
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Hora fin</Form.Label>
-                    <Form.Control
-                        as="select"
-                        value={endTime}
-                        onChange={(e) => setEndTimeAux(e.target.value) }>
-                            <option>{endTime}</option>
-                            {optionsHours}
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Dia</Form.Label>
-                    <Form.Control 
-                        as="select"
-                        value={day}
-                        onChange={ (e) => setDayAux(e.target.value) }>
-                            <option selected>{day}</option>
-                            {optionDays}
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Aula</Form.Label>
-                    <input className="form-control"
-                        value={classroom}
-                        onChange={ (e) => setClassroomAux(e.target.value) }
-                        required
-                        />
-                </Form.Group>
-            </Form>
+                <Card.Body>
+                    <Form data-toggle="validator">  
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Group >
+                                    <Form.Label>Hora de comienzo</Form.Label>
+                                    <Form.Control as="select"
+                                                  value={startTime}
+                                                  onChange={(e) => setStartTimeAux(e.target.value) }>
+                                        {optionsHours}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Hora de fin</Form.Label>
+                                    <Form.Control as="select"
+                                                  value={endTime}
+                                                  onChange={(e) => setEndTimeAux(e.target.value) }>
+                                        {optionsHours}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Día</Form.Label>
+                                    <Form.Control as="select"
+                                                  value={day}
+                                                  onChange={ (e) => setDayAux(e.target.value) }>
+                                        {optionDays}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={6}>
+                                <Form.Group>
+                                    <Form.Label>Aula</Form.Label>
+                                    <input className="form-control"
+                                           value={classroom}
+                                           onChange={ (e) => setClassroomAux(e.target.value) }
+                                           required/>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Card.Body>
             </Accordion.Collapse> 
-        </Card.Body>
         </Card>
-)
+    );
 }
 
 export default ScheduleEditItem;
