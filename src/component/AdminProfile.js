@@ -157,8 +157,7 @@ const AdminProfile = () => {
                         </Card.Footer>                    
                     </Card>
                 </Col>
-                <Col xs={1}/>
-                <Col xs={4}>
+                <Col xs={5}>
                     {/* <OverlapList/> */}
                     <TodoList />
                 </Col>

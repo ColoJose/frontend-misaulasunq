@@ -38,6 +38,7 @@ export default function CommissionForm({ classroomOptions, addCommission }) {
 
     // schedule methods
     const addSchedule = (newSchedule) => {
+        document.getElementById("addedSchedulesSection").style.border = "";
         setSchedules([...schedules,newSchedule]);
     };
 
